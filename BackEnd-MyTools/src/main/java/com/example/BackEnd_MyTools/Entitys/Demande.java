@@ -1,12 +1,9 @@
-package com.example.MyTools.Entitys;
-
+package com.example.BackEnd_MyTools.Entitys;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.Data;
 
-@Data
 @Document(collection = "Demande") // MongoDB collection name
-
+@Data
 public class Demande {
     public int id;
     public String title;
