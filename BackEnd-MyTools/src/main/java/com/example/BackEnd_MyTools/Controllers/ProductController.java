@@ -23,7 +23,7 @@ public class ProductController {
     public void createProduct(Product product) {
         productService.createProduct(product);
     }
-    <                               @GetMapping("/products")
+    @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         if (products.isEmpty()) {
