@@ -1,31 +1,43 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Menu, X, Palette, Sun, Moon, User, LogOut, Heart, ShoppingBag, Settings } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import { useTheme } from '../../hooks/useTheme';
-import Button from '../common/Button';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  Menu,
+  X,
+  Palette,
+  Sun,
+  Moon,
+  User,
+  LogOut,
+  Heart,
+  ShoppingBag,
+  Settings,
+} from "lucide-react";
+import { useAuth } from "../../hooks/useAuth";
+import { useTheme } from "../../hooks/useTheme";
+import Button from "../common/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, login } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
+  const handleLogin = () => {
+    login();
+  };
   const handleLogout = () => {
     logout();
-    navigate('/login');
     setIsProfileOpen(false);
   };
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Events', path: '/events' },
-    { name: 'Store', path: '/store' },
-    { name: 'Artists', path: '/artists' },
-    { name: 'About', path: '/about' },
+    { name: "Home", path: "/" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Events", path: "/events" },
+    { name: "Store", path: "/store" },
+    { name: "Artists", path: "/artists" },
+    { name: "About", path: "/about" },
   ];
 
   return (
@@ -48,8 +60,7 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className="px-4 py-2 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium transition-all duration-200 rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816]"
-              >
+                className="px-4 py-2 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium transition-all duration-200 rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816]">
                 {link.name}
               </Link>
             ))}
@@ -61,8 +72,7 @@ const Navbar = () => {
             <button
               onClick={toggleTheme}
               className="p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors"
-              aria-label="Toggle theme"
-            >
+              aria-label="Toggle theme">
               {isDarkMode ? (
                 <Sun className="w-5 h-5 text-[#d4a343]" />
               ) : (
@@ -74,17 +84,20 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center gap-2 p-1 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#383530] transition-all duration-200 hover:scale-105"
-                >
+                  className="flex items-center gap-2 p-1 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#383530] transition-all duration-200 hover:scale-105">
                   {user?.profile_image ? (
-                    <img 
-                      src={user.profile_image} 
-                      alt={user?.username || 'Profile'}
+                    <img
+                      src={user.profile_image}
+                      alt={user?.username || "Profile"}
                       className="w-10 h-10 rounded-xl object-cover shadow-md hover:shadow-lg transition-all duration-200 ring-2 ring-white dark:ring-[#2d2a27]"
                     />
                   ) : (
                     <div className="w-10 h-10 bg-gradient-to-br from-[#6d2842] to-[#a64d6d] rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md hover:shadow-lg transition-all duration-200 ring-2 ring-white dark:ring-[#2d2a27]">
-                      {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U').toUpperCase()}
+                      {(
+                        user?.first_name?.charAt(0) ||
+                        user?.username?.charAt(0) ||
+                        "U"
+                      ).toUpperCase()}
                     </div>
                   )}
                 </button>
@@ -94,45 +107,45 @@ const Navbar = () => {
                   <motion.div
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden"
-                  >
-                    <div className="px-5 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white">
+                    className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden">
+                    {/* <div className="px-5 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white">
                       <div className="flex items-center gap-3 mb-2">
                         {user?.profile_image ? (
-                          <img 
-                            src={user.profile_image} 
-                            alt={user?.username || 'Profile'}
+                          <img
+                            src={user.profile_image}
+                            alt={user?.username || "Profile"}
                             className="w-12 h-12 rounded-xl object-cover ring-2 ring-white/30 shadow-lg"
                           />
                         ) : (
                           <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white font-bold text-xl ring-2 ring-white/30">
-                            {(user?.first_name?.charAt(0) || user?.username?.charAt(0) || 'U').toUpperCase()}
+                            {(
+                              user?.first_name?.charAt(0) ||
+                              user?.username?.charAt(0) ||
+                              "U"
+                            ).toUpperCase()}
                           </div>
                         )}
                         <div className="flex-1">
                           <p className="text-sm font-bold">
-                            {user?.first_name && user?.last_name 
-                              ? `${user.first_name} ${user.last_name}` 
+                            {user?.first_name && user?.last_name
+                              ? `${user.first_name} ${user.last_name}`
                               : user?.username}
                           </p>
-                          <p className="text-xs opacity-90">
-                            {user?.email}
-                          </p>
+                          <p className="text-xs opacity-90">{user?.email}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 mt-3">
                         <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium capitalize">
-                          {user?.role || 'User'}
+                          {user?.role || "User"}
                         </span>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="py-2">
                       <Link
                         to="/dashboard"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
+                        onClick={() => setIsProfileOpen(false)}>
                         <User className="w-5 h-5" />
                         <span className="font-medium">Dashboard</span>
                       </Link>
@@ -140,8 +153,7 @@ const Navbar = () => {
                       <Link
                         to="/dashboard/favorites"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
+                        onClick={() => setIsProfileOpen(false)}>
                         <Heart className="w-5 h-5" />
                         <span className="font-medium">Favorites</span>
                       </Link>
@@ -149,8 +161,7 @@ const Navbar = () => {
                       <Link
                         to="/dashboard/purchases"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
+                        onClick={() => setIsProfileOpen(false)}>
                         <ShoppingBag className="w-5 h-5" />
                         <span className="font-medium">Purchases</span>
                       </Link>
@@ -158,8 +169,7 @@ const Navbar = () => {
                       <Link
                         to="/dashboard/settings"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
+                        onClick={() => setIsProfileOpen(false)}>
                         <Settings className="w-5 h-5" />
                         <span className="font-medium">Settings</span>
                       </Link>
@@ -168,8 +178,7 @@ const Navbar = () => {
                     <div className="border-t border-[#e8e7e5] dark:border-[#4a4642]">
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-5 py-3 w-full text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium"
-                      >
+                        className="flex items-center gap-3 px-5 py-3 w-full text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
                         <LogOut className="w-5 h-5" />
                         <span>Logout</span>
                       </button>
@@ -179,24 +188,13 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link to="/login">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-5 py-2.5 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all"
-                  >
-                    Login
-                  </motion.button>
-                </Link>
-                <Link to="/signup">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-5 py-2.5 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all"
-                  >
-                    Sign Up
-                  </motion.button>
-                </Link>
+                <button
+                  onClick={handleLogin}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-5 py-2.5 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
+                  Login/SignIn
+                </button>
               </div>
             )}
           </div>
@@ -204,8 +202,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9]"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+            onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
@@ -218,17 +215,15 @@ const Navbar = () => {
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 border-t border-[#e8e7e5] dark:border-[#4a4642]"
-          >
+            className="md:hidden py-4 border-t border-[#e8e7e5] dark:border-[#4a4642]">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className="block py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 {link.name}
               </Link>
             ))}
@@ -236,8 +231,7 @@ const Navbar = () => {
             <div className="pt-4 mt-4 border-t border-[#e8e7e5] dark:border-[#4a4642] space-y-3">
               <button
                 onClick={toggleTheme}
-                className="flex items-center gap-3 w-full py-3 text-[#5d5955] dark:text-[#c4bfb9]"
-              >
+                className="flex items-center gap-3 w-full py-3 text-[#5d5955] dark:text-[#c4bfb9]">
                 {isDarkMode ? (
                   <>
                     <Sun className="w-5 h-5 text-[#d4a343]" />
@@ -256,8 +250,7 @@ const Navbar = () => {
                   <Link
                     to="/dashboard"
                     className="block py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
+                    onClick={() => setIsMenuOpen(false)}>
                     Dashboard
                   </Link>
                   <button
@@ -265,8 +258,7 @@ const Navbar = () => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="block w-full text-left py-3 text-red-600 dark:text-red-400"
-                  >
+                    className="block w-full text-left py-3 text-red-600 dark:text-red-400">
                     Logout
                   </button>
                 </>
@@ -276,8 +268,7 @@ const Navbar = () => {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all"
-                    >
+                      className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
                       Login
                     </motion.button>
                   </Link>
@@ -285,8 +276,7 @@ const Navbar = () => {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all"
-                    >
+                      className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
                       Sign Up
                     </motion.button>
                   </Link>
