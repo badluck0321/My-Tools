@@ -1,0 +1,19 @@
+2025-10-25 15:41:10 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 21316 (C:\Users\m.abousalih\Desktop\My-Tools\BackEnd-MyTools\target\classes started by m.abousalih in C:\Users\m.abousalih\Desktop\My-Tools\BackEnd-MyTools)
+2025-10-25 15:41:10 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-25 15:41:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-25 15:41:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 3 MongoDB repository interfaces.
+2025-10-25 15:41:15 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-25 15:41:15 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-25 15:41:15 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-25 15:41:15 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-25 15:41:15 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5190 ms
+2025-10-25 15:41:17 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-25 15:42:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-25 15:42:10 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 61.251 seconds (process running for 61.895)
+2025-10-25 15:42:28 [http-nio-8888-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-25 15:42:29 [http-nio-8888-exec-1] WARN  o.a.c.util.SessionIdGeneratorBase - Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [120] milliseconds.
+2025-10-25 16:17:18 [http-nio-8888-exec-5] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 3435 ms
+2025-10-25 16:41:42 [http-nio-8888-exec-1] INFO  c.e.B.Logging.LoggingService - ? REQUEST: DELETE /products/%7Bid%7D - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-25 16:41:42 [http-nio-8888-exec-1] INFO  c.e.B.Logging.LoggingService - ? SUCCESS: DELETE /products/%7Bid%7D - Status: 200 - Duration: 257ms
+2025-10-25 16:42:07 [http-nio-8888-exec-8] INFO  c.e.B.Logging.LoggingService - ? REQUEST: POST /products - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-25 16:42:07 [http-nio-8888-exec-8] INFO  c.e.B.Logging.LoggingService - ? SUCCESS: POST /products - Status: 200 - Duration: 318ms
