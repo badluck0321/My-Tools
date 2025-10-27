@@ -1,19 +1,154 @@
-2025-10-25 15:41:10 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 21316 (C:\Users\m.abousalih\Desktop\My-Tools\BackEnd-MyTools\target\classes started by m.abousalih in C:\Users\m.abousalih\Desktop\My-Tools\BackEnd-MyTools)
-2025-10-25 15:41:10 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-25 15:41:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2025-10-25 15:41:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 3 MongoDB repository interfaces.
-2025-10-25 15:41:15 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
-2025-10-25 15:41:15 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-10-25 15:41:15 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
-2025-10-25 15:41:15 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-10-25 15:41:15 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5190 ms
-2025-10-25 15:41:17 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
-2025-10-25 15:42:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
-2025-10-25 15:42:10 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 61.251 seconds (process running for 61.895)
-2025-10-25 15:42:28 [http-nio-8888-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-25 15:42:29 [http-nio-8888-exec-1] WARN  o.a.c.util.SessionIdGeneratorBase - Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [120] milliseconds.
-2025-10-25 16:17:18 [http-nio-8888-exec-5] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 3435 ms
-2025-10-25 16:41:42 [http-nio-8888-exec-1] INFO  c.e.B.Logging.LoggingService - ? REQUEST: DELETE /products/%7Bid%7D - User: usermt - IP: 0:0:0:0:0:0:0:1
-2025-10-25 16:41:42 [http-nio-8888-exec-1] INFO  c.e.B.Logging.LoggingService - ? SUCCESS: DELETE /products/%7Bid%7D - Status: 200 - Duration: 257ms
-2025-10-25 16:42:07 [http-nio-8888-exec-8] INFO  c.e.B.Logging.LoggingService - ? REQUEST: POST /products - User: usermt - IP: 0:0:0:0:0:0:0:1
-2025-10-25 16:42:07 [http-nio-8888-exec-8] INFO  c.e.B.Logging.LoggingService - ? SUCCESS: POST /products - Status: 200 - Duration: 318ms
+2025-10-27 19:15:09 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 13300 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 19:15:09 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 19:16:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 19:16:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 288 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 19:16:12 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-27 19:16:13 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-27 19:16:13 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27 19:16:17 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 66302 ms
+2025-10-27 19:16:28 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 19:16:37 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-27 19:16:37 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 98.029 seconds (process running for 101.658)
+2025-10-27 19:30:53 [http-nio-8888-exec-2] ERROR c.e.B.Logging.LoggingService - ? ERROR (minimal): GET /swagger-ui/ - Status: 200 - Duration: 172ms - User: anonymous - Msg: No static resource swagger-ui.
+2025-10-27 19:30:54 [http-nio-8888-exec-2] ERROR c.e.B.Logging.LoggingService - ? ERROR: GET /swagger-ui/ - Status: 500 - Duration: 836ms
+2025-10-27 19:31:03 [http-nio-8888-exec-1] ERROR c.e.B.Logging.LoggingService - ? ERROR (minimal): GET /v3/api-docs - Status: 200 - Duration: 944ms - User: anonymous - Msg: Handler dispatch failed: java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'
+2025-10-27 19:31:03 [http-nio-8888-exec-1] ERROR c.e.B.Logging.LoggingService - ? ERROR: GET /v3/api-docs - Status: 500 - Duration: 950ms
+2025-10-27 19:38:58 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27 19:38:59 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-27 19:42:39 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 14036 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 19:42:39 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 19:42:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 19:42:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 111 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 19:42:43 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-27 19:42:43 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-27 19:42:43 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27 19:42:44 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4858 ms
+2025-10-27 19:42:46 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 19:42:48 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-27 19:42:48 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 11.002 seconds (process running for 11.69)
+2025-10-27 19:44:16 [http-nio-8888-exec-8] ERROR c.e.B.Logging.LoggingService - ? ERROR (minimal): GET /v3/api-docs - Status: 200 - Duration: 583ms - User: anonymous - Msg: Handler dispatch failed: java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'
+2025-10-27 19:44:16 [http-nio-8888-exec-8] ERROR c.e.B.Logging.LoggingService - ? ERROR: GET /v3/api-docs - Status: 500 - Duration: 602ms
+2025-10-27 19:44:23 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27 19:44:23 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-27 19:45:15 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - Starting BackEndMyToolsApplicationTests using Java 17.0.16 with PID 10616 (started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 19:45:15 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 19:45:19 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 19:45:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 230 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 19:45:27 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 19:45:30 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - Started BackEndMyToolsApplicationTests in 16.8 seconds (process running for 21.285)
+2025-10-27 19:47:08 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 9756 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 19:47:08 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 19:47:09 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 19:47:10 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 86 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 19:47:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-27 19:47:10 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-27 19:47:10 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27 19:47:10 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2780 ms
+2025-10-27 19:47:12 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 19:47:13 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-27 19:47:13 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 6.337 seconds (process running for 7.17)
+2025-10-27 19:47:21 [http-nio-8888-exec-8] ERROR c.e.B.Logging.LoggingService - ? ERROR (minimal): GET /v3/api-docs - Status: 200 - Duration: 483ms - User: anonymous - Msg: Handler dispatch failed: java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'
+2025-10-27 19:47:21 [http-nio-8888-exec-8] ERROR c.e.B.Logging.LoggingService - ? ERROR: GET /v3/api-docs - Status: 500 - Duration: 498ms
+2025-10-27 19:47:51 [http-nio-8888-exec-7] ERROR c.e.B.Logging.LoggingService - ? ERROR (minimal): GET /v3/api-docs - Status: 200 - Duration: 171ms - User: anonymous - Msg: Handler dispatch failed: java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'
+2025-10-27 19:47:51 [http-nio-8888-exec-7] ERROR c.e.B.Logging.LoggingService - ? ERROR: GET /v3/api-docs - Status: 500 - Duration: 176ms
+2025-10-27 19:51:03 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27 19:51:04 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-27 20:06:09 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - Starting BackEndMyToolsApplicationTests using Java 17.0.16 with PID 17052 (started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 20:06:09 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 20:06:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 20:06:14 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 217 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 20:06:22 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 20:06:29 [main] INFO  c.e.B.BackEndMyToolsApplicationTests - Started BackEndMyToolsApplicationTests in 21.277 seconds (process running for 24.788)
+2025-10-27 20:09:02 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 576 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 20:09:02 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 20:09:04 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 20:09:04 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 283 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 20:09:05 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-27 20:09:05 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-27 20:09:05 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-10-27 20:09:06 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3890 ms
+2025-10-27 20:09:08 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 20:09:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-27 20:09:10 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 9.803 seconds (process running for 10.517)
+2025-10-27 20:10:16 [http-nio-8888-exec-8] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 690 ms
+2025-10-27 20:16:01 [http-nio-8888-exec-3] INFO  c.e.B.Logging.LoggingService - ? REQUEST: GET /products - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-27 20:16:01 [http-nio-8888-exec-3] INFO  c.e.B.Logging.LoggingService - ? SUCCESS: GET /products - Status: 200 - Duration: 83ms
+2025-10-27 20:16:16 [http-nio-8888-exec-7] INFO  c.e.B.Logging.LoggingService - ? REQUEST: POST /products - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-27 20:16:16 [http-nio-8888-exec-7] ERROR c.e.B.Logging.LoggingService - ? EXCEPTION: POST /products - Status: 200 - Error: Write operation ... - Duration: 29ms - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-27 20:16:16 [http-nio-8888-exec-7] ERROR c.e.B.Logging.LoggingService - ? ERROR: POST /products - Status: 500 - Duration: 83ms
+2025-10-27 20:18:30 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 5996 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 20:18:30 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 20:18:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 20:18:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 144 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 20:18:34 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method 'methodValidationPostProcessor' parameter 0: Error loading class [com.example.BackEnd_MyTools.Logging.GlobalExceptionHandler] for bean with name 'globalExceptionHandler' defined in file [C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes\com\example\BackEnd_MyTools\Logging\GlobalExceptionHandler.class]: problem with class file or dependent class
+2025-10-27 20:18:34 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27 20:18:34 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method 'methodValidationPostProcessor' parameter 0: Error loading class [com.example.BackEnd_MyTools.Logging.GlobalExceptionHandler] for bean with name 'globalExceptionHandler' defined in file [C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes\com\example\BackEnd_MyTools\Logging\GlobalExceptionHandler.class]: problem with class file or dependent class
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:265)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:806)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:609)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.example.BackEnd_MyTools.BackEndMyToolsApplication.main(BackEndMyToolsApplication.java:10)
+Caused by: org.springframework.beans.factory.CannotLoadBeanClassException: Error loading class [com.example.BackEnd_MyTools.Logging.GlobalExceptionHandler] for bean with name 'globalExceptionHandler' defined in file [C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes\com\example\BackEnd_MyTools\Logging\GlobalExceptionHandler.class]: problem with class file or dependent class
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1559)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:685)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:653)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1687)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:534)
+	at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:260)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1637)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1397)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 19 common frames omitted
+Caused by: java.lang.UnsupportedClassVersionError: com/example/BackEnd_MyTools/Logging/GlobalExceptionHandler has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
+	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1017)
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:150)
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:862)
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull(BuiltinClassLoader.java:760)
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(BuiltinClassLoader.java:681)
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:639)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:467)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:304)
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:489)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1624)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1549)
+	... 30 common frames omitted
+2025-10-27 20:19:36 [main] INFO  c.e.B.BackEndMyToolsApplication - Starting BackEndMyToolsApplication using Java 17.0.16 with PID 6872 (C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools\target\classes started by Good-Luck in C:\Users\Good-Luck\Desktop\test-git\My-Tools\BackEnd-MyTools)
+2025-10-27 20:19:36 [main] INFO  c.e.B.BackEndMyToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-27 20:19:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2025-10-27 20:19:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 90 ms. Found 3 MongoDB repository interfaces.
+2025-10-27 20:19:40 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-10-27 20:19:40 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-27 20:19:40 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-10-27 20:19:40 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4203 ms
+2025-10-27 20:19:43 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-10-27 20:19:44 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2025-10-27 20:19:44 [main] INFO  c.e.B.BackEndMyToolsApplication - Started BackEndMyToolsApplication in 8.943 seconds (process running for 10.116)
+2025-10-27 20:20:46 [http-nio-8888-exec-8] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 690 ms
+2025-10-27 20:20:54 [http-nio-8888-exec-4] INFO  c.e.B.Logging.LoggingService - ? REQUEST: POST /products - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-27 20:20:54 [http-nio-8888-exec-4] ERROR c.e.B.Logging.LoggingService - ? EXCEPTION: POST /products - Status: 200 - Error: Write operation error on server localhost:27017. Write error: WriteError{code=11000, message='E11000 duplicate key error collection: mytoolsdb.Product index: _id_ dup key: { _id: 0 }', details={}}. - Duration: 59ms - User: usermt - IP: 0:0:0:0:0:0:0:1
+2025-10-27 20:20:54 [http-nio-8888-exec-4] ERROR c.e.B.Logging.LoggingService - ? ERROR: POST /products - Status: 500 - Duration: 179ms
