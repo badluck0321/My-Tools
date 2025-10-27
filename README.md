@@ -17,11 +17,11 @@ My-Tools is a comprehensive application designed to [briefly describe your app's
 
 🏗️ Architecture
 text
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   React         │    │   Spring Boot    │    │   Keycloak      │
-│   Frontend      │ ── │   Backend API    │ ── │   Auth Server   │
-│                 │    │                  │    │                 │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐
+│ React │ │ Spring Boot │ │ Keycloak │
+│ Frontend │ ── │ Backend API │ ── │ Auth Server │
+│ │ │ │ │ │
+└─────────────────┘ └──────────────────┘ └─────────────────┘
 🔐 Security Features
 Single Sign-On (SSO) with Keycloak
 
@@ -44,25 +44,28 @@ Keycloak server
 [Your database]
 
 <!-------------------------------------------------------  Backend Setup ----------------------------------------------------------------------------------->
+
 bash
 cd backend
 ./mvnw spring-boot:run
+
 <!-------------------------------------------------------  Frontend Setup ---------------------------------------------------------------------------------->
+
 bash
 cd frontend
 npm install
-npm start
+npm run dev
 📁 Project Structure
 text
 my-tools/
-├── frontend/                 # React application
-│   ├── src/
-│   ├── public/
-│   └── package.json
-├── backend/                  # Spring Boot application
-│   ├── src/main/java/
-│   ├── pom.xml
-│   └── application.properties
+├── frontend/ # React application
+│ ├── src/
+│ ├── public/
+│ └── package.json
+├── backend/ # Spring Boot application
+│ ├── src/main/java/
+│ ├── pom.xml
+│ └── application.properties
 
 Keycloak Setup
 Import realm configuration
@@ -73,12 +76,15 @@ Set up users and roles
 
 Environment Variables
 properties
+
 # Backend
+
 KEYCLOAK_AUTH_SERVER_URL=your_keycloak_url
 KEYCLOAK_REALM=my-tools
 KEYCLOAK_CLIENT_ID=backend-client
 
 # Frontend
+
 REACT_APP_KEYCLOAK_URL=your_keycloak_url
 REACT_APP_CLIENT_ID=frontend-client
 🚀 Deployment

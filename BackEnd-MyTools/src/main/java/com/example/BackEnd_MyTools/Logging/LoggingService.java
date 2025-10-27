@@ -139,7 +139,7 @@ public class LoggingService {
                 log.error("💥 EXCEPTION: {} {} - Status: {} - Error: {} - Duration: {}ms - User: {} - IP: {}",
                         request.getMethod(), request.getRequestURI(),
                         response != null ? response.getStatus() : 500,
-                        limitErreurMsg(ex.getMessage(), 2), duration, getUserInfo(), getClientIp(request));
+                        limitErreurMsg(ex.getMessage(), 5), duration, getUserInfo(), getClientIp(request));
                 // , ex); // Stack trace goes to log file
             }
         } catch (Exception e) {
@@ -148,6 +148,22 @@ public class LoggingService {
         }
     }
 
+    public void logErrorMinimal(HttpServletRequest request, HttpServletResponse response, Exception ex, long duration) {
+        try {
+            String username = getUserInfo();
+            String path = request != null ? request.getRequestURI() : "unknown";
+            int status = response != null ? response.getStatus() : 500;
+
+            // Console only — very small message, no MongoDB write
+            log.error("❌ ERROR (minimal): {} {} - Status: {} - Duration: {}ms - User: {} - Msg: {}",
+                    request != null ? request.getMethod() : "?", path, status, duration, username,
+                    limitErreurMsg(ex.getMessage(), 50)); // keep even this tiny
+
+        } catch (Exception e) {
+            // absolutely ignore logging failures here
+            System.err.println("Minimal logging failed: " + e.getMessage());
+        }
+    }
     // Helper methods
 
     private boolean isImportantRequest(HttpServletRequest request) {
