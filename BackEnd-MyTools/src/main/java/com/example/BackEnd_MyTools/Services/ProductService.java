@@ -19,7 +19,7 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public Product getProductById(int id) {
+    public Product getProductById(String id) {
         return productRepo.findById(id).orElse(null);
     }
 
@@ -27,7 +27,7 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public Product updateProduct(int id, Product updatedProduct) {
+    public Product updateProduct(String id, Product updatedProduct) {
         return productRepo.findById(id).map(product -> {
             product.setName(updatedProduct.getName());
             product.setCategoryId(updatedProduct.getCategoryId());
@@ -38,12 +38,16 @@ public class ProductService {
             product.setListedFor(updatedProduct.getListedFor());
             product.setDuration(updatedProduct.getDuration());
             product.setIsavailable(updatedProduct.isIsavailable());
+            // ✅ update photos (replace or merge)
+            if (updatedProduct.getPhotoIds() != null && !updatedProduct.getPhotoIds().isEmpty()) {
+                product.setPhotoIds(updatedProduct.getPhotoIds());
+            }
             return productRepo.save(product);
         }).orElse(null);
     }
-    
-    public void deleteProduct(int id) {
+
+    public void deleteProduct(String id) {
         productRepo.deleteById(id);
     }
-    
+
 }
