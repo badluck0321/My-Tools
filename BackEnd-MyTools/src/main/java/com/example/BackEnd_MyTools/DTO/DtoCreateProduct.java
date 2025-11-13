@@ -1,16 +1,10 @@
-package com.example.BackEnd_MyTools.Entitys;
+package com.example.BackEnd_MyTools.DTO;
 
 import java.util.List;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Data;
 
-@Data
-@Document(collection = "Product") // MongoDB collection name
-public class Product {
-    @Id
-    public String id;
-
+public class DtoCreateProduct {
     public String name;
     public int categoryId;
     public int markId;

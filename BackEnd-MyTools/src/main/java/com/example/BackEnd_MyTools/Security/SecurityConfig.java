@@ -20,12 +20,15 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         // Allow access to Swagger and OpenAPI docs without auth
+
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
-                                "/webjars/**")
+                                "/webjars/**",
+                                "/actuator/**",
+                                "/products/photos/**")
                         .permitAll()
 
                         // Secure all other endpoints

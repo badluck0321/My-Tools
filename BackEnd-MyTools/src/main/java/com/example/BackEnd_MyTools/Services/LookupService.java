@@ -19,24 +19,23 @@ public class LookupService {
         return lookupRepo.save(lookups);
     }
 
-    public Lookups updateLookups(int id, Lookups lookup) {
+    public Lookups updateLookups(String id, Lookups lookup) {
         return lookupRepo.findById(id).map(lookups -> {
             lookups.setName(lookup.getName());
             return lookupRepo.save(lookups);
         }).orElse(null);
     }
+
     public List<Lookups> getAllLookups() {
         return lookupRepo.findAll();
     }
 
-    public Lookups getLookupById(int id) {
+    public Lookups getLookupById(String id) {
         return lookupRepo.findById(id).orElse(null);
     }
 
-    public void deleteLookup(int id) {
+    public void deleteLookup(String id) {
         lookupRepo.deleteById(id);
     }
-
-
 
 }

@@ -5,10 +5,7 @@ import org.springframework.data.mongodb.repository.ReadPreference;
 
 import com.example.BackEnd_MyTools.Entitys.Lookups;
 
-
 @ReadPreference
-public interface LookupRepo extends MongoRepository<Lookups, Integer> {
+public interface LookupRepo extends MongoRepository<Lookups, String> {
 
-    
-    
 }
