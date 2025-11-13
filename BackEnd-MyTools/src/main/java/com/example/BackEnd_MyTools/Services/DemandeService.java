@@ -1,7 +1,5 @@
 package com.example.BackEnd_MyTools.Services;
-
 import org.springframework.stereotype.Service;
-
 import com.example.BackEnd_MyTools.Entitys.Demande;
 import com.example.BackEnd_MyTools.Repositories.DemandeRepo;
 
@@ -16,18 +14,20 @@ public class DemandeService {
     public Demande createDemande(Demande demande) {
         return demandeRepo.save(demande);
     }
-    
+
     public java.util.List<Demande> getAllDemandes() {
         return demandeRepo.findAll();
     }
-    public Demande getDemandeById(int id) {
+
+    public Demande getDemandeById(String id) {
         return demandeRepo.findById(id).orElse(null);
     }
-    public void deleteDemande(int id) {
+
+    public void deleteDemande(String id) {
         demandeRepo.deleteById(id);
     }
 
-    public Demande updateDemande(int id, Demande updatedDemande) {
+    public Demande updateDemande(String id, Demande updatedDemande) {
         return demandeRepo.findById(id).map(demande -> {
             demande.setTitle(updatedDemande.getTitle());
             demande.setTypeId(updatedDemande.getTypeId());
@@ -37,5 +37,4 @@ public class DemandeService {
         }).orElse(null);
     }
 
-    
 }

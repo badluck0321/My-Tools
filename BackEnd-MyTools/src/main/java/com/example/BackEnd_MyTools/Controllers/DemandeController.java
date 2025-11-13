@@ -1,13 +1,12 @@
 package com.example.BackEnd_MyTools.Controllers;
 
 import java.util.List;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.BackEnd_MyTools.Entitys.Demande;
 import com.example.BackEnd_MyTools.Services.DemandeService;
 
@@ -20,27 +19,65 @@ public class DemandeController {
     }
 
     @PostMapping("/demandes")
-    public Demande createDemande(Demande demande) {
-        return demandeService.createDemande(demande);
+    public ResponseEntity<?> createDemande(Demande demande) {
+        try {
+            Demande createdDemande = demandeService.createDemande(demande);
+            return ResponseEntity.ok().body(createdDemande);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
+        }
     }
 
     @GetMapping("/demandes")
-    public List<Demande> getAllDemandes() {
-        return demandeService.getAllDemandes();
+    public ResponseEntity<List<Demande>> getAllDemandes() {
+        List<Demande> demandes = demandeService.getAllDemandes();
+        try {
+            if (demandes.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+            }
+            return ResponseEntity.ok(demandes);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
+
     }
 
     @GetMapping("/demandes/{id}")
-    public Demande getDemandeById(int id) {
-        return demandeService.getDemandeById(id);
+    public ResponseEntity<Demande> getDemandeById(String id) {
+        Demande demande = demandeService.getDemandeById(id);
+        try {
+            if (demande == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok(demande);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PutMapping("/demandes/{id}")
-    public Demande updateDemande(int id, Demande updatedDemande) {
-        return demandeService.updateDemande(id, updatedDemande);
+    public ResponseEntity<?> updateDemande(String id, Demande updatedDemande) {
+        Demande demande = demandeService.updateDemande(id, updatedDemande);
+        try {
+            if (demande == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok(demande);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
+        }
     }
 
     @DeleteMapping("/demandes/{id}")
-    public void deleteDemandeById(int id) {
-        demandeService.deleteDemande(id);
+    public ResponseEntity<?> deleteDemandeById(String id) {
+        try {
+            demandeService.deleteDemande(id);
+            return ResponseEntity.ok().body("deleted succesfuly");
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Erreur" + ex.getMessage());
+        }
     }
 }
