@@ -64,7 +64,7 @@ public class StoreController {
             storeService.deleteStore(Id);
             return ResponseEntity.ok().build();
         } catch (Exception ex) {
-            return ResponseEntity.status(500).body("Execption mds :" + ex.getMessage())
+            return ResponseEntity.status(500).body("Execption mds :" + ex.getMessage());
         }
     }
 
