@@ -1,16 +1,13 @@
 package com.example.BackEnd_MyTools.Controllers;
 
 import java.util.List;
-import java.io.IOException;
-
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import com.example.BackEnd_MyTools.Entitys.Store;
 import com.example.BackEnd_MyTools.Services.StoreService;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/stores")
 public class StoreController {
     final StoreService storeService;
 
