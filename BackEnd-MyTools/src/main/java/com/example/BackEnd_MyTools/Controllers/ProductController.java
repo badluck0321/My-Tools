@@ -17,7 +17,7 @@ import com.example.BackEnd_MyTools.Mapper.ProductMapper;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "http://localhost:3000") // allow React dev server
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
     private final ProductService productService;
@@ -31,6 +31,18 @@ public class ProductController {
     }
 
     // ✅ CREATE PRODUCT (with optional photos)
+    // {
+    // "name": "Electric Drill",
+    // "categoryId": 3,
+    // "markId": 12,
+    // "serieNum": 8456321,
+    // "description": "Professional drill",
+    // "price": "1200",
+    // "listedFor": 30,
+    // "duration": 12,
+    // "photoIds": [],
+    // "isavailable": true
+    // }
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createProduct(
             @RequestPart("product") String productJson,
@@ -88,6 +100,28 @@ public class ProductController {
     public ResponseEntity<List<DtoGetProduct>> getAllProducts(HttpServletRequest request) {
         try {
             List<Product> products = productService.getAllProducts();
+            if (products.isEmpty())
+                return ResponseEntity.noContent().build();
+            String baseUrl = String.format("%s://%s:%d%s", request.getScheme(),
+                    request.getServerName(),
+                    request.getServerPort(), request.getContextPath());
+
+            List<DtoGetProduct> dtoProducts = productMapper.toDtoList(products, baseUrl);
+            return ResponseEntity.ok(dtoProducts);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    // ✅ GET ALL PRODUCTS WITH SPECS
+    @GetMapping("/search")
+    public ResponseEntity<List<DtoGetProduct>> getAllProductsSpect(HttpServletRequest request,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) Integer markId,
+            @RequestParam(required = false) Boolean available,
+            @RequestParam(required = false) String name) {
+        try {
+            List<Product> products = productService.getAllProductsSpecs(categoryId, markId, available, name);
             if (products.isEmpty())
                 return ResponseEntity.noContent().build();
             String baseUrl = String.format("%s://%s:%d%s", request.getScheme(),
