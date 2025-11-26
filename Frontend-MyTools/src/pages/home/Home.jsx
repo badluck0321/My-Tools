@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Sparkles, Users, TrendingUp, Palette, ArrowRight, Star } from 'lucide-react';
@@ -37,7 +38,7 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="container-custom relative z-10 py-20">
+        <div className="container-custom relative z-10 py-10">
           <div className="max-w-5xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -58,12 +59,12 @@ const Home = () => {
               </motion.div>
 
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-8 leading-tight">
-                <span className="block text-[#2d2a27] dark:text-[#fafaf9]">Where Art Meets</span>
-                <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2">Technology</span>
+                <span className="block text-[#2d2a27] dark:text-[#fafaf9]">All the Tools</span>
+                <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2"> You Need</span>
               </h1>
               
               <p className="text-xl md:text-2xl lg:text-3xl text-[#5d5955] dark:text-[#c4bfb9] mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-                Discover, collect, and celebrate extraordinary art from talented creators around the globe
+                Loan ,Sell, Buy, Discover, collect, and help the one in Need of Advice
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -74,7 +75,7 @@ const Home = () => {
                     className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all min-w-[240px]"
                   >
                     <Sparkles className="w-5 h-5" />
-                    <span>Explore Gallery</span>
+                    <span>Tools</span>
                   </motion.button>
                 </Link>
                 <Link to="/signup">
@@ -84,7 +85,7 @@ const Home = () => {
                     className="flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-[#2d2a27] border-2 border-[#6d2842] dark:border-[#d4a343] text-[#6d2842] dark:text-[#d4a343] hover:bg-[#6d2842] dark:hover:bg-[#d4a343] hover:text-white dark:hover:text-[#2d2a27] font-semibold rounded-xl transition-all min-w-[240px]"
                   >
                     <Palette className="w-5 h-5" />
-                    <span>Join as Artist</span>
+                    <span>Join as Provider</span>
                   </motion.button>
                 </Link>
               </div>
