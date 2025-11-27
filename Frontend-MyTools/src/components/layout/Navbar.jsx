@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { ArtworkCard, Loading, Input, Button } from '../../components/common';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
+  Search,
   Menu,
   X,
   Palette,
@@ -16,12 +18,12 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../hooks/useTheme";
-import Button from "../common/Button";
+// import Button from "../common/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { isAuthenticated, user, logout, login } = useAuth();
+  const { authenticated, user, logout, login } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   // const navigate = useNavigate();
   const handleLogin = () => {
@@ -35,10 +37,8 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Events", path: "/events" },
-    { name: "Store", path: "/store" },
-    { name: "Artists", path: "/artists" },
-    { name: "About", path: "/about" },
+    { name: "Deals", path: "/deals" },
+    { name: "Stores", path: "/stores" },
   ];
 
   return (
@@ -66,7 +66,27 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-
+        <div className="mb space-y-4">
+          {/* Search Bar */}
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Input
+                type="text"
+                placeholder="Search ..."
+                // onChange={(e) => setSearchTerm(e.target.value)}
+                icon={Search}
+              />
+            </div>
+            <Button
+              variant="outline"
+              // icon={Filter}
+              // onClick={() => setShowFilters(!showFilters)}
+              className="lg:hidden"
+            >
+              Filters
+            </Button>
+            </div>
+          </div>
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-4">
             {/* Theme Toggle */}
@@ -81,7 +101,7 @@ const Navbar = () => {
               )}
             </button>
 
-            {isAuthenticated ? (
+            {authenticated ? (
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -109,7 +129,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden">
-                    {/* <div className="px-5 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white">
+                    <div className="px-5 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white">
                       <div className="flex items-center gap-3 mb-2">
                         {user?.profile_image ? (
                           <img
@@ -140,7 +160,7 @@ const Navbar = () => {
                           {user?.role || "User"}
                         </span>
                       </div>
-                    </div> */}
+                    </div>
 
                     <div className="py-2">
                       <Link
@@ -246,7 +266,7 @@ const Navbar = () => {
                 )}
               </button>
 
-              {isAuthenticated ? (
+              {authenticated ? (
                 <>
                   <Link
                     to="/dashboard"

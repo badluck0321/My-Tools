@@ -55,6 +55,14 @@ bash
 cd frontend
 npm install
 npm run dev
+<!-------------------------------------------------------  AI Setup (OpenIA is a thief)---------------------------------------------------------------------------------->
+using Groq and Ollama
+
+Base-url = https://api.groq.com/openai
+Model = llama-3.3-70b-versatile
+
+
+
 📁 Project Structure
 text
 my-tools/
