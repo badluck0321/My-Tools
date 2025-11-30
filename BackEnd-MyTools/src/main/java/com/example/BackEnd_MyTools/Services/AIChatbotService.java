@@ -21,7 +21,7 @@ public class AIChatbotService {
     }
 
     private static final String SYSTEM_PROMPT = """
-            Tu es ArtVinciBot, l'assistant de la plateforme My tools 
+            Tu es ArtVinciBot, l'assistant de la plateforme My tools
             Tu aides les utilisateurs à :
             • Découvrir des événements culturels (ateliers, marchés, expositions)
             • Trouver des produits artisanaux (céramique, cuir, tissage…)
