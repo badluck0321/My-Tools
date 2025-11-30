@@ -1,5 +1,5 @@
 // API Base URL
-export const API_BASE_URL = 'http://localhost:8000/api';
+export const API_BASE_URL = 'http://localhost:8888/api';
 
 // API Endpoints
 export const API_ENDPOINTS = {
@@ -12,26 +12,26 @@ export const API_ENDPOINTS = {
   UPDATE_PROFILE: '/auth/me/update/',
   FORGOT_PASSWORD: '/auth/forgot-password/',
   RESET_PASSWORD: '/auth/reset-password/',
-  
+
   // User (Legacy - use Auth endpoints instead)
   USER_PROFILE: '/auth/me/',
-  
+
   // Artworks
   ARTWORKS: '/artworks/',
   ARTWORK_DETAIL: (id) => `/artworks/${id}/`,
   ARTWORK_LIKE: (id) => `/artworks/${id}/like/`,
   ARTWORK_COMMENT: (id) => `/artworks/${id}/comments/`,
-  
+
   // Artists
   ARTISTS: '/artists/',
   ARTIST_DETAIL: (id) => `/artists/${id}/`,
   ARTIST_FOLLOW: (id) => `/artists/${id}/follow/`,
   ARTIST_ARTWORKS: (id) => `/artists/${id}/artworks/`,
-  
+
   // Store
   STORE_ITEMS: '/store/',
   CATEGORIES: '/categories/',
-  
+
   // Dashboard
   MY_ARTWORKS: '/dashboard/artworks/',
   MY_FAVORITES: '/dashboard/favorites/',
@@ -85,7 +85,7 @@ export const STORAGE_KEYS = {
 // Animation Variants
 export const FADE_IN_VARIANTS = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: { duration: 0.5 }
   }
@@ -93,8 +93,8 @@ export const FADE_IN_VARIANTS = {
 
 export const SLIDE_UP_VARIANTS = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.5 }
   }
@@ -102,8 +102,8 @@ export const SLIDE_UP_VARIANTS = {
 
 export const SCALE_VARIANTS = {
   hidden: { opacity: 0, scale: 0.95 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
     transition: { duration: 0.3 }
   }

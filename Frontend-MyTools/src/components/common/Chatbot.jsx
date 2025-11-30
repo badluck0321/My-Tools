@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Send, Sparkles, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { eventService } from '../../services/api';
+// import { eventService } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import { chatService } from '../../services/chatService';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +32,9 @@ const Chatbot = () => {
   const initializeChatbot = async () => {
     try {
       setIsTyping(true);
-      const response = await eventService.sendChatbotMessage({
-        message: '__greeting__',
-        context: {}
-      });
+      const response = await chatService.sendMessage(
+         '__greeting__'
+      );
 
       setMessages([
         {
@@ -80,10 +80,11 @@ const Chatbot = () => {
 
     try {
       // Send to backend
-      const response = await eventService.sendChatbotMessage({
-        message: userMessage,
-        context: {}
-      });
+      // const response = await eventService.sendChatbotMessage({
+      const response = await chatService.sendMessage(
+        userMessage,
+      
+      );
 
       // Add bot response
       const botMessage = {
