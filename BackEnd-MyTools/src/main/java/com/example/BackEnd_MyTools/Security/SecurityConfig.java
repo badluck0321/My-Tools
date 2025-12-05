@@ -18,9 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors() // ← THIS IS REQUIRED
+                .and()
                 .authorizeHttpRequests(authz -> authz
                         // Allow access to Swagger and OpenAPI docs without auth
-
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",

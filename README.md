@@ -1,4 +1,4 @@
-My-Tools - Full-Stack Application Management System
+My-Tools  Full-Stack Application Management System
 A modern full-stack application built with React frontend, Spring Boot backend, and Keycloak for secure authentication and authorization.
 
 🚀 Tech Stack
@@ -12,10 +12,10 @@ Database: [MongoDB]
 
 Security: JWT-based authentication with role-based access control
 
-📋 Project Overview
+# 📋 Project Overview
 My-Tools is a comprehensive application designed to [briefly describe your app's purpose - e.g., manage tools, inventory, user resources, etc.]. The application features a secure, scalable architecture with separate frontend and backend components protected by enterprise-grade authentication.
 
-🏗️ Architecture
+# 🏗️ Architecture
 text
 ┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐
 │ React │ │ Spring Boot │ │ Keycloak │
@@ -56,14 +56,17 @@ cd frontend
 npm install
 npm run dev
 <!-------------------------------------------------------  AI Setup (OpenIA is a thief)---------------------------------------------------------------------------------->
+--in developpement take the key from the env in the frontend , in prod you need to put it in var env of the server
+
 using Groq and Ollama
 
 Base-url = https://api.groq.com/openai
 Model = llama-3.3-70b-versatile
+key=${GROQ_API_KEY}
 
 
 
-📁 Project Structure
+# 📁 Project Structure
 text
 my-tools/
 ├── frontend/ # React application
@@ -109,6 +112,21 @@ Traditional server deployment
 
 📄 License
 [Add your license information]
+
+🔐 Keycloak
+
+Handles login, refresh tokens, session etc.
+
+🖥 Spring Boot (Backend API)
+
+Acts as a confidential client in Keycloak → exchanges the authorization code → gets tokens from Keycloak → stores the Access Token in a server-side HTTP-only cookie → sends responses to React.
+
+💻 React (Frontend)
+
+Just a UI.
+It never stores tokens.
+Uses cookies automatically.
+
 
 Key Features
 ✅ Secure authentication with Keycloak

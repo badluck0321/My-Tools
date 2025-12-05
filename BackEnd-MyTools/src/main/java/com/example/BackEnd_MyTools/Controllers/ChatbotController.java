@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.security.PermitAll;
 
 @RestController
-@PermitAll // allow anonymous (unauthenticated) access to this controller's
+// @PermitAll // allow anonymous (unauthenticated) access to this controller's
 // endpoints
 @RequestMapping("/api/chat")
 public class ChatbotController {
