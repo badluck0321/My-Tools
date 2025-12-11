@@ -9,7 +9,7 @@ import jakarta.annotation.security.PermitAll;
 @RestController
 // @PermitAll // allow anonymous (unauthenticated) access to this controller's
 // endpoints
-@RequestMapping("/api/chat")
+@RequestMapping("/chat")
 public class ChatbotController {
 
     private final AIChatbotService aiChatbotService;

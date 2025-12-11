@@ -31,7 +31,6 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/products/photos/**")
                         .permitAll()
-
                         // Secure all other endpoints
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()))) // Add decoder here
