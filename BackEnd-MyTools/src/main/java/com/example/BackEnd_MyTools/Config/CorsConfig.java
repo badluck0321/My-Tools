@@ -13,11 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
+                registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000") // React dev server
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(false) // ← must be false if allowedOrigins = "*"
+                        .allowedHeaders("Authorization", "Content-Type")
+                        .allowCredentials(true) // ← must be false if allowedOrigins = "*"
                         .maxAge(3600);
             }
         };

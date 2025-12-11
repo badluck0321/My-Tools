@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Send, Sparkles, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-// import { eventService } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { chatService } from '../../services/chatService';
 

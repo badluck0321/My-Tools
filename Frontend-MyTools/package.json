@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
+    "@react-keycloak/web": "^3.4.0",
     "axios": "^1.12.2",
     "framer-motion": "^12.23.22",
     "keycloak-js": "^26.2.1",
