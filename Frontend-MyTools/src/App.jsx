@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "./context/AuthContext";
+// import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Layout } from "./components/layout";
-import { useAuth } from "./hooks/useAuth";
+// import { useAuth } from "./hooks/useAuth";
 import Home from "./pages/home/Home";
 import About from "./pages/home/About";
 import Gallery from "./pages/gallery/Gallery";
@@ -19,6 +19,7 @@ import EventsPage from "./pages/events/EventsPage";
 import EventDetailPage from "./pages/events/EventDetailPage";
 import EventFormPage from "./pages/events/EventFormPage";
 import EventAttendeesPage from "./pages/events/EventAttendeesPage";
+import { useKeycloak } from "./providers/KeycloakProvider";
 
 // Scroll to Top Component
 const ScrollToTop = () => {
@@ -32,23 +33,42 @@ const ScrollToTop = () => {
 };
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const { authenticated, loading } = useAuth();
-  if (loading) {
+  const { initialized, authenticated, login } = useKeycloak();
+
+  if (!initialized) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fafaf9] via-[#f5f5f4] to-[#e7e5e4]">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#6d2842]"></div>
-          <p className="mt-4 text-[#2d2a27] font-medium">Loading...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6d2842]" />
       </div>
     );
   }
-  return authenticated ? children : <Navigate to="/" />;
+
+  if (!authenticated) {
+    login(); // redirect to Keycloak
+    return null;
+  }
+
+  return children;
 };
+// const ProtectedRoute = ({ children }) => {
+//   const { authenticated, loading } = useAuth();
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fafaf9] via-[#f5f5f4] to-[#e7e5e4]">
+//         <div className="text-center">
+//           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#6d2842]"></div>
+//           <p className="mt-4 text-[#2d2a27] font-medium">Loading...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+//   return authenticated ? children : <Navigate to="/" />;
+// };
 
 // Public Route Component (redirect if already logged in)
 const PublicRoute = ({ children }) => {
-  const { authenticated, loading } = useAuth();
+  // const { authenticated, loading } = useAuth();
+  const { authenticated, loading } = useKeycloak();
 
   // Don't show loading for public routes to prevent component unmounting
   // Just render children - the auth check will happen after mount
@@ -62,7 +82,7 @@ const PublicRoute = ({ children }) => {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <Router>
           <ScrollToTop />
           <Layout>
@@ -123,7 +143,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/events/:slug/attendees"
                 element={
                   <ProtectedRoute>
@@ -132,7 +152,6 @@ function App() {
                 }
               />
 
-              {/* Protected Routes */}
               <Route
                 path="/dashboard/*"
                 element={
@@ -140,7 +159,7 @@ function App() {
                     <Dashboard />
                   </ProtectedRoute>
                 }
-              />
+              /> */}
 
               {/* 404 */}
               <Route
@@ -194,7 +213,7 @@ function App() {
             }}
           />
         </Router>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </ThemeProvider>
   );
 }

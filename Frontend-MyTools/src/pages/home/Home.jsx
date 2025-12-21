@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Sparkles, Users, TrendingUp, Palette, ArrowRight, Star } from 'lucide-react';
 import { Button } from '../../components/common';
+import ProductGrid from '../../components/Product/ProductGrid';
 
 const Home = () => {
   const features = [
@@ -117,7 +118,9 @@ const Home = () => {
             </motion.div>
           </div>
         </div>
-
+          <div className="mb-12">
+            <ProductGrid></ProductGrid>
+          </div>
         {/* Enhanced Decorative Elements */}
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#6d2842]/20 dark:bg-[#6d2842]/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute top-1/3 right-10 w-72 h-72 bg-[#b8862f]/20 dark:bg-[#b8862f]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
@@ -143,7 +146,6 @@ const Home = () => {
               Experience the perfect blend of creativity and technology in the digital art marketplace
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <motion.div

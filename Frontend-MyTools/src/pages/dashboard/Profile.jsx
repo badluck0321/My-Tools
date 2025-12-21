@@ -14,11 +14,12 @@ import {
   Briefcase,
   CheckCircle2,
 } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
+import { useKeycloak } from "../../providers/KeycloakProvider";
 import showToast from "../../services/toast";
 
 const Profile = () => {
-  const { user, updateProfile, refreshUserProfile } = useAuth();
+  const { user, updateProfile, refreshUserProfile } = useKeycloak();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
