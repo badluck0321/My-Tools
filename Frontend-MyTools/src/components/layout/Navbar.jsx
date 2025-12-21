@@ -16,14 +16,17 @@ import {
   ShoppingBag,
   Settings,
 } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../hooks/useTheme";
+import { useKeycloak } from "../../providers/KeycloakProvider";
 // import Button from "../common/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { authenticated, user, logout, login } = useAuth();
+  // const { authenticated, user, logout, login } = useAuth();
+  const { authenticated, user, logout, login } = useKeycloak();
+
   const { isDarkMode, toggleTheme } = useTheme();
   // const navigate = useNavigate();
   const handleLogin = () => {

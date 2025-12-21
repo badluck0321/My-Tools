@@ -5,7 +5,7 @@ import { Upload, X, Plus, ArrowLeft, Save, Image as ImageIcon, Sparkles } from '
 import { eventService } from '../../services/api';
 import { showToast } from '../../services/toast';
 import { Button, Loading, LocationPicker } from '../../components/common';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth'; import { useKeycloak } from '../../providers/KeycloakProvider';
 
 const EventFormPage = () => {
   const { slug } = useParams();

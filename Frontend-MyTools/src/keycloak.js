@@ -19,22 +19,22 @@ class KeycloakService {
     }
 
     this.keycloak = new Keycloak(config);
-    
+
     this.initPromise = this.keycloak.init({
       onLoad: 'check-sso',
       pkceMethod: 'S256',
       checkLoginIframe: false,
     })
-    .then((authenticated) => {
-      this.initialized = true;
-      console.log('Keycloak initialized successfully. Authenticated:', authenticated);
-      return this.keycloak;
-    })
-    .catch((error) => {
-      console.error('Keycloak initialization failed:', error);
-      this.initPromise = null; // Reset so we can retry
-      throw error;
-    });
+      .then((authenticated) => {
+        this.initialized = true;
+        console.log('Keycloak initialized successfully. Authenticated:', authenticated);
+        return this.keycloak;
+      })
+      .catch((error) => {
+        console.error('Keycloak initialization failed:', error);
+        this.initPromise = null; // Reset so we can retry
+        throw error;
+      });
 
     return this.initPromise;
   }
@@ -56,7 +56,10 @@ class KeycloakService {
   }
 
   logout() {
-    return this.keycloak.logout();
+    return this.keycloak.logout({
+      redirectUri: window.location.origin + "/", // redirect to home after logout
+    });
+
   }
 
   getToken() {

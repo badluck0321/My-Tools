@@ -7,7 +7,7 @@ import {
 import { eventService } from '../../services/api';
 import { showToast } from '../../services/toast';
 import { Button, Loading } from '../../components/common';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth'; import { useKeycloak } from '../../providers/KeycloakProvider';
 
 const EventAttendeesPage = () => {
   const { slug } = useParams();

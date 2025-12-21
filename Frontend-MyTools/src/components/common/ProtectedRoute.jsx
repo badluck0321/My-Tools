@@ -1,9 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 import { Loading } from '../components/common';
+import { useKeycloak } from '../../providers/KeycloakProvider';
+// export
+ const ProtectedRoute = ({ children }) => {
+  // const { authenticated, loading } = useAuth();
+    const { authenticated, loading } = useKeycloak();
 
-export const ProtectedRoute = ({ children }) => {
-  const { authenticated, loading } = useAuth();
 
   if (loading) {
     return <Loading fullScreen text="Verifying authentication..." />;
@@ -13,7 +16,7 @@ export const ProtectedRoute = ({ children }) => {
 };
 
 export const PublicRoute = ({ children }) => {
-  const { authenticated, loading } = useAuth();
+  const { authenticated, loading } = useKeycloak();
 
   if (loading) {
     return <Loading fullScreen text="Loading..." />;

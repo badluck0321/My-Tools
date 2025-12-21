@@ -10,7 +10,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { eventService } from '../../services/api';
 import { showToast } from '../../services/toast';
 import { Button, Loading, Modal } from '../../components/common';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth'; import { useKeycloak } from '../../providers/KeycloakProvider';
 import EventLocationMap from '../../components/events/EventLocationMap';
 
 const EventDetailPage = () => {
