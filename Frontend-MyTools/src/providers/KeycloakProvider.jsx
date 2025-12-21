@@ -14,17 +14,42 @@ export const KeycloakProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
 
+  // useEffect(() => {
+  //   initKeycloak()
+  //     .then((keycloak) => {
+  //       setInitialized(true);
+  //       setAuthenticated(keycloak.authenticated);
+  //       setToken(getToken());
+  //     })
+  //     .catch((err) => {
+  //       console.error("Keycloak initialization failed:", err);
+  //     });
+  // }, []);
   useEffect(() => {
-    initKeycloak()
-      .then((keycloak) => {
-        setInitialized(true);
-        setAuthenticated(keycloak.authenticated);
+  initKeycloak()
+    .then((keycloak) => {
+      setInitialized(true);
+      setAuthenticated(keycloak.authenticated);
+      setToken(getToken());
+
+      keycloak.onAuthSuccess = () => {
+        setAuthenticated(true);
         setToken(getToken());
-      })
-      .catch((err) => {
-        console.error("Keycloak initialization failed:", err);
-      });
-  }, []);
+      };
+
+      keycloak.onAuthLogout = () => {
+        setAuthenticated(false);
+        setToken(null);
+      };
+
+      keycloak.onTokenExpired = () => {
+        keycloak.updateToken(30).then(() => {
+          setToken(getToken());
+        });
+      };
+    })
+    .catch(console.error);
+}, []);
 
   if (!initialized) {
     return (
