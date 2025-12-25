@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
+import React from "react";
 import { useState } from "react";
-import { ArtworkCard, Loading, Input, Button } from '../../components/common';
+import { ProductCard, Loading, Input, Button } from '../../components/common';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -16,15 +16,13 @@ import {
   ShoppingBag,
   Settings,
 } from "lucide-react";
-// import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../hooks/useTheme";
 import { useKeycloak } from "../../providers/KeycloakProvider";
-// import Button from "../common/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  // const { authenticated, user, logout, login } = useAuth();
+  // const { authenticated, user, logout, login } = useKeycloak();
   const { authenticated, user, logout, login } = useKeycloak();
 
   const { isDarkMode, toggleTheme } = useTheme();
@@ -167,7 +165,7 @@ const Navbar = () => {
 
                     <div className="py-2">
                       <Link
-                        to="/dashboard"
+                        to="/Dashboard"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <User className="w-5 h-5" />
@@ -189,7 +187,13 @@ const Navbar = () => {
                         <ShoppingBag className="w-5 h-5" />
                         <span className="font-medium">Purchases</span>
                       </Link>
-
+                      <Link
+                        to="/dashboard/purchases"
+                        className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
+                        onClick={() => setIsProfileOpen(false)}>
+                        <ShoppingBag className="w-5 h-5" />
+                        <span className="font-medium">My Store</span>
+                      </Link>
                       <Link
                         to="/dashboard/settings"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"

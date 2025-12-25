@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class DtoGetProduct {
+    private String id;
     private String name;
     private int categoryId;
     private int markId;
