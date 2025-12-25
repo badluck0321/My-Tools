@@ -93,11 +93,11 @@ public class ProductController {
     // return ResponseEntity.status(500).body("Erreur lors de la création : " +
     // ex.getMessage());
     // }
-    // }
-
+    // } 
+    
     // ✅ GET ALL PRODUCTS
-    @GetMapping
-    public ResponseEntity<List<DtoGetProduct>> getAllProducts(HttpServletRequest request) {
+    @GetMapping("/GetAllProductsDTO")
+    public ResponseEntity<List<DtoGetProduct>> getAllProductsDTO(HttpServletRequest request) {
         try {
             List<Product> products = productService.getAllProducts();
             if (products.isEmpty())
@@ -114,7 +114,7 @@ public class ProductController {
     }
 
     // ✅ GET ALL PRODUCTS WITH SPECS
-    @GetMapping("/search")
+    @GetMapping
     public ResponseEntity<List<DtoGetProduct>> getAllProductsSpect(HttpServletRequest request,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) Integer markId,
