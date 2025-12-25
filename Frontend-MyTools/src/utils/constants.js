@@ -59,7 +59,8 @@ export const USER_ROLES = {
 // Price Ranges for Filters
 export const PRICE_RANGES = [
   { id: 'all', label: 'All Prices', min: 0, max: Infinity },
-  { id: 'under-100', label: 'Under $100', min: 0, max: 100 },
+    { id: 'under-50', label: 'Under $50', min: 0, max: 50 },
+  { id: '50-100', label: '$50-$100', min: 50, max: 100 },
   { id: '100-500', label: '$100 - $500', min: 100, max: 500 },
   { id: '500-1000', label: '$500 - $1000', min: 500, max: 1000 },
   { id: 'above-1000', label: 'Above $1000', min: 1000, max: Infinity },
