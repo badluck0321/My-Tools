@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Heart, ShoppingBag, Image as ImageIcon, Settings, Sparkles } from 'lucide-react';
-// // import { useAuth } from '../../hooks/useAuth';
 import { useKeycloak } from '../../providers/KeycloakProvider';
 
 import { ELEGANT_COLORS } from '../../utils/elegantTheme';
