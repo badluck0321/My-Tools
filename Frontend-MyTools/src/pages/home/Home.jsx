@@ -118,9 +118,9 @@ const Home = () => {
             </motion.div>
           </div>
         </div>
-          <div className="mb-12">
+          {/* <div className="mb-12">
             <ProductGrid></ProductGrid>
-          </div>
+          </div> */}
         {/* Enhanced Decorative Elements */}
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#6d2842]/20 dark:bg-[#6d2842]/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute top-1/3 right-10 w-72 h-72 bg-[#b8862f]/20 dark:bg-[#b8862f]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>

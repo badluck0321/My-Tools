@@ -20,5 +20,6 @@ public class Product {
     public int listedFor;
     public int duration;
     private List<String> photoIds;
+    public String ownerId;
     public boolean isavailable;
 }

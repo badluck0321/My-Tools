@@ -6,6 +6,7 @@ import EventsPage from "../pages/events/EventsPage";
 import EventDetailPage from "../pages/events/EventDetailPage";
 import EventFormPage from "../pages/events/EventFormPage";
 import Dashboard from "../pages/dashboard/Dashboard";
+// import AddProduct from "../pages/Products/AddProduct";
 
 export const publicRoutes = [
   { path: "/", element: <Home /> },

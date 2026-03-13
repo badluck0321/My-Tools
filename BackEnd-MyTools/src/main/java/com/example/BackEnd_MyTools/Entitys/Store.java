@@ -1,11 +1,8 @@
 package com.example.BackEnd_MyTools.Entitys;
-
 import java.time.Instant;
 import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.Data;
 
 @Document(collection = "Store")
@@ -21,7 +18,6 @@ public class Store {
     Instant createdAt;
     List<String> ownerId;
     List<String> associatsId;
-
     List<String> socialMedias;
 
 }

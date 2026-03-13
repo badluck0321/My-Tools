@@ -6,6 +6,7 @@ import { useKeycloak } from '../../providers/KeycloakProvider';
 
 import { ELEGANT_COLORS } from '../../utils/elegantTheme';
 import Profile from './Profile';
+import MyStore from './MyStore';
 
 const Dashboard = () => {
   const { user } = useKeycloak();
@@ -23,10 +24,10 @@ const Dashboard = () => {
       color: 'from-[#6d2842] to-[#a64d6d]' // Burgundy
     },
     { 
-      id: 'artworks', 
-      name: 'My Artworks', 
+      id: 'MyStore', 
+      name: 'My Store', 
       icon: ImageIcon, 
-      artistOnly: true,
+      // artistOnly: true,
       color: 'from-[#b8862f] to-[#d4a343]' // Gold
     },
     { 
@@ -135,7 +136,7 @@ const Dashboard = () => {
               <Routes>
                 <Route index element={<Navigate to="profile" replace />} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="artworks" element={<ArtworksSection />} />
+                <Route path="MyStore" element={<MyStore />} />
                 <Route path="favorites" element={<FavoritesSection />} />
                 <Route path="purchases" element={<PurchasesSection />} />
                 <Route path="settings" element={<SettingsSection />} />
