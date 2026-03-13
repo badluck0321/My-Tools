@@ -5,8 +5,12 @@ import com.example.BackEnd_MyTools.Services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import com.example.BackEnd_MyTools.Services.PhotoService;
+
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -46,9 +50,14 @@ public class ProductController {
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createProduct(
             @RequestPart("product") String productJson,
-            @RequestPart(value = "photos", required = false) List<MultipartFile> photos) {
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos, @AuthenticationPrincipal Jwt jwt) {
         try {
             // ✅ Manually convert JSON to Product
+            String sub = jwt.getClaim("sub");
+            if (sub == null || sub.isEmpty()) {
+                return ResponseEntity.status(401).body("Utilisateur non authentifié");
+                
+            }
             ObjectMapper mapper = new ObjectMapper();
             Product product = mapper.readValue(productJson, Product.class);
 
