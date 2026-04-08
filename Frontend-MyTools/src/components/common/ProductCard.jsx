@@ -2,10 +2,11 @@ import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice, getImageUrl } from '../../utils/helpers';
-
-
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product, onLike, isLiked = false }) => {
+  const navigate = useNavigate();
+
   const handleLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -13,7 +14,8 @@ const ProductCard = ({ product, onLike, isLiked = false }) => {
   };
 
   return (
-    <Link to={`/product/${product.id}`}>
+    // <Link to={`/product/${product.id}`}>
+    <div onClick={() => navigate(`/products/${product.id}`)} className="cursor-pointer ...">
       <motion.div
         whileHover={{ y: -8 }}
         className="card-elegant overflow-hidden group cursor-pointer"
@@ -69,7 +71,8 @@ const ProductCard = ({ product, onLike, isLiked = false }) => {
           </div>
         </div>
       </motion.div>
-     </Link>
+    </div>
+    //</Link> 
   );
 };
 

@@ -194,13 +194,13 @@ const About = () => {
                   Join as Artist
                 </motion.button>
               </Link>
-              <Link to="/gallery">
+              <Link to="/Products">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-[#6d2842] font-semibold rounded-xl transition-all min-w-[200px]"
                 >
-                  Explore Gallery
+                  Explore Products
                 </motion.button>
               </Link>
             </div>
