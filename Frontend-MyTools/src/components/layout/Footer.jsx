@@ -6,7 +6,7 @@ const Footer = () => {
 
   const footerLinks = {
     explore: [
-      { name: 'Gallery', path: '/gallery' },
+      { name: 'Gallery', path: '/Products' },
       { name: 'Artists', path: '/artists' },
       { name: 'Store', path: '/store' },
       { name: 'Categories', path: '/categories' },

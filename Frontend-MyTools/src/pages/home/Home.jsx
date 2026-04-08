@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Sparkles, Users, TrendingUp, Palette, ArrowRight, Star } from 'lucide-react';
 import { Button } from '../../components/common';
-import ProductGrid from '../../components/Product/ProductGrid';
+// import ProductGrid from '../../components/Product/ProductGrid';
 
 const Home = () => {
   const features = [
@@ -69,7 +69,7 @@ const Home = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/gallery">
+                <Link to="/Products">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -118,10 +118,6 @@ const Home = () => {
             </motion.div>
           </div>
         </div>
-          {/* <div className="mb-12">
-            <ProductGrid></ProductGrid>
-          </div> */}
-        {/* Enhanced Decorative Elements */}
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-[#6d2842]/20 dark:bg-[#6d2842]/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute top-1/3 right-10 w-72 h-72 bg-[#b8862f]/20 dark:bg-[#b8862f]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
         <div className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-[#508978]/20 dark:bg-[#508978]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
