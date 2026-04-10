@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface MasteryMapper {
-    GetMasteryDto toDto(Mastery mastery, @Context String baseUrl);
-    List<GetMasteryDto> toDtoList(List<Mastery> masterys, @Context String baseUrl);
+    GetMasteryDto toDto(Mastery mastery);
+    static List<GetMasteryDto> toDtoList(List<Mastery> masterys) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toDtoList'");
+    }
 }

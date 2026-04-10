@@ -26,22 +26,16 @@ public class MasteryService {
         return masteryRepo.findAll();
     }
 
-    public List<Mastery> getAllMasterysSpecs(Integer categoryId, Integer markId, Boolean available, String name) {
+    public List<Mastery> getAllMasterysSpecs(String title,Integer typeId) {
         List<Criteria> criteriaList = new ArrayList<>();
 
-        Criteria c1 = MasterySpecs.hasCategoryId(categoryId);
-        Criteria c2 = MasterySpecs.hasMarkId(markId);
-        Criteria c3 = MasterySpecs.isAvailable(available);
-        Criteria c4 = MasterySpecs.hasNameLike(name);
+        Criteria c1 = MasterySpecs.hasTitleLike(title);
+        Criteria c2 = MasterySpecs.hasTypeId(typeId);
 
         if (c1 != null)
             criteriaList.add(c1);
         if (c2 != null)
             criteriaList.add(c2);
-        if (c3 != null)
-            criteriaList.add(c3);
-        if (c4 != null)
-            criteriaList.add(c4);
 
         Query query = new Query();
 
