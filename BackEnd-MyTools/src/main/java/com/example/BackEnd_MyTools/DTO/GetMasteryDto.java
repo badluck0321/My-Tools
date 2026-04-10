@@ -1,7 +1,5 @@
 package com.example.BackEnd_MyTools.DTO;
-
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
@@ -10,6 +8,6 @@ public class GetMasteryDto {
     public String id;
     public String title;
     public int typeId;
-    public String price;
+    public int price;
     public String description;
 }

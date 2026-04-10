@@ -11,6 +11,6 @@ public class Mastery {
     public String id;
     public String title;
     public int typeId;
-    public String price;
+    public int price;
     public String description;
 }
