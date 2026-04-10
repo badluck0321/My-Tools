@@ -1,9 +1,12 @@
 package com.example.BackEnd_MyTools.Controllers;
-
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import com.example.BackEnd_MyTools.DTO.GetMasteryDto;
 import com.example.BackEnd_MyTools.Entitys.Mastery;
 import com.example.BackEnd_MyTools.Services.MasteryService;
+import com.example.BackEnd_MyTools.Mapper.MasteryMapper;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,13 +21,32 @@ public class MasteryController {
     @PostMapping("")
     public ResponseEntity<?> AddMastery(Mastery mastery) {
         try {
-            Mastery addedmastery = masteryService.addMastery(mastery);
+            Mastery addedmastery = masteryService.createMastery(mastery);
             return ResponseEntity.ok(addedmastery);
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
         }
     }
 
+
+    // ✅ GET ALL PRODUCTS WITH SPECS
+    @GetMapping("specials")
+    public ResponseEntity<List<GetMasteryDto>> getAllMasterysSpect(HttpServletRequest request,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Integer typeId
+            ) {
+        try {
+            List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId);
+
+            if (masterys.isEmpty())
+                return ResponseEntity.noContent().build();
+            List<GetMasteryDto> getMasteryDtos = MasteryMapper.toDtoList(masterys);
+            return ResponseEntity.ok(getMasteryDtos);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
+    
+    }
     @GetMapping("")
     public ResponseEntity<?> GetAllMasterys() {
         try {
@@ -38,7 +60,7 @@ public class MasteryController {
     @GetMapping("/Id")
     public ResponseEntity<?> GetMastery(String Id) {
         try {
-            Mastery mastery = masteryService.getMastery(Id);
+            Mastery mastery = masteryService.getMasteryById(Id);
             return ResponseEntity.ok(mastery);
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
