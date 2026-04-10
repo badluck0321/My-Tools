@@ -1,12 +1,9 @@
-package com.example.BackEnd_MyTools.Entitys;
-
+package com.example.BackEnd_MyTools.DTO;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
-@Document(collection = "Demande") // MongoDB collection name
 @Data
-public class Demande {
+public class GetMasteryDto {
     @Id
     public String id;
     public String title;

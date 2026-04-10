@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -146,7 +147,7 @@ const InfoRow = ({ label, value }) => (
 );
 
 /* ─── Main Component ──────────────────────────────── */
-const ProductDetail = () => {
+const ProductInfos = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -300,4 +301,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductInfos;

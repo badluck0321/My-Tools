@@ -1,11 +1,9 @@
 package com.example.BackEnd_MyTools.Controllers;
-
 import com.example.BackEnd_MyTools.Entitys.Product;
 import com.example.BackEnd_MyTools.Services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import com.example.BackEnd_MyTools.Services.PhotoService;
-
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,29 +78,6 @@ public class ProductController {
         }
     }
 
-    // ✅ CREATE PRODUCT (with optional photos)
-    // @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    // public ResponseEntity<?> createProduct(
-    // @RequestPart("product") Product product,
-    // @RequestPart(value = "photos", required = false) List<MultipartFile> photos)
-    // {
-    // try {
-    // if (photos != null && !photos.isEmpty()) {
-    // List<String> photoIds = new ArrayList<>();
-    // for (MultipartFile photo : photos) {
-    // String id = photoService.savePhoto(photo);
-    // photoIds.add(id);
-    // }
-    // product.setPhotoIds(photoIds);
-    // }
-
-    // Product createdProduct = productService.createProduct(product);
-    // return ResponseEntity.ok(createdProduct);
-    // } catch (Exception ex) {
-    // return ResponseEntity.status(500).body("Erreur lors de la création : " +
-    // ex.getMessage());
-    // }
-    // } 
     
     // ✅ GET ALL PRODUCTS
     @GetMapping("/GetAllProductsDTO")
@@ -144,18 +119,7 @@ public class ProductController {
         }
     }
 
-    // @GetMapping
-    // public ResponseEntity<List<Product>> getAllProducts() {
-    // try {
-    // List<Product> products = productService.getAllProducts();
-    // if (products.isEmpty()) {
-    // return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    // }
-    // return ResponseEntity.ok(products);
-    // } catch (Exception ex) {
-    // return ResponseEntity.status(500).build();
-    // }
-    // }
+
 
     // ✅ GET PRODUCT BY ID
     @GetMapping("/{id}")
