@@ -11,7 +11,7 @@ public class DtoGetProduct {
     private int markId;
     private int serieNum;
     private String description;
-    private String price;
+    private int price;
     private int listedFor;
     private int duration;
     private boolean isavailable;

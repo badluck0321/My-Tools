@@ -10,7 +10,7 @@ public class DtoCreateProduct {
     public int markId;
     public int serieNum;
     public String description;
-    public String price;
+    public int price;
     public int listedFor;
     public int duration;
     private List<String> photoIds;
