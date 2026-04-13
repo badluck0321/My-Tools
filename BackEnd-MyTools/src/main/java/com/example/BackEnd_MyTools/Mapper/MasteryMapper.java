@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface MasteryMapper {
     GetMasteryDto toDto(Mastery mastery);
-    static List<GetMasteryDto> toDtoList(List<Mastery> masterys) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toDtoList'");
-    }
+    
+    List<GetMasteryDto> toDtoList(List<Mastery> masterys);
 }

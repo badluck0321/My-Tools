@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/masterys")
 public class MasteryController {
-    final MasteryService masteryService;
+    private final MasteryService masteryService;
+    private final MasteryMapper masteryMapper;
 
-    public MasteryController(MasteryService masteryService) {
+    public MasteryController(MasteryService masteryService, MasteryMapper masteryMapper) {
         this.masteryService = masteryService;
+        this.masteryMapper = masteryMapper;
     }
 
     @PostMapping("")
@@ -40,7 +42,7 @@ public class MasteryController {
 
             if (masterys.isEmpty())
                 return ResponseEntity.noContent().build();
-            List<GetMasteryDto> getMasteryDtos = MasteryMapper.toDtoList(masterys);
+            List<GetMasteryDto> getMasteryDtos = masteryMapper.toDtoList(masterys);
             return ResponseEntity.ok(getMasteryDtos);
         } catch (Exception ex) {
             return ResponseEntity.status(500).build();
@@ -51,7 +53,8 @@ public class MasteryController {
     public ResponseEntity<?> GetAllMasterys() {
         try {
             List<Mastery> masterys = masteryService.getAllMasterys();
-            return ResponseEntity.ok(masterys);
+                        List<GetMasteryDto> getMasteryDtos = masteryMapper.toDtoList(masterys);
+            return ResponseEntity.ok(getMasteryDtos);
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
         }
