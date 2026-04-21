@@ -57,9 +57,10 @@ public class MasteryService {
     public Mastery updateMastery(String id, Mastery updatedmastery) {
         return masteryRepo.findById(id).map(mastery -> {
             mastery.setTitle(updatedmastery.getTitle());
-            mastery.setDescription(updatedmastery.getDescription());
-            mastery.setPrice(updatedmastery.getPrice());
             mastery.setTypeId(updatedmastery.getTypeId());
+            mastery.setPrice(updatedmastery.getPrice());
+            mastery.setDescription(updatedmastery.getDescription());
+            mastery.setDescription(updatedmastery.getPhotoId());
             return masteryRepo.save(mastery);
         }).orElse(null);
     }
