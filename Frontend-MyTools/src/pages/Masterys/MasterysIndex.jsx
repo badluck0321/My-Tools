@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, Filter, X } from 'lucide-react';
 import { ProductCard, ArtworkCard, Loading, Input, Button } from '../../components/common';
 import { ART_CATEGORIES, PRICE_RANGES, SORT_OPTIONS } from '../../utils/constants';
 import { productService } from '../../services/productService';
 
-const ProductsIndex = () => {
+const MasterysIndex = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,7 +59,7 @@ const ProductsIndex = () => {
 
   // Reset visible items when filters change
   useEffect(() => {
-    setVisibleCount(20);
+    setVisibleCount(8);
   }, [searchTerm, selectedCategory, selectedPriceRange]);
 
   // Detect if more products exist
@@ -74,7 +74,7 @@ const ProductsIndex = () => {
         const target = entries[0];
 
         if (target.isIntersecting && hasMore) {
-          setVisibleCount((prev) => prev + 20);
+          setVisibleCount((prev) => prev + 8);
         }
       },
       {
@@ -248,4 +248,4 @@ const ProductsIndex = () => {
   );
 };
 
-export default ProductsIndex;
+export default MasterysIndex;

@@ -9,8 +9,11 @@ import lombok.Data;
 public class Mastery {
     @Id
     public String id;
+    
+    public String masterId;
     public String title;
     public int typeId;
     public int price;
     public String description;
+    public String photoId;
 }
