@@ -59,7 +59,7 @@ const ProductsIndex = () => {
 
   // Reset visible items when filters change
   useEffect(() => {
-    setVisibleCount(8);
+    setVisibleCount(20);
   }, [searchTerm, selectedCategory, selectedPriceRange]);
 
   // Detect if more products exist
@@ -74,7 +74,7 @@ const ProductsIndex = () => {
         const target = entries[0];
 
         if (target.isIntersecting && hasMore) {
-          setVisibleCount((prev) => prev + 8);
+          setVisibleCount((prev) => prev + 20);
         }
       },
       {
