@@ -15,5 +15,5 @@ public class DtoGetProduct {
     private int listedFor;
     private int duration;
     private boolean isavailable;
-    private List<String> photoIds;
+    private List<String> photoUrls;
 }

@@ -19,7 +19,7 @@ public class Product {
     public int price;
     public int listedFor;
     public int duration;
-    private List<String> photoIds;
+    private List<String> photoUrls;
     public String ownerId;
     public boolean isavailable;
 }
