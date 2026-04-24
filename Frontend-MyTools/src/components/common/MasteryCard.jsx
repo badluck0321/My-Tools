@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 import { formatPrice, getImageUrl } from '../../utils/helpers';
 import { useNavigate } from 'react-router-dom';
 
-const MasteryCard = ({ product, onLike, isLiked = false }) => {
+const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
   const navigate = useNavigate();
 
   const handleLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (onLike) onLike(product._id);
+    if (onLike) onLike(mastery._id);
   };
 
   return (
-    // <Link to={`/product/${product.id}`}>
-    <div onClick={() => navigate(`/products/${product.id}`)} className="cursor-pointer ...">
+    // <Link to={`/product/${mastery.id}`}>
+    <div onClick={() => navigate(`/mastery/${mastery.id}`)} className="cursor-pointer ...">
       <motion.div
         whileHover={{ y: -8 }}
         className="card-elegant overflow-hidden group cursor-pointer"
@@ -24,11 +24,11 @@ const MasteryCard = ({ product, onLike, isLiked = false }) => {
         <div className="relative aspect-square overflow-hidden">
           <img
             src={
-              product.photoIds && product.photoIds.length > 0
-                ? getImageUrl(product.photoIds[0])
+              mastery.photoUrls
+                ? getImageUrl(mastery.photoId)
                 : "/no-image.png"
             }
-            alt={product.name}
+            alt={mastery.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
 
@@ -49,23 +49,23 @@ const MasteryCard = ({ product, onLike, isLiked = false }) => {
         {/* Content */}
         <div className="p-5">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-1">
-            {product.name}
+            {mastery.title}
           </h3>
 
-          {product.description && (
+          {mastery.description && (
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-              {product.description}
+              {mastery.description}
             </p>
           )}
 
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
-              {formatPrice(product.price)}
+              {formatPrice(mastery.price)}
             </span>
 
-            {product.categoryId && (
+            {mastery.categoryId && (
               <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
-                Category {product.categoryId}
+                Category {mastery.typeId}
               </span>
             )}
           </div>

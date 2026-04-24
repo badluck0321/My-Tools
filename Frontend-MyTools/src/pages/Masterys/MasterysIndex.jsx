@@ -2,56 +2,56 @@ import { useState, useEffect, useRef } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, Filter, X } from 'lucide-react';
-import { ProductCard, ArtworkCard, Loading, Input, Button } from '../../components/common';
+import { ArtworkCard, Loading, Input, Button } from '../../components/common';
 import { ART_CATEGORIES, PRICE_RANGES, SORT_OPTIONS } from '../../utils/constants';
-import { productService } from '../../services/productService';
+import { masteryService } from '../../services/MasteryService';
+import MasteryCard from '../../components/common/MasteryCard';
 
 const MasterysIndex = () => {
-  const [products, setProducts] = useState([]);
+  const [masterys, setMasterys] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [selectedSort, setSelectedSort] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
-  const [likedProducts, setLikedProducts] = useState(new Set());
-
+  const [likedMasterys, setLikedMasterys] = useState(new Set());
   // Infinite scroll states
   const [visibleCount, setVisibleCount] = useState(8);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
 
-  // Fetch products from API
+  // Fetch masterys from API
   useEffect(() => {
     setLoading(true);
-    productService.getProducts()
+    masteryService.getMasterys()
       .then((data) => {
-        setProducts(data);
+        setMasterys(data);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
 
   // Local-only like toggle
-  const handleLike = (productId) => {
-    setLikedProducts((prev) => {
+  const handleLike = (masteryId) => {
+    setLikedMasterys((prev) => {
       const newSet = new Set(prev);
-      newSet.has(productId) ? newSet.delete(productId) : newSet.add(productId);
+      newSet.has(masteryId) ? newSet.delete(masteryId) : newSet.add(masteryId);
       return newSet;
     });
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredMasterys = masterys.filter((mastery) => {
     const matchesSearch =
-      product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      mastery.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-    if (selectedCategory !== 'all' && product.categoryId !== selectedCategory) {
+    if (selectedCategory !== 'all' && mastery.typeId !== selectedCategory) {
       return false;
     }
 
     if (selectedPriceRange !== 'all') {
       const range = PRICE_RANGES.find((r) => r.id === selectedPriceRange);
-      return matchesSearch && Number(product.price) >= range.min && Number(product.price) <= range.max;
+      return matchesSearch && Number(mastery.price) >= range.min && Number(mastery.price) <= range.max;
     }
 
     return matchesSearch;
@@ -62,10 +62,10 @@ const MasterysIndex = () => {
     setVisibleCount(8);
   }, [searchTerm, selectedCategory, selectedPriceRange]);
 
-  // Detect if more products exist
+  // Detect if more masterys exist
   useEffect(() => {
-    setHasMore(visibleCount < filteredProducts.length);
-  }, [visibleCount, filteredProducts.length]);
+    setHasMore(visibleCount < filteredMasterys.length);
+  }, [visibleCount, filteredMasterys.length]);
 
   // Intersection Observer
   useEffect(() => {
@@ -103,11 +103,11 @@ const MasterysIndex = () => {
         >
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6">
             <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
-              Products / Services
+              Masterys / Services
             </span>
           </h1>
           <p className="text-lg text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">
-            Explore our curated collection of Products and Services
+            Explore our curated collection of Masterys and Services
           </p>
         </motion.div>
 
@@ -117,7 +117,7 @@ const MasterysIndex = () => {
             <div className="flex-1">
               <Input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search masterys..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 icon={Search}
@@ -213,33 +213,33 @@ const MasterysIndex = () => {
         </div>
 
         <div className="mb-6">
-          Showing {filteredProducts.length} Products / Services
-          {filteredProducts.length !== 1 && 's'}
+          Showing {filteredMasterys.length} Masterys
+          {filteredMasterys.length !== 1 && 's'}
         </div>
 
         {loading ? (
-          <Loading text="Loading products..." />
-        ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-20">No products found</div>
+          <Loading text="Loading masterys..." />
+        ) : filteredMasterys.length === 0 ? (
+          <div className="text-center py-20">No masterys found</div>
         ) : (
           <>
             <motion.div
               layout
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {filteredProducts.slice(0, visibleCount).map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
+              {filteredMasterys.slice(0, visibleCount).map((mastery) => (
+                <MasteryCard
+                  key={mastery.id}
+                  mastery={mastery}
                   onLike={handleLike}
-                  isLiked={likedProducts.has(product.id)}
+                  isLiked={likedMasterys.has(mastery.id)}
                 />
               ))}
             </motion.div>
-
+{/* <MasteryCard></MasteryCard> */}
             {/* Infinite scroll loader */}
             <div ref={loaderRef} className="flex justify-center py-10">
-              {hasMore && <Loading text="Loading more products..." />}
+              {hasMore && <Loading text="Loading more masterys..." />}
             </div>
           </>
         )}

@@ -9,7 +9,7 @@ export interface Product {
   listedFor: number;
   duration: number;
   isavailable: boolean;
-  photoIds: string[];
+  photoUrls: string[];
 }
 export interface Store {
   id: string;
@@ -19,10 +19,6 @@ export interface Store {
   isVerified: boolean;
   createdAt: Date;
   ownerId: string;
-  associatsId: [
-    string
-  ];
-  socialMedias: [
-    string
-  ]
+  associatsId: [string];
+  socialMedias: [string];
 }

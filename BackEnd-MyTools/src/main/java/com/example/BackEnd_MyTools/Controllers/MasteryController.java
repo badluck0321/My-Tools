@@ -1,14 +1,13 @@
 package com.example.BackEnd_MyTools.Controllers;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import com.example.BackEnd_MyTools.DTO.DtoGetMastery;
 import com.example.BackEnd_MyTools.Entitys.Mastery;
-import com.example.BackEnd_MyTools.Entitys.Product;
+import com.example.BackEnd_MyTools.Mapper.MasteryMapper;
 import com.example.BackEnd_MyTools.Services.MasteryService;
 import com.example.BackEnd_MyTools.Services.PhotoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.BackEnd_MyTools.Mapper.MasteryMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -29,15 +28,6 @@ public class MasteryController {
     }
 
 
-//    {
-//   "id": "string",
-//   "masterId": "string",
-//   "title": "string",
-//   "typeId": 0,
-//   "price": 0,
-//   "description": "string",
-//   "photoId": "string"
-// }
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> AddMastery(@RequestPart("mastery") String masteryJson,
             @RequestPart(value = "photo", required = false) MultipartFile photo, @AuthenticationPrincipal Jwt jwt) 
@@ -49,8 +39,8 @@ public class MasteryController {
                     return ResponseEntity.status(401).body("Utilisateur non authentifié");
                     
                 }
-            ObjectMapper mapper = new ObjectMapper();
-            Mastery mastery = mapper.readValue(masteryJson, Mastery.class);
+                ObjectMapper mapper = new ObjectMapper();
+                Mastery mastery = mapper.readValue(masteryJson, Mastery.class);
                 if (photo != null && !photo.isEmpty()) {
                     String photoId = null;
                         String id = photoService.savePhoto(photo);
@@ -69,7 +59,7 @@ public class MasteryController {
         }
 
 
-    // ✅ GET ALL PRODUCTS WITH SPECS
+    // ✅ GET ALL Masterys
     @GetMapping("specials")
     public ResponseEntity<List<DtoGetMastery>> getAllMasterysSpect(HttpServletRequest request,
             @RequestParam(required = false) String title,
@@ -80,23 +70,17 @@ public class MasteryController {
 
             if (masterys.isEmpty())
                 return ResponseEntity.noContent().build();
-            List<DtoGetMastery> getMasteryDtos = masteryMapper.toDtoList(masterys);
+            String baseUrl = String.format("%s://%s:%d%s", request.getScheme(),
+            request.getServerName(),
+            request.getServerPort(), request.getContextPath());
+            List<DtoGetMastery> getMasteryDtos = masteryMapper.toDtoList(masterys, baseUrl);
             return ResponseEntity.ok(getMasteryDtos);
         } catch (Exception ex) {
             return ResponseEntity.status(500).build();
         }
     
     }
-    @GetMapping("")
-    public ResponseEntity<?> GetAllMasterys() {
-        try {
-            List<Mastery> masterys = masteryService.getAllMasterys();
-                        List<DtoGetMastery> getMasteryDtos = masteryMapper.toDtoList(masterys);
-            return ResponseEntity.ok(getMasteryDtos);
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
-        }
-    }
+
 
     @GetMapping("/Id")
     public ResponseEntity<?> GetMastery(String Id) {
@@ -141,6 +125,16 @@ public class MasteryController {
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la mise à jour : " + ex.getMessage());
         }
+    }
+
+    // ✅ GET PHOTO BY ID (for React display)
+    @GetMapping("/photo/{photoId}")
+    public ResponseEntity<byte[]> getPhoto(@PathVariable String photoId) throws IOException {
+        return photoService.getPhoto(photoId)
+                .map(photoData -> ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(photoData.contentType()))
+                        .body(photoData.bytes()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/Id")
