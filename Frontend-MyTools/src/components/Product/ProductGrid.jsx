@@ -16,7 +16,7 @@
 //             {products.map((p, i) => (
 //                 <div key={i} style={styles.card}>
 //                     <img
-//                         src={p.photoIds.length > 0 ? p.photoIds[0] : "/no-image.png"}
+//                         src={p.photoUrls.length > 0 ? p.photoUrls[0] : "/no-image.png"}
 //                         alt={p.name}
 //                         style={styles.image}
 //                     />

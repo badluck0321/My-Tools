@@ -45,9 +45,9 @@ const PhotoImage = ({ photoId, alt, className }) => {
 };
 
 /* ─── Image Gallery ───────────────────────────────── */
-const Gallery = ({ photoIds }) => {
+const Gallery = ({ photoUrls }) => {
   const [current, setCurrent] = useState(0);
-  const total = photoIds.length;
+  const total = photoUrls.length;
 
   const prev = () => setCurrent((c) => (c - 1 + total) % total);
   const next = () => setCurrent((c) => (c + 1) % total);
@@ -66,7 +66,7 @@ const Gallery = ({ photoIds }) => {
             className="w-full h-full"
           >
             <PhotoImage
-              photoId={photoIds[current]}
+              photoId={photoUrls[current]}
               alt={`Photo ${current + 1}`}
               className="w-full h-full object-cover"
             />
@@ -100,7 +100,7 @@ const Gallery = ({ photoIds }) => {
       {/* Thumbnails — only if multiple photos */}
       {total > 1 && (
         <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
-          {photoIds.map((id, i) => (
+          {photoUrls.map((id, i) => (
             <button
               key={id}
               onClick={() => setCurrent(i)}
@@ -204,8 +204,8 @@ const ProductInfos = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {product.photoIds && product.photoIds.length > 0 ? (
-              <Gallery photoIds={product.photoIds} />
+            {product.photoUrls && product.photoUrls.length > 0 ? (
+              <Gallery photoUrls={product.photoUrls} />
             ) : (
               <div className="aspect-[4/3] rounded-2xl bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580]">
                 No image available
@@ -266,7 +266,7 @@ const ProductInfos = () => {
               )}
               <InfoRow
                 label="Photos"
-                value={`${product.photoIds?.length ?? 0} image${product.photoIds?.length !== 1 ? 's' : ''}`}
+                value={`${product.photoUrls?.length ?? 0} image${product.photoUrls?.length !== 1 ? 's' : ''}`}
               />
             </div>
 
