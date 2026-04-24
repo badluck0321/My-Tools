@@ -24,8 +24,8 @@ const ProductCard = ({ product, onLike, isLiked = false }) => {
         <div className="relative aspect-square overflow-hidden">
           <img
             src={
-              product.photoIds && product.photoIds.length > 0
-                ? getImageUrl(product.photoIds[0])
+              product.photoUrls && product.photoUrls.length > 0
+                ? getImageUrl(product.photoUrls[0])
                 : "/no-image.png"
             }
             alt={product.name}

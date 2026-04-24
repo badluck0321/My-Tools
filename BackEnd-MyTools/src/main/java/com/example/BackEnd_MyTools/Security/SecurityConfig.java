@@ -29,7 +29,8 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**",
                                 "/actuator/**",
-                                "/products/photos/**")
+                                "/products/photos/**",
+                                "/masterys/photo/**")
                         .permitAll()
                         // Secure all other endpoints
                         .anyRequest().authenticated())

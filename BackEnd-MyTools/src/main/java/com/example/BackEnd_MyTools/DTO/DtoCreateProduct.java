@@ -13,6 +13,6 @@ public class DtoCreateProduct {
     public int price;
     public int listedFor;
     public int duration;
-    private List<String> photoIds;
+    private List<String> photoUrls;
     public boolean isavailable;
 }

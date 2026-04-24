@@ -71,8 +71,8 @@ public class ProductService {
             product.setDuration(updatedProduct.getDuration());
             product.setIsavailable(updatedProduct.isIsavailable());
             // ✅ update photos (replace or merge)
-            if (updatedProduct.getPhotoIds() != null && !updatedProduct.getPhotoIds().isEmpty()) {
-                product.setPhotoIds(updatedProduct.getPhotoIds());
+            if (updatedProduct.getPhotoUrls() != null && !updatedProduct.getPhotoUrls().isEmpty()) {
+                product.setPhotoUrls(updatedProduct.getPhotoUrls());
             }
             return productRepo.save(product);
         }).orElse(null);

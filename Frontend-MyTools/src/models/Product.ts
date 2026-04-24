@@ -9,5 +9,5 @@ export interface Product {
   listedFor: number;
   duration: number;
   isavailable: boolean;
-  photoIds: string[];
+  photoUrls: string[];
 }
