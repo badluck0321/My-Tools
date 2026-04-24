@@ -1,4 +1,4 @@
-BackEnd-MyTools/logs/mytools-app.log
+BackEnd-MyTools/logs/*
 Frontend-MyTools/vite.config.js
 Frontend-MyTools/package-lock.json
 .vscode/settings.json
