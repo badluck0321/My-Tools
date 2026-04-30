@@ -1,4 +1,6 @@
 package com.example.BackEnd_MyTools.Controllers;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +17,43 @@ public class StoreController {
         this.storeService = storeService;
     }
 
+    // @PostMapping("")
+    // public ResponseEntity<?> AddStore(Store store) {
+    //     try {
+    //         Store addedstore = storeService.addStore(store);
+    //         return ResponseEntity.ok(addedstore);
+    //     } catch (Exception ex) {
+    //         return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
+    //     }
+    // }
+
     @PostMapping("")
-    public ResponseEntity<?> AddStore(Store store) {
-        try {
-            Store addedstore = storeService.addStore(store);
-            return ResponseEntity.ok(addedstore);
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
+    public ResponseEntity<?> createStore(
+            @RequestBody Store store,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        String sub = jwt.getClaim("sub");
+        if (sub == null || sub.isEmpty()) {
+            return ResponseEntity.status(401).body("Non authentifié");
         }
+
+        // Option A — block owners AND associates
+        boolean alreadyOwns = storeService.existsByOwner(sub);
+        boolean alreadyAssociate = storeService.existsByAssociate(sub);
+        if (alreadyOwns || alreadyAssociate) {
+            return ResponseEntity.status(409)
+                .body("You are already linked to a store");
+        }
+
+        // // Option B — block owners only (comment out alreadyAssociate check)
+        // if (alreadyOwns) {
+        //     return ResponseEntity.status(409)
+        //         .body("You already own a store");
+        // }
+
+        store.setOwnerId(List.of(sub));   // force ownerId from token, not from body
+        Store created = storeService.addStore(store);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping("")
@@ -43,6 +74,18 @@ public class StoreController {
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
         }
+    }
+
+    @GetMapping("/stores/mine")
+    public ResponseEntity<?> getMyStore(@AuthenticationPrincipal Jwt jwt) {
+        String sub = jwt.getClaim("sub");
+        if (sub == null || sub.isEmpty()) {
+            return ResponseEntity.status(401).body("Utilisateur non authentifié");
+        }
+        Store store = storeService.findByOwnerId(sub);
+        return store != null
+                ? ResponseEntity.ok(store)
+                : ResponseEntity.noContent().build(); // 204 = no store found
     }
 
     @PutMapping("/{id}")

@@ -17,7 +17,7 @@ public class Store {
     Boolean isVerified = false;
     Instant createdAt;
     List<String> ownerId;
-    List<String> associatsId;
+    List<String> associatsIds;
     List<String> socialMedias;
 
 }

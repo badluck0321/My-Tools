@@ -13,15 +13,6 @@ public class StoreService {
     public StoreService(StoreRepo storeRepo) {
         this.storeRepo = storeRepo;
     }
-
-    public List<Store> getAllStores() {
-        return storeRepo.findAll();
-    }
-
-    public Store getStore(String Id) {
-        return storeRepo.findById(Id).orElse(null);
-    }
-
     public Store addStore(Store store) {
         return storeRepo.save(store);
     }
@@ -32,7 +23,7 @@ public class StoreService {
             store.setEmail(updatedstore.getEmail());
             store.setIsActive(updatedstore.getIsActive());
             store.setIsVerified(updatedstore.getIsVerified());
-            store.setAssociatsId(updatedstore.getAssociatsId());
+            store.setAssociatsIds(updatedstore.getAssociatsIds());
             store.setSocialMedias(updatedstore.getSocialMedias());
 
             return storeRepo.save(store);
@@ -42,5 +33,26 @@ public class StoreService {
     public void deleteStore(String Id) {
         storeRepo.deleteById(Id);
     }
+    public List<Store> getAllStores() {
+        return storeRepo.findAll();
+    }
+
+    public Store getStore(String Id) {
+        return storeRepo.findById(Id).orElse(null);
+    }
+    // StoreService.java
+    public Store findByOwnerId(String ownerId) {
+        return storeRepo.findByOwnerIdContaining(ownerId).orElse(null);
+    }
+
+    public boolean existsByOwner(String sub) {
+        return storeRepo.existsByOwnerIdContaining(sub);
+    }
+    
+    public boolean existsByAssociate(String sub) {
+        return storeRepo.existsByAssociatsIdsContaining(sub);
+    }
+
+
 
 }
