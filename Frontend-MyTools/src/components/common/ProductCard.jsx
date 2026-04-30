@@ -15,7 +15,7 @@ const ProductCard = ({ product, onLike, isLiked = false }) => {
 
   return (
     // <Link to={`/product/${product.id}`}>
-    <div onClick={() => navigate(`/products/${product.id}`)} className="cursor-pointer ...">
+    <div onClick={() => navigate(`/products/${product.id}`)}>
       <motion.div
         whileHover={{ y: -8 }}
         className="card-elegant overflow-hidden group cursor-pointer"
