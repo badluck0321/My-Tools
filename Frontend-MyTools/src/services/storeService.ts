@@ -1,14 +1,14 @@
 import interceptor from "../interceptors/auth.interceptor";
-import { Product } from "../models/Product";
+import { Store } from "../models/Store";
 import { useAuth } from "../context/AuthContext";
 
-export const productService = {
-  async getProduct(): Promise<Product[]> {
+export const storeService = {
+  async getStore(): Promise<Store[]> {
     const response = await interceptor.get("/stores");
-    return response.data as Product[]; // <-- Correct
+    return response.data as Store[]; // <-- Correct
   },
-    async addProduct(Store stores): Promise<Product[]> {
-    const response = await interceptor.get("/stores");
-    return response.data as Product[]; // <-- Correct
+    async addProduct(store: Store): Promise<Store[]> {
+    const response = await interceptor.post("/stores", store);
+    return response.data as Store[]; // <-- Correct
   },
 };

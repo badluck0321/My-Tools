@@ -15,7 +15,7 @@ const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
 
   return (
     // <Link to={`/product/${mastery.id}`}>
-    <div onClick={() => navigate(`/mastery/${mastery.id}`)} className="cursor-pointer ...">
+    <div onClick={() => navigate(`/masterys/${mastery.id}`)}>
       <motion.div
         whileHover={{ y: -8 }}
         className="card-elegant overflow-hidden group cursor-pointer"
@@ -24,7 +24,7 @@ const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
         <div className="relative aspect-square overflow-hidden">
           <img
             src={
-              mastery.photoUrls
+              mastery.photoId
                 ? getImageUrl(mastery.photoId)
                 : "/no-image.png"
             }

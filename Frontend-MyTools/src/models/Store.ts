@@ -18,7 +18,7 @@ export interface Store {
   isActive: boolean;
   isVerified: boolean;
   createdAt: Date;
-  ownerId: string;
-  associatsId: [string];
-  socialMedias: [string];
+  ownerId: string[];
+  associatsIds: string[];
+  socialMedias: string[];
 }
