@@ -40,7 +40,6 @@ const Navbar = () => {
     { name: "Products", path: "/Products" },
     { name: "Events", path: "/events" },
     { name: "Masterys", path: "/Masterys" },
-    // { name: "Products", path: "/product/create" },
     { name: "Stores", path: "/stores" },
   ];
 

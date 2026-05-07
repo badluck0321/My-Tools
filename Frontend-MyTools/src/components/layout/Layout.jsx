@@ -1,6 +1,7 @@
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Chatbot } from '../common';
+import CartWidget from '../common/CartWidget';
 import { useTheme } from '../../hooks/useTheme';
 // import { useKeycloak } from '../../providers/KeycloakProvider';
 
@@ -10,7 +11,7 @@ const Layout = ({ children }) => {
   
   // Show chatbot only to visitors (non-artists or unauthenticated users)
   // const showChatbot = !user || user.role !== 'artist';
-    const showChatbot = 'artist';
+    // const showChatbot = 'artist';
 
   
   return (
@@ -26,9 +27,10 @@ const Layout = ({ children }) => {
         {children}
       </main>
       <Footer />
-      
+      <CartWidget />   {/* ← add above chatbot */}
+
       {/* AI Chatbot - Only visible to visitors */}
-      {showChatbot && <Chatbot />}
+      { <Chatbot />}
     </div>
   );
 };
