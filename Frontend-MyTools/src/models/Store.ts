@@ -6,7 +6,7 @@ export interface Product {
   serieNum: number;
   description: string;
   price: string;
-  listedFor: number;
+  listedForId: number;
   duration: number;
   isavailable: boolean;
   photoUrls: string[];

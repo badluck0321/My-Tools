@@ -10,14 +10,19 @@ import lombok.Data;
 
 public class Store {
     @Id
-    String id;
-    String name;
-    String email;
-    Boolean isActive = true;
-    Boolean isVerified = false;
-    Instant createdAt;
-    List<String> ownerId;
-    List<String> associatsIds;
-    List<String> socialMedias;
+    public String id;
+   
+   public String name;
+   public String email;
+   public String phone;
+   public String logo;
+   public String address;
+   public Boolean isActive = true;
+   public Boolean isVerified = false;
+   public boolean isDeliveryAvailable;
+   public Instant createdAt;
+   public List<String> ownerId;
+   public List<String> associatsIds;
+   public List<String> socialMedias;
 
 }
