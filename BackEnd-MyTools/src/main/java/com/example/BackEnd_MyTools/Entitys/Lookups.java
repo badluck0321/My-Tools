@@ -4,11 +4,16 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
-@Document(collection = "LookUps") // MongoDB collection name
 @Data
+@Document(collection = "lookup")
 public class Lookups {
-    @Id
-    public String id;
 
-    public String name;
+    @Id
+    private String id;
+
+    private String type;   // e.g. CONDITION, PRICING_TYPE
+    private String code;   // e.g. NEW, USED
+    private String value;  // e.g. "New", "Used"
+
+    private boolean isActive = true;
 }

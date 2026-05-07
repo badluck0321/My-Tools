@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.BackEnd_MyTools.Entitys.Lookups;
-import com.example.BackEnd_MyTools.Repositories.LookupRepo;
+import com.example.BackEnd_MyTools.Repositories.LookupRepository;
 
 @Service
 public class LookupService {
-    private final LookupRepo lookupRepo;
+    private final LookupRepository lookupRepo;
 
-    public LookupService(LookupRepo lookupRepo) {
+    public LookupService(LookupRepository lookupRepo) {
         this.lookupRepo = lookupRepo;
     }
 
@@ -21,7 +21,7 @@ public class LookupService {
 
     public Lookups updateLookups(String id, Lookups lookup) {
         return lookupRepo.findById(id).map(lookups -> {
-            lookups.setName(lookup.getName());
+            lookups.setValue(lookup.getValue());
             return lookupRepo.save(lookups);
         }).orElse(null);
     }
