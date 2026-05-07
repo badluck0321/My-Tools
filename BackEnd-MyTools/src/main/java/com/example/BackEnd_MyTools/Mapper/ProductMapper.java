@@ -3,7 +3,6 @@ import com.example.BackEnd_MyTools.Entitys.Product;
 import com.example.BackEnd_MyTools.DTO.DtoGetProduct;
 import org.mapstruct.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

@@ -37,8 +37,8 @@ public class ProductSpecs {
         return duration != null ? Criteria.where("duration").is(duration) : null;
     }
 
-    public static Criteria hasListedFor(Integer listedFor) {
-        return listedFor != null ? Criteria.where("listedFor").is(listedFor) : null;
+    public static Criteria hasListedFor(Integer listedForId) {
+        return listedForId != null ? Criteria.where("listedForId").is(listedForId) : null;
     }
 
 }

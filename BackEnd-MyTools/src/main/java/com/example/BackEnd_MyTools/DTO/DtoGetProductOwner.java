@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class DtoGetProduct {
+public class DtoGetProductOwner {
     private String id;
     private String name;
     private int categoryId;
@@ -13,6 +13,7 @@ public class DtoGetProduct {
     private String description;
     private int price;
     private int listedForId;
+    private String ownerId;
     private int duration;
     private boolean isavailable;
     private List<String> photoUrls;

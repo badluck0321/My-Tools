@@ -178,7 +178,7 @@ const MasteryInfos = () => {
     );
 
   const listedForLabel =
-    product.listedFor === 0 ? 'Sale' : product.listedFor === 1 ? 'Rent' : 'Both';
+    product.listedForId === 0 ? 'Sale' : product.listedForId === 1 ? 'Rent' : 'Both';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
@@ -275,7 +275,7 @@ const MasteryInfos = () => {
                 className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20"
               >
                 <ShoppingCart size={18} />
-                {product.listedFor === 1 ? 'Rent Now' : 'Add to Cart'}
+                {product.listedForId === 1 ? 'Rent Now' : 'Add to Cart'}
               </button>
 
               <button

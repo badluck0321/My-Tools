@@ -32,7 +32,7 @@ public class ProductController {
         this.productMapper = productMapper;
     }
 
-    @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping( consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createProduct(
             @RequestPart("product") String productJson,
             @RequestPart(value = "photos", required = false) List<MultipartFile> photos, @AuthenticationPrincipal Jwt jwt) {

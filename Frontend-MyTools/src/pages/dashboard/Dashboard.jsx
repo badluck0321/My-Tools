@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Link, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,6 +8,8 @@ import { useKeycloak } from '../../providers/KeycloakProvider';
 import { ELEGANT_COLORS } from '../../utils/elegantTheme';
 import Profile from './Profile';
 import MyStore from './MyStore';
+import MyProducts from './MyProducts';
+import MyFavorites from './MyFavorites';
 
 const Dashboard = () => {
   const { user } = useKeycloak();
@@ -26,6 +29,13 @@ const Dashboard = () => {
     { 
       id: 'MyStore', 
       name: 'My Store', 
+      icon: ImageIcon, 
+      // artistOnly: true,
+      color: 'from-[#b8862f] to-[#d4a343]' // Gold
+    },
+        { 
+      id: 'MyProducts', 
+      name: 'My Products', 
       icon: ImageIcon, 
       // artistOnly: true,
       color: 'from-[#b8862f] to-[#d4a343]' // Gold
@@ -137,7 +147,8 @@ const Dashboard = () => {
                 <Route index element={<Navigate to="profile" replace />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="MyStore" element={<MyStore />} />
-                <Route path="favorites" element={<FavoritesSection />} />
+                <Route path="MyProducts"  element={<MyProducts />} />
+                <Route path="favorites" element={<MyFavorites />} />
                 <Route path="purchases" element={<PurchasesSection />} />
                 <Route path="settings" element={<SettingsSection />} />
               </Routes>

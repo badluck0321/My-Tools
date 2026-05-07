@@ -76,7 +76,7 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/stores/mine")
+    @GetMapping("/mine")
     public ResponseEntity<?> getMyStore(@AuthenticationPrincipal Jwt jwt) {
         String sub = jwt.getClaim("sub");
         if (sub == null || sub.isEmpty()) {

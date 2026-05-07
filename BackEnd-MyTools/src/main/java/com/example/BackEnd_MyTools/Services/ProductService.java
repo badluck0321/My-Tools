@@ -67,7 +67,7 @@ public class ProductService {
             product.setSerieNum(updatedProduct.getSerieNum());
             product.setDescription(updatedProduct.getDescription());
             product.setPrice(updatedProduct.getPrice());
-            product.setListedFor(updatedProduct.getListedFor());
+            product.setListedForId(updatedProduct.getListedForId());
             product.setDuration(updatedProduct.getDuration());
             product.setIsavailable(updatedProduct.isIsavailable());
             // ✅ update photos (replace or merge)

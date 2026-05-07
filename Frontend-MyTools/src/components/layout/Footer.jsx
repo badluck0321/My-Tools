@@ -6,9 +6,9 @@ const Footer = () => {
 
   const footerLinks = {
     explore: [
-      { name: 'Gallery', path: '/Products' },
-      { name: 'Artists', path: '/artists' },
-      { name: 'Store', path: '/store' },
+      { name: 'Products', path: '/Products' },
+      { name: 'Masterys', path: '/Masterys' },
+      { name: 'Stores', path: '/stores' },
       { name: 'Categories', path: '/categories' },
     ],
     company: [
@@ -56,7 +56,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
-                <span className="text-[#5d5955] dark:text-[#c4bfb9]">info@artvinci.com</span>
+                <span className="text-[#5d5955] dark:text-[#c4bfb9]">info@MyTools.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
