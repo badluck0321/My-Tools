@@ -68,7 +68,7 @@ The application is engineered with a clean separation of concerns across two ind
 - Browse a rich catalog of professional tools and equipment
 - Each product supports **multiple photos** with animated gallery, thumbnail strip, and arrow navigation
 - Products are categorized by **category**, **brand/mark**, and **serie number**
-- Listing types: **Sale** (`listedFor: 0`), **Rent** (`listedFor: 1`), or **Both**
+- Listing types: **Sale** (`listedForId: 0`), **Rent** (`listedForId: 1`), or **Both**
 - Duration tracking for rental listings (in months)
 - Real-time availability status with visual badges
 
@@ -268,7 +268,7 @@ BackEnd-MyTools/
 │   │   ├── Product.java
 │   │   │     @Document(collection = "Product")
 │   │   │     Fields: id, name, categoryId, markId, serieNum,
-│   │   │             description, price, listedFor, duration,
+│   │   │             description, price, listedForId, duration,
 │   │   │             photoIds (List<String>), ownerId, isavailable
 │   │   │
 │   │   └── Mastery.java
@@ -609,7 +609,7 @@ GET /products?categoryId=8&markId=19&available=true&name=drill
     "serieNum": 1001,
     "description": "Powerful 18V cordless drill with 2-speed gearbox",
     "price": "129.99",
-    "listedFor": 0,
+    "listedForId": 0,
     "duration": 0,
     "isavailable": true,
     "photoIds": [
@@ -620,7 +620,7 @@ GET /products?categoryId=8&markId=19&available=true&name=drill
 ]
 ```
 
-**`listedFor` values:**
+**`listedForId` values:**
 
 | Value | Meaning | Button Label |
 |-------|---------|-------------|
@@ -646,7 +646,7 @@ GET /products/product_1
   "serieNum": 1001,
   "description": "Powerful 18V cordless drill with 2-speed gearbox",
   "price": "129.99",
-  "listedFor": 0,
+  "listedForId": 0,
   "duration": 0,
   "photoIds": ["69dcbedfe19e2b5563b17d8f"],
   "ownerId": null,
@@ -678,7 +678,7 @@ Authorization: Bearer <token>
   "serieNum": 8451,
   "description": "Professional 18V drill with 2-speed gearbox",
   "price": 150.99,
-  "listedFor": 0,
+  "listedForId": 0,
   "duration": 12,
   "isavailable": true
 }
@@ -919,7 +919,7 @@ GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxx
   serieNum: NumberInt(8451),     // Integer — model/serie number
   description: "...",            // String
   price: NumberInt(150),         // Decimal — base price
-  listedFor: NumberInt(0),       // Integer — 0=Sale, 1=Rent, 30=Both
+  listedForId: NumberInt(0),       // Integer — 0=Sale, 1=Rent, 30=Both
   duration: NumberInt(12),       // Integer — rental duration in months
   photoIds: [                    // Array<String> — GridFS ObjectId refs
     "69dcbedfe19e2b5563b17d8f",
