@@ -2,6 +2,7 @@ package com.example.BackEnd_MyTools.Services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import com.example.BackEnd_MyTools.Kafka.KafkaProducerService;
 import org.springframework.stereotype.Service;
 import com.example.BackEnd_MyTools.Entitys.Favorite;
 import com.example.BackEnd_MyTools.Entitys.Product;
@@ -15,6 +16,8 @@ public class FavoriteService {
 
     private final FavoriteRepo favoriteRepository;
     private final ProductRepo productRepository;
+private final KafkaProducerService kafka;
+
 
     public List<Favorite> getFavorites(String userId) {
         return favoriteRepository.findByUserId(userId);
@@ -29,10 +32,11 @@ public class FavoriteService {
         Optional<Favorite> existing =
             favoriteRepository.findByUserIdAndProductId(userId, productId);
 
-        if (existing.isPresent()) {
-            favoriteRepository.delete(existing.get());
-            return false;
-        }
+    if (existing.isPresent()) {
+        favoriteRepository.delete(existing.get());
+        kafka.sendActivity(userId, "UNFAVORITED", productId, "PRODUCT");
+        return false;
+    }
 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -44,6 +48,16 @@ public class FavoriteService {
         favorite.setPrice(product.getPrice());
         favorite.setSavedAt(LocalDateTime.now());
         favoriteRepository.save(favorite);
+
+            // ... save favorite ...
+    kafka.sendActivity(userId, "FAVORITED", productId, "PRODUCT");
+    kafka.sendNotification(
+        product.getOwnerId() != null ? product.getOwnerId() : null,
+        "PRODUCT_FAVORITED",
+        "Someone liked your product!",
+        product.getName() + " was added to a wishlist",
+        productId
+    );
         return true;
     }
 
