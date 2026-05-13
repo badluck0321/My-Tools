@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+
+  # ── MongoDB ── no exposure + auth enabled ─────────
+  mongodb:
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}       # auth in prod
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    # No ports — only backend can reach it internally
+
+  # ── Keycloak ── production mode with PostgreSQL ────
+  # In prod, Keycloak uses PostgreSQL instead of file DB
+  keycloak:
+    ports:
+      - "8080:8080"               # or put behind nginx/reverse proxy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: ${KC_DB_USER}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}   # your real domain e.g. auth.mytools.com
+      KC_PROXY: edge
+    command: start                  # production mode — requires HTTPS
+
+  # ── PostgreSQL for Keycloak ────────────────────────
+  # Keycloak needs a proper DB in production, not file storage
+  keycloak-db:
+    image: postgres:15-alpine
+    container_name: mytools-keycloak-db
+    restart: unless-stopped
+    volumes:
+      - keycloak-pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${KC_DB_USER}
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD}
+    networks:
+      - mytools-network
+
+  # ── Backend ── optimized production JAR ───────────
+  backend:
+    build:
+      context: ./BackEnd-MyTools
+      dockerfile: Dockerfile.prod
+    container_name: mytools-backend
+    restart: unless-stopped
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb:27017/${MONGO_DB}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://${KEYCLOAK_HOSTNAME}/realms/myrealm
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_PROFILES_ACTIVE: prod
+      # JVM tuned for production
+      JAVA_OPTS: -Xms256m -Xmx512m -XX:+UseG1GC
+    depends_on:
+      - mongodb
+      - keycloak
+      - kafka
+    networks:
+      - mytools-network
+
+  # ── Frontend ── nginx serving built files ──────────
+  frontend:
+    build:
+      context: ./Frontend-MyTools
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_API_BASE_URL: https://${API_DOMAIN}      # your real domain
+        VITE_KEYCLOAK_URL: https://${KEYCLOAK_HOSTNAME}
+        VITE_KEYCLOAK_REALM: myrealm
+        VITE_KEYCLOAK_CLIENT_ID: frontend-mytools
+    container_name: mytools-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mytools-network

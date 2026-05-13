@@ -3,3 +3,6 @@ Frontend-MyTools/vite.config.js
 Frontend-MyTools/package-lock.json
 .vscode/settings.json
 BackEnd-MyTools/logs/mytools-app.log
+.env.prod
+.env.dev
+*.env.local

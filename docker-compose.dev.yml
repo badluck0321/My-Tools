@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+
+  # ── MongoDB ── expose for Compass ─────────────────
+  mongodb:
+    ports:
+      - "27017:27017"           # open for MongoDB Compass on your machine
+    environment:
+      MONGO_INITDB_DATABASE: mytoolsdb
+
+  # ── Kafka ── expose for local testing ─────────────
+  kafka:
+    environment:
+      # Dev adds an external listener so you can test from your machine
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+    ports:
+      - "9092:9092"             # open so you can test Kafka from your machine
+
+  # ── Kafka UI ── only in dev ────────────────────────
+  # No need for this in production
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: mytools-kafka-ui
+    restart: unless-stopped
+    depends_on:
+      - kafka
+    ports:
+      - "8090:8080"             # http://localhost:8090
+    environment:
+      KAFKA_CLUSTERS_0_NAME: mytools-dev
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    networks:
+      - mytools-network
+
+  # ── Keycloak ── dev mode, no HTTPS ────────────────
+  keycloak:
+    ports:
+      - "8080:8080"
+    environment:
+      KC_DB: dev-file           # simple file DB, fine for dev
+    command: start-dev          # dev mode — no HTTPS, faster startup
+
+  # ── Backend ── hot reload via volume mount ─────────
+  # Does NOT rebuild on every change — Spring DevTools watches for changes
+  backend:
+    build:
+      context: ./BackEnd-MyTools
+      dockerfile: Dockerfile.dev
+    container_name: mytools-backend-dev
+    ports:
+      - "8888:8888"
+      - "5005:5005"             # remote debug port — attach IntelliJ/VSCode debugger
+    volumes:
+      - ./BackEnd-MyTools:/app  # mount source code — changes reflect immediately
+      - ~/.m2:/root/.m2         # cache Maven dependencies between restarts
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/mytoolsdb
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/myrealm
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/myrealm/protocol/openid-connect/certs
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_PROFILES_ACTIVE: dev
+      # Enable remote debugging
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    depends_on:
+      - mongodb
+      - keycloak
+      - kafka
+    networks:
+      - mytools-network
+
+  # ── Frontend ── Vite dev server with hot reload ────
+  # Changes in React files reflect instantly in browser
+  frontend:
+    build:
+      context: ./Frontend-MyTools
+      dockerfile: Dockerfile.dev
+    container_name: mytools-frontend-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend-MyTools:/app       # mount source code
+      - /app/node_modules             # keep node_modules from container (not host)
+    environment:
+      VITE_API_BASE_URL: http://localhost:8888
+      VITE_KEYCLOAK_URL: http://localhost:8080
+      VITE_KEYCLOAK_REALM: myrealm
+      VITE_KEYCLOAK_CLIENT_ID: frontend-mytools
+    depends_on:
+      - backend
+    networks:
+      - mytools-network

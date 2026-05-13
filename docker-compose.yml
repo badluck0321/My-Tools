@@ -1,0 +1,77 @@
+version: '3.8'
+
+# Shared network — all containers talk to each other by service name
+networks:
+  mytools-network:
+    driver: bridge
+
+# Persistent volumes — data survives restarts
+volumes:
+  mongo-data:
+  keycloak-data:
+  zookeeper-data:
+  kafka-data:
+
+services:
+
+  # ── MongoDB ──────────────────────────────────────
+  # Identical in dev and prod
+  mongodb:
+    image: mongo:6
+    container_name: mytools-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mytools-network
+    # No ports exposed by default — only backend needs it
+    # Dev override will expose 27017 for Compass
+
+  # ── Zookeeper ─────────────────────────────────────
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: mytools-zookeeper
+    restart: unless-stopped
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - mytools-network
+
+  # ── Kafka ─────────────────────────────────────────
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: mytools-kafka
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+    networks:
+      - mytools-network
+    # No ports exposed by default — backend talks internally
+
+  # ── Keycloak ──────────────────────────────────────
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.2
+    container_name: mytools-keycloak
+    restart: unless-stopped
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    networks:
+      - mytools-network
+    # command and ports differ between dev and prod
