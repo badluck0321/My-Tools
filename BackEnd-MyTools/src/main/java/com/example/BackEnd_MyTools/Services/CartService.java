@@ -2,14 +2,13 @@ package com.example.BackEnd_MyTools.Services;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import com.example.BackEnd_MyTools.Kafka.KafkaProducerService;
 import org.springframework.stereotype.Service;
 import com.example.BackEnd_MyTools.DTO.AddToCartRequest;
 import com.example.BackEnd_MyTools.Entitys.Cart;
-import com.example.BackEnd_MyTools.Entitys.Lookups;
 import com.example.BackEnd_MyTools.Entitys.Product;
 import com.example.BackEnd_MyTools.Repositories.CartRepo;
-import com.example.BackEnd_MyTools.Repositories.LookupRepository;
 import com.example.BackEnd_MyTools.Repositories.ProductRepo;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +18,7 @@ public class CartService {
 
     private final CartRepo cartRepository;
     private final ProductRepo productRepository;
+    private final KafkaProducerService kafka;
 
     /* ── Get or create cart for user ── */
     public Cart getOrCreateCart(String userId) {
@@ -88,6 +88,15 @@ public class CartService {
         cart.setUpdatedAt(LocalDateTime.now());
         cart.setExpiresAt(LocalDateTime.now().plusDays(7));
 
+
+        // emit activity
+        kafka.sendActivity(userId, "ADDED_TO_CART", request.getProductId(), "PRODUCT");
+
+        // emit analytics
+        kafka.sendAnalytics("CART_ADD", userId, Map.of(
+            "productId", request.getProductId(),
+            "listingType", request.getListingType()
+        ));
         return cartRepository.save(cart);
     }
 
