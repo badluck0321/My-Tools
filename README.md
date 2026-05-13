@@ -949,6 +949,330 @@ GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxx
 
 ---
 
+🐳 Professional Docker Environment
+
+My-Tools uses a multi-environment Docker architecture designed for real-world development and production deployment.
+
+Instead of maintaining one oversized docker-compose.yml, the platform separates:
+
+File	Purpose
+docker-compose.yml	Shared base infrastructure
+docker-compose.dev.yml	Development overrides
+docker-compose.prod.yml	Production overrides
+.env.dev	Development environment variables
+.env.prod	Production secrets and configuration
+
+This architecture provides:
+
+✅ Environment isolation
+✅ Safer production deployments
+✅ Hot reload in development
+✅ Production-optimized containers
+✅ Internal-only networking
+✅ Secure secret management
+✅ Easier CI/CD integration
+📁 Docker Architecture
+My-Tools/
+├── docker-compose.yml
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+├── .env.dev
+├── .env.prod
+├── .gitignore
+│
+├── BackEnd-MyTools/
+│   ├── Dockerfile.dev
+│   └── Dockerfile.prod
+│
+└── Frontend-MyTools/
+    ├── Dockerfile.dev
+    ├── Dockerfile.prod
+    └── nginx.prod.conf
+🧱 Base Compose File
+
+The base compose file contains only shared infrastructure used by both development and production environments.
+
+Included Services
+Service	Purpose
+MongoDB	Main application database
+Kafka	Event streaming
+Keycloak	Authentication and authorization
+Networks	Internal service communication
+Volumes	Persistent data storage
+Why Ports Are Not Exposed in Base Config
+
+Database and messaging services are intentionally kept internal.
+
+This means:
+
+MongoDB is not publicly reachable
+Kafka is not publicly reachable
+Zookeeper is not publicly reachable
+
+Only application services communicate internally through Docker networking.
+
+This is critical for production security.
+
+🧪 Development Environment
+
+The development override (docker-compose.dev.yml) enables developer-focused tooling and hot reload capabilities.
+
+Development Features
+Feature	Description
+Hot Reload	Backend + frontend reload instantly
+MongoDB Port Exposure	Connect with MongoDB Compass
+Kafka Port Exposure	Local Kafka testing
+Kafka UI	Browser-based Kafka management
+Remote Debugging	Attach IntelliJ/VSCode debugger
+Keycloak Dev Mode	Faster startup without HTTPS
+Development Container Behavior
+Backend
+
+The backend uses:
+
+Spring Boot DevTools
+volume mounting
+Maven dependency caching
+
+Source code changes immediately reflect inside the running container.
+
+Frontend
+
+The frontend runs the Vite development server with:
+
+HMR (Hot Module Reload)
+live React refresh
+mounted source code
+
+Changes appear instantly in the browser without rebuilding images.
+
+Start Development Environment
+docker-compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  --env-file .env.dev \
+  up --build -d
+Stop Development Environment
+docker-compose \
+  -f docker-compose.yml \
+  -f docker-compose.dev.yml \
+  down
+Development URLs
+Service	URL
+Frontend	http://localhost:3000
+Backend API	http://localhost:8888
+Swagger UI	http://localhost:8888/swagger-ui.html
+Keycloak	http://localhost:8080
+Kafka UI	http://localhost:8090
+MongoDB	mongodb://localhost:27017
+🚀 Production Environment
+
+The production override (docker-compose.prod.yml) enables hardened, optimized deployment settings.
+
+Production Features
+Feature	Description
+Multi-stage builds	Smaller and safer images
+JVM optimization	Tuned heap and garbage collection
+Internal networking	Databases not publicly exposed
+Keycloak production mode	Secure authentication setup
+PostgreSQL for Keycloak	Persistent enterprise-grade storage
+nginx frontend	Optimized static asset serving
+Environment secrets	Externalized sensitive configuration
+Production Security Improvements
+MongoDB Authentication
+
+Production MongoDB requires authentication:
+
+MONGO_USER=mytools_user
+MONGO_PASSWORD=strong_password
+Keycloak Production Mode
+
+Unlike development mode:
+
+HTTPS is expected
+PostgreSQL replaces file storage
+proxy mode is enabled
+hostname validation is enforced
+Internal Networking
+
+Only frontend and API ports are exposed publicly.
+
+Infrastructure services remain isolated inside the Docker network.
+
+🔐 Environment Variables
+Development Environment
+
+.env.dev
+
+KEYCLOAK_ADMIN=admin
+KEYCLOAK_ADMIN_PASSWORD=admin
+
+Safe to commit because it contains no production secrets.
+
+Production Environment
+
+.env.prod
+
+KEYCLOAK_ADMIN=admin
+KEYCLOAK_ADMIN_PASSWORD=strong_password
+
+MONGO_DB=mytoolsdb
+MONGO_USER=mytools_user
+MONGO_PASSWORD=strong_password
+
+KC_DB_USER=keycloak_user
+KC_DB_PASSWORD=strong_password
+
+KEYCLOAK_HOSTNAME=auth.mytools.com
+API_DOMAIN=api.mytools.com
+
+⚠️ Never commit .env.prod to Git.
+
+🚫 Git Ignore Rules
+.env.prod
+*.env.local
+
+This prevents accidental secret exposure.
+
+🛠️ Dockerfiles
+Backend Development Dockerfile
+
+Development backend containers support:
+
+Spring Boot DevTools
+remote debugging
+live reload
+FROM maven:3.9-eclipse-temurin-17
+
+WORKDIR /app
+
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
+
+COPY src ./src
+
+CMD ["mvn", "spring-boot:run"]
+Backend Production Dockerfile
+
+Production containers use a multi-stage build:
+
+FROM maven:3.9-eclipse-temurin-17 AS build
+
+WORKDIR /app
+
+COPY pom.xml .
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8888
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+Benefits:
+
+smaller image size
+faster deployments
+reduced attack surface
+no Maven runtime dependency
+Frontend Development Dockerfile
+
+The frontend development container runs the Vite dev server:
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json .
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+Frontend Production Dockerfile
+
+Production frontend uses nginx to serve optimized static assets:
+
+FROM node:18-alpine AS build
+
+WORKDIR /app
+
+COPY package*.json .
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+⚡ Makefile Shortcuts
+
+To simplify Docker commands, My-Tools includes a Makefile.
+
+Available Commands
+dev-up:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up --build -d
+
+dev-down:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+
+dev-logs:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml logs -f
+
+prod-up:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.prod up --build -d
+
+prod-down:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
+Usage
+make dev-up
+make dev-down
+make dev-logs
+
+make prod-up
+make prod-down
+📊 Development vs Production
+Concern	Development	Production
+Hot Reload	✅ Enabled	❌ Disabled
+MongoDB Port	Exposed	Internal Only
+Kafka UI	Enabled	Disabled
+Remote Debugging	Enabled	Disabled
+Keycloak Mode	start-dev	start
+HTTPS	Optional	Required
+Frontend Server	Vite	nginx
+Backend Runtime	Maven	Optimized JAR
+Database Security	Minimal	Authentication Enabled
+Secrets	Local only	Externalized
+🔒 Production Recommendations
+
+Before deploying publicly:
+
+Enable HTTPS with nginx or reverse proxy
+Use strong passwords for all services
+Enable MongoDB authentication
+Add Docker healthchecks
+Configure log rotation
+Use pinned image versions instead of latest
+Run containers as non-root users
+Use external object storage for large-scale media hosting
+Add monitoring (Prometheus/Grafana)
+Configure automated backups
+
+
 ## 🐳 Docker Deployment
 
 ### Full Stack with Docker Compose
