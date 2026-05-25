@@ -17,7 +17,7 @@ services:
   # ── MongoDB ──────────────────────────────────────
   # Identical in dev and prod
   mongodb:
-    image: mongo:6
+    image: mongo:7.0
     container_name: mytools-mongodb
     restart: unless-stopped
     volumes:
@@ -62,9 +62,8 @@ services:
       - mytools-network
     # No ports exposed by default — backend talks internally
 
-  # ── Keycloak ──────────────────────────────────────
   keycloak:
-    image: quay.io/keycloak/keycloak:21.1.2
+    image: quay.io/keycloak/keycloak:26.4.5
     container_name: mytools-keycloak
     restart: unless-stopped
     volumes:
@@ -74,4 +73,3 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     networks:
       - mytools-network
-    # command and ports differ between dev and prod
