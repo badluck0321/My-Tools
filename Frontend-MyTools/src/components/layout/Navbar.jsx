@@ -53,7 +53,7 @@ const Navbar = () => {
               <Palette className="w-7 h-7 text-white" />
             </div>
             <span className="text-2xl font-display font-extrabold bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent tracking-tight">
-              Artvinci
+              My-Tools
             </span>
           </Link>
 

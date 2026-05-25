@@ -27,7 +27,7 @@
 
 <br/>
 
-**[🚀 Live Demo](#)** · **[📖 API Docs](http://localhost:8888/swagger-ui.html)** · **[🐛 Report Bug](https://github.com/badluck0321/My-Tools/issues)** · **[💡 Request Feature](https://github.com/badluck0321/My-Tools/issues)**
+**[🚀 Live Demo](#)** · **[📖 API Docs](http://localhost:8888/swagger-ui/index.html)** · **[🐛 Report Bug](https://github.com/badluck0321/My-Tools/issues)** · **[💡 Request Feature](https://github.com/badluck0321/My-Tools/issues)**
 
 <br/>
 
@@ -420,12 +420,14 @@ cd My-Tools
 # Local installation
 mongod --dbpath /data/db
 
-# Or via Docker
+# Or via Docker without the docker compose
 docker run -d \
-  --name my-tools-mongo \
+  --name mytools-mongodb \
+  --restart unless-stopped \
+  --network mytools-network \
   -p 27017:27017 \
-  -v my-tools-mongo-data:/data/db \
-  mongo:6
+  -v mongo-data:/data/db \
+  mongo:7.0
 ```
 
 ---
@@ -433,13 +435,17 @@ docker run -d \
 ### Step 3 — Configure & Start Keycloak
 
 ```bash
-# Via Docker (recommended)
+# Via Docker (recommended) without the docker compose
 docker run -d \
-  --name my-tools-keycloak \
+  --name mytools-keycloak \
+  --restart unless-stopped \
+  --network mytools-network \
   -p 8080:8080 \
+  -v keycloak-data:/opt/keycloak/data \
   -e KEYCLOAK_ADMIN=admin \
   -e KEYCLOAK_ADMIN_PASSWORD=admin \
-  quay.io/keycloak/keycloak:latest start-dev
+  quay.io/keycloak/keycloak:26.4.5 \
+  start-dev
 ```
 
 Open `http://localhost:8080/admin` and complete the setup:
@@ -510,7 +516,7 @@ curl http://localhost:8888/actuator/health
 # → {"status":"UP"}
 
 # Open Swagger UI
-open http://localhost:8888/swagger-ui.html
+open http://localhost:8888/swagger-ui/index.html
 ```
 
 ---
@@ -1061,7 +1067,7 @@ Development URLs
 Service	URL
 Frontend	http://localhost:3000
 Backend API	http://localhost:8888
-Swagger UI	http://localhost:8888/swagger-ui.html
+Swagger UI	http://localhost:8888/swagger-ui/index.html
 Keycloak	http://localhost:8080
 Kafka UI	http://localhost:8090
 MongoDB	mongodb://localhost:27017
