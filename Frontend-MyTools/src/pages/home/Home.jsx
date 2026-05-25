@@ -55,13 +55,13 @@ const Home = () => {
               >
                 <Sparkles className="w-4 h-4 text-[#6d2842] dark:text-[#d4a343]" />
                 <span className="text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9]">
-                  Join 10,000+ Artists & Collectors
+                  Join 10,000+ Artisans & crafters sharing their work 
                 </span>
               </motion.div>
 
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-8 leading-tight">
-                <span className="block text-[#2d2a27] dark:text-[#fafaf9]">All the Tools</span>
-                <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2"> You Need</span>
+                <span className="block text-[#2d2a27] dark:text-[#fafaf9]">All you need</span>
+                <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2"> For Your Project</span>
               </h1>
               
               <p className="text-xl md:text-2xl lg:text-3xl text-[#5d5955] dark:text-[#c4bfb9] mb-12 max-w-3xl mx-auto font-light leading-relaxed">
@@ -69,24 +69,24 @@ const Home = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/Products">
+                <Link to="/Masteries">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all min-w-[240px]"
                   >
                     <Sparkles className="w-5 h-5" />
-                    <span>Tools</span>
+                    <span>Craftmans</span>
                   </motion.button>
                 </Link>
-                <Link to="/signup">
+                <Link to="/Products">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-[#2d2a27] border-2 border-[#6d2842] dark:border-[#d4a343] text-[#6d2842] dark:text-[#d4a343] hover:bg-[#6d2842] dark:hover:bg-[#d4a343] hover:text-white dark:hover:text-[#2d2a27] font-semibold rounded-xl transition-all min-w-[240px]"
                   >
                     <Palette className="w-5 h-5" />
-                    <span>Join as Provider</span>
+                    <span>Tools</span>
                   </motion.button>
                 </Link>
               </div>
@@ -136,7 +136,7 @@ const Home = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">Why Choose Artvinci?</span>
+              <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">Why Choose My-Tools?</span>
             </h2>
             <p className="text-lg text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">
               Experience the perfect blend of creativity and technology in the digital art marketplace
@@ -244,7 +244,7 @@ const Home = () => {
               Ready to Start Your Art Journey?
             </h2>
             <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto opacity-95 font-light">
-              Join thousands of art lovers and creators on Artvinci today
+              Join thousands of art lovers and creators on My-Tools today
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link to="/signup">
@@ -274,3 +274,207 @@ const Home = () => {
 };
 
 export default Home;
+ 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// import { motion } from 'framer-motion';
+// import { Link } from 'react-router-dom';
+// import { Sparkles, Users, TrendingUp, Palette, ArrowRight, Star, Hammer, Wrench, Package, CheckCircle } from 'lucide-react';
+// import { Button } from '../../components/common';
+
+// const Home = () => {
+//   const features = [
+//     {
+//       icon: Hammer,
+//       title: 'Find Real Craft Mastery',
+//       description: 'Access skilled hands for woodworking, painting, sculpture, repair, and more.'
+//     },
+//     {
+//       icon: Wrench,
+//       title: 'Get Projects Done',
+//       description: 'Connect with people who can execute real physical and creative work.'
+//     },
+//     {
+//       icon: CheckCircle,
+//       title: 'Verified Practical Skill',
+//       description: 'Work with people based on proven ability, not theory or credentials.'
+//     },
+//     {
+//       icon: Sparkles,
+//       title: 'End-to-End Execution',
+//       description: 'From idea → craft → finished object, everything in one ecosystem.'
+//     }
+//   ];
+
+//   const secondaryFeatures = [
+//     {
+//       icon: Palette,
+//       title: 'Sell Craft & Work',
+//       description: 'Monetize handmade work, services, and creative output.'
+//     },
+//     {
+//       icon: Package,
+//       title: 'Loan Tools & Assets',
+//       description: 'Borrow or lend materials, tools, and creative resources.'
+//     },
+//     {
+//       icon: Users,
+//       title: 'Connect With Makers',
+//       description: 'Work directly with artisans, builders, and skilled creators.'
+//     }
+//   ];
+
+//   const featuredArtists = [
+//     { id: 1, name: 'Sarah Chen', specialty: 'Wood Craft & Design', followers: '12.5K' },
+//     { id: 2, name: 'Marcus Rivera', specialty: 'Handmade Sculpture', followers: '8.2K' },
+//     { id: 3, name: 'Amara Johnson', specialty: 'Traditional Craft Repair', followers: '15.1K' },
+//   ];
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
+
+//       {/* HERO */}
+//       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+//         <div className="container-custom relative z-10 py-10">
+//           <div className="max-w-5xl mx-auto text-center">
+
+//             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+
+//               <motion.div
+//                 initial={{ opacity: 0, scale: 0.9 }}
+//                 animate={{ opacity: 1, scale: 1 }}
+//                 transition={{ delay: 0.2 }}
+//                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-[#2d2a27]/80 backdrop-blur-sm rounded-full mb-8"
+//               >
+//                 <Hammer className="w-4 h-4 text-[#6d2842]" />
+//                 <span className="text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9]">
+//                   Find the mastery needed to build anything real
+//                 </span>
+//               </motion.div>
+
+//               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-8 leading-tight">
+//                 <span className="block text-[#2d2a27] dark:text-[#fafaf9]">
+//                   Build Anything
+//                 </span>
+//                 <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2">
+//                   With Real Craft Mastery
+//                 </span>
+//               </h1>
+
+//               <p className="text-xl md:text-2xl lg:text-3xl text-[#5d5955] dark:text-[#c4bfb9] mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+//                 A platform where you find the hands, skills, and craftsmanship needed to execute real-world projects — from handmade objects to repairs and custom creations.
+//               </p>
+
+//               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+
+//                 <Link to="/Products">
+//                   <motion.button
+//                     whileHover={{ scale: 1.05 }}
+//                     whileTap={{ scale: 0.95 }}
+//                     className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold rounded-xl min-w-[240px]"
+//                   >
+//                     <Hammer className="w-5 h-5" />
+//                     <span>Find Craft Mastery</span>
+//                   </motion.button>
+//                 </Link>
+
+//                 <Link to="/signup">
+//                   <motion.button
+//                     whileHover={{ scale: 1.05 }}
+//                     whileTap={{ scale: 0.95 }}
+//                     className="flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-[#2d2a27] border-2 border-[#6d2842] text-[#6d2842] dark:text-[#d4a343] font-semibold rounded-xl min-w-[240px]"
+//                   >
+//                     <Users className="w-5 h-5" />
+//                     <span>Become a Maker</span>
+//                   </motion.button>
+//                 </Link>
+
+//               </div>
+
+//             </motion.div>
+//           </div>
+//         </div>
+
+//         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#fafaf9] dark:to-[#1a1816] pointer-events-none" />
+//       </section>
+
+//       {/* CORE VALUE */}
+//       <section className="py-20 bg-white dark:bg-[#2d2a27]">
+//         <div className="container-custom text-center">
+
+//           <h2 className="text-4xl md:text-5xl font-bold mb-4">
+//             What This Platform Actually Does
+//           </h2>
+
+//           <p className="text-lg text-[#5d5955] dark:text-[#c4bfb9] mb-12 max-w-3xl mx-auto">
+//             It connects real-world problems with real-world hands that can solve them.
+//           </p>
+
+//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+//             {features.map((item, index) => (
+//               <motion.div
+//                 key={index}
+//                 initial={{ opacity: 0, y: 20 }}
+//                 whileInView={{ opacity: 1, y: 0 }}
+//                 viewport={{ once: true }}
+//                 className="p-8 rounded-2xl border bg-[#fafaf9] dark:bg-[#1a1816]"
+//               >
+//                 <item.icon className="w-10 h-10 mb-4 text-[#6d2842]" />
+//                 <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+//                 <p className="text-sm text-[#5d5955] dark:text-[#c4bfb9]">{item.description}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+
+//         </div>
+//       </section>
+
+//       {/* ECOSYSTEM (SECONDARY) */}
+//       <section className="py-20 bg-[#fafaf9] dark:bg-[#1a1816]">
+//         <div className="container-custom text-center">
+
+//           <h2 className="text-4xl font-bold mb-4">Supporting Ecosystem</h2>
+//           <p className="mb-12 text-[#5d5955] dark:text-[#c4bfb9]">
+//             Tools, trade, and lending exist to support real execution — not replace it
+//           </p>
+
+//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+//             {secondaryFeatures.map((item, index) => (
+//               <div key={index} className="bg-white dark:bg-[#2d2a27] p-8 rounded-2xl border">
+//                 <item.icon className="w-10 h-10 mb-4 text-[#6d2842]" />
+//                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+//                 <p className="text-[#5d5955] dark:text-[#c4bfb9]">{item.description}</p>
+//               </div>
+//             ))}
+//           </div>
+
+//         </div>
+//       </section>
+
+//       {/* CTA */}
+//       <section className="py-24 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white text-center">
+
+//         <h2 className="text-4xl font-bold mb-4">
+//           Find the Hands You Need
+//         </h2>
+
+//         <p className="mb-8 text-lg opacity-90 max-w-2xl mx-auto">
+//           Stop planning. Start building. Connect with real craft mastery today.
+//         </p>
+
+//         <Link to="/signup">
+//           <button className="px-8 py-4 bg-white text-[#6d2842] font-semibold rounded-xl">
+//             Start Now
+//           </button>
+//         </Link>
+
+//       </section>
+
+//     </div>
+//   );
+// };
+
+// export default Home;

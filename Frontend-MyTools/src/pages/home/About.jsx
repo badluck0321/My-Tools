@@ -48,7 +48,7 @@ const About = () => {
               <Palette className="w-12 h-12 text-[#6d2842] dark:text-[#d4a343]" />
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6">
-              <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">About Artvinci</span>
+              <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">About My-Tools</span>
             </h1>
             <p className="text-xl text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">
               We're on a mission to democratize art by creating a global platform that connects
@@ -98,7 +98,7 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-lg text-[#5d5955] dark:text-[#c4bfb9] text-left">
                 <p>
-                  Artvinci was born from a simple belief: art should be accessible to everyone, everywhere.
+                  My-Tools was born from a simple belief: art should be accessible to everyone, everywhere.
                   We saw talented artists struggling to reach their audience and art lovers searching for
                   unique pieces without a central, trustworthy platform.
                 </p>
@@ -109,7 +109,7 @@ const About = () => {
                   and innovation.
                 </p>
                 <p>
-                  Today, Artvinci is more than just a marketplace—it's a global community where creativity
+                  Today, My-Tools is more than just a marketplace—it's a global community where creativity
                   meets opportunity, where art transcends borders, and where everyone can be part of the
                   artistic journey.
                 </p>

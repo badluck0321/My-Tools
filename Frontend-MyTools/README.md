@@ -1,6 +1,6 @@
-# 🎨 Artvinci - Digital Art Gallery Platform
+# 🎨 My-Tools - Digital Art Gallery Platform
 
-A modern, elegant digital art gallery platform built with React 18, Vite, Tailwind CSS, and Framer Motion. Artvinci connects artists and art enthusiasts, providing a seamless platform to discover, collect, and celebrate digital art.
+A modern, elegant digital art gallery platform built with React 18, Vite, Tailwind CSS, and Framer Motion. My-Tools connects artists and art enthusiasts, providing a seamless platform to discover, collect, and celebrate digital art.
 
 ## ✨ Features
 
@@ -62,14 +62,14 @@ The app includes **mock authentication** for testing without a backend:
 
 ### Quick Login:
 ```
-Email: demo@artvinci.com
+Email: demo@My-Tools.com
 Password: Demo123!
 ```
 
 ### Available Test Accounts:
-- **Artist**: `artist@artvinci.com` / `Artist123!`
-- **Buyer**: `buyer@artvinci.com` / `Buyer123!`
-- **Demo**: `demo@artvinci.com` / `Demo123!`
+- **Artist**: `artist@My-Tools.com` / `Artist123!`
+- **Buyer**: `buyer@My-Tools.com` / `Buyer123!`
+- **Demo**: `demo@My-Tools.com` / `Demo123!`
 
 📄 See [LOGIN_CREDENTIALS.md](./LOGIN_CREDENTIALS.md) for complete details.
 

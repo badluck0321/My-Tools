@@ -43,7 +43,7 @@ const Footer = () => {
                 <Palette className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-display font-bold bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
-                Artvinci
+                My-Tools
               </span>
             </Link>
             
@@ -148,7 +148,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <p className="text-[#5d5955] dark:text-[#c4bfb9] text-sm">
-              © {currentYear} Artvinci. All rights reserved.
+              © {currentYear} My-Tools. All rights reserved.
             </p>
 
             {/* Social Links */}

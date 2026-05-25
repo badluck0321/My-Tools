@@ -153,7 +153,7 @@ const Chatbot = () => {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold">Assistant ArtVinci</h3>
+                  <h3 className="font-bold">Assistant My-Tools</h3>
                   <p className="text-xs opacity-90">Découvrez des événements</p>
                 </div>
               </div>
