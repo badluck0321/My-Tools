@@ -1,10 +1,10 @@
 package com.example.BackEnd_MyTools.Entitys;
+
 import java.time.Instant;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
-
 
 @Document(collection = "Product") // MongoDB collection name
 @Data
