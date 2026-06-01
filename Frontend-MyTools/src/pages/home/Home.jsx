@@ -14,7 +14,7 @@ const Home = () => {
     },
     {
       icon: Users,
-      title: 'Connect with Artists',
+      title: 'Connect with Craftmans',
       description: 'Follow your favorite artists and stay updated with their latest creations.'
     },
     {
