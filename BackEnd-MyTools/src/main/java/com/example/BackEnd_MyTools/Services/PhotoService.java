@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,21 @@ public class PhotoService {
 
     @Autowired
     private GridFsTemplate gridFsTemplate;
+
+    public String saveFromUrl(String imageUrl) throws IOException {
+
+        URL url = new URL(imageUrl);
+
+        try (InputStream inputStream = url.openStream()) {
+
+            ObjectId id = gridFsTemplate.store(
+                    inputStream,
+                    imageUrl.substring(imageUrl.lastIndexOf('/') + 1),
+                    MediaType.IMAGE_PNG_VALUE);
+
+            return id.toString();
+        }
+    }
 
     public String savePhoto(MultipartFile file) throws IOException {
         ObjectId id = gridFsTemplate.store(
