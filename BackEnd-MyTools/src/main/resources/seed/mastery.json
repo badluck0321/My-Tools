@@ -11,7 +11,7 @@
     "city": "Casablanca",
     "experienceYears": 5,
     "description": "Expert plumber for home repairs",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396912/plumber_kyva3b.png"
   },
   {
     "masterId": "M002",
@@ -25,7 +25,7 @@
     "city": "Rabat",
     "experienceYears": 3,
     "description": "Interior and exterior painting services",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396902/painter_cpqwvi.png"
   },
   {
     "masterId": "M003",
@@ -39,7 +39,7 @@
     "city": "Casablanca",
     "experienceYears": 7,
     "description": "Certified electrician for residential wiring",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396899/house_wife_tpqq4x.png"
   },
   {
     "masterId": "M004",
@@ -53,7 +53,7 @@
     "city": "Marrakech",
     "experienceYears": 2,
     "description": "Professional home and office cleaning",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396899/house_wife_tpqq4x.png"
   },
   {
     "masterId": "M005",
@@ -67,7 +67,7 @@
     "city": "Tangier",
     "experienceYears": 6,
     "description": "AC installation and repair specialist",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396918/1780390564_nm00vw.png"
   },
   {
     "masterId": "M006",
@@ -81,7 +81,7 @@
     "city": "Rabat",
     "experienceYears": 4,
     "description": "Certified childcare provider",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396901/nani_mm2cdj.png"
   },
   {
     "masterId": "M007",
@@ -95,7 +95,7 @@
     "city": "Casablanca",
     "experienceYears": 8,
     "description": "Full car diagnostics and repair",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396899/mechanic_awvqer.png"
   },
   {
     "masterId": "M008",
@@ -109,7 +109,7 @@
     "city": "Marrakech",
     "experienceYears": 3,
     "description": "Logo and branding designer",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396919/Designer_u7vac6.png"
   },
   {
     "masterId": "M009",
@@ -123,7 +123,7 @@
     "city": "Casablanca",
     "experienceYears": 5,
     "description": "Full-stack web developer",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396918/developper_ipzv8s.png"
   },
   {
     "masterId": "M010",
@@ -137,7 +137,7 @@
     "city": "Rabat",
     "experienceYears": 6,
     "description": "High school math tutor",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396917/tutor_gb3hd5.png"
   },
   {
     "masterId": "M011",
@@ -151,7 +151,7 @@
     "city": "Fes",
     "experienceYears": 10,
     "description": "Roofing and waterproofing expert",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396912/roofer_acriwt.png"
   },
   {
     "masterId": "M012",
@@ -165,7 +165,7 @@
     "city": "Casablanca",
     "experienceYears": 4,
     "description": "Bridal and event makeup artist",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396903/photographer_tmrskx.png"
   },
   {
     "masterId": "M013",
@@ -179,7 +179,7 @@
     "city": "Marrakech",
     "experienceYears": 7,
     "description": "Event and portrait photographer",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396903/photographer_tmrskx.png"
   },
   {
     "masterId": "M014",
@@ -193,7 +193,7 @@
     "city": "Rabat",
     "experienceYears": 5,
     "description": "Certified yoga and wellness coach",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396915/yuga_trainer_rtwbxp.png"
   },
   {
     "masterId": "M015",
@@ -207,7 +207,7 @@
     "city": "Casablanca",
     "experienceYears": 4,
     "description": "Technical IT troubleshooting",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396912/tech_support_b5wce8.png"
   },
   {
     "masterId": "M016",
@@ -221,7 +221,7 @@
     "city": "Tangier",
     "experienceYears": 6,
     "description": "Modern home interior designer",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396919/Designer_u7vac6.png"
   },
   {
     "masterId": "M017",
@@ -235,7 +235,7 @@
     "city": "Fes",
     "experienceYears": 9,
     "description": "Metal welding and fabrication",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396918/welder_dsxmz4.png"
   },
   {
     "masterId": "M018",
@@ -249,7 +249,7 @@
     "city": "Marrakech",
     "experienceYears": 5,
     "description": "French and English tutoring",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396913/translator_rq8xam.png"
   },
   {
     "masterId": "M019",
@@ -263,7 +263,7 @@
     "city": "Casablanca",
     "experienceYears": 2,
     "description": "Fast local delivery service",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396916/delivery_man_pfzpug.png"
   },
   {
     "masterId": "M020",
@@ -277,7 +277,7 @@
     "city": "Rabat",
     "experienceYears": 6,
     "description": "Professional hair styling and coloring",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396920/hair_stylist_htl7kb.png"
   },
   {
     "masterId": "M021",
@@ -291,7 +291,7 @@
     "city": "Casablanca",
     "experienceYears": 7,
     "description": "Event and private security",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396912/security_ffktpq.png"
   },
   {
     "masterId": "M022",
@@ -305,7 +305,7 @@
     "city": "Marrakech",
     "experienceYears": 8,
     "description": "Traditional Moroccan catering",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396911/traiteur_ysqp98.png"
   },
   {
     "masterId": "M023",
@@ -319,7 +319,7 @@
     "city": "Rabat",
     "experienceYears": 4,
     "description": "Laptop and desktop repair",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396902/pc_Repairman_yksecv.png"
   },
   {
     "masterId": "M024",
@@ -333,7 +333,7 @@
     "city": "Casablanca",
     "experienceYears": 6,
     "description": "Arabic, French, English translation",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396913/translator_rq8xam.png"
   },
   {
     "masterId": "M025",
@@ -347,7 +347,7 @@
     "city": "Tangier",
     "experienceYears": 5,
     "description": "Garden maintenance and landscaping",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396920/gardner_msxrhu.png"
   },
   {
     "masterId": "M026",
@@ -361,7 +361,7 @@
     "city": "Rabat",
     "experienceYears": 4,
     "description": "Relaxation and therapeutic massage",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396900/massager_olndai.png"
   },
   {
     "masterId": "M027",
@@ -375,7 +375,7 @@
     "city": "Casablanca",
     "experienceYears": 3,
     "description": "IKEA and custom furniture assembly",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396913/assembly_thecnicien_arpxi9.png"
   },
   {
     "masterId": "M028",
@@ -389,7 +389,7 @@
     "city": "Marrakech",
     "experienceYears": 7,
     "description": "Wedding and corporate event planner",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396911/traiteur_ysqp98.png"
   },
   {
     "masterId": "M029",
@@ -403,7 +403,7 @@
     "city": "Fes",
     "experienceYears": 6,
     "description": "Emergency lock and key services",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396900/locksmith_kvb4qa.png"
   },
   {
     "masterId": "M030",
@@ -417,6 +417,6 @@
     "city": "Rabat",
     "experienceYears": 5,
     "description": "Personal diet and nutrition planning",
-    "photoId": null
+    "seedImageUrl": "https://res.cloudinary.com/dkmhbowlx/image/upload/v1780396901/nutritionist_y5t1vj.png"
   }
 ]

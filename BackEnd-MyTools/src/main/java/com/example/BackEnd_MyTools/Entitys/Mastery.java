@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
-@Document(collection = "Service") // MongoDB collection name
+@Document(collection = "Mastery") // MongoDB collection name
 @Data
 public class Mastery {
     @Id
     public String id;
-    
+
     public String masterId;
     public String masterName;
     public String masterPhone;
