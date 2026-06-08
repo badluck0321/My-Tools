@@ -18,7 +18,7 @@ import { Loading } from '../../components/common';
 import { productService } from '../../services/productService';
 import { useKeycloak } from '../../providers/KeycloakProvider'; // adjust path
 import interceptor from '../../interceptors/auth.interceptor'; // adjust path
-
+import ReviewSection from '../../components/common/ReviewSection'; // adjust path
 
 
 /* ─── PhotoImage: fetches one photo via service, renders it ── */
@@ -325,6 +325,8 @@ const ProductInfos = () => {
                 <Share2 size={18} />
               </button>
             </div>
+            <ReviewSection productId={product.id} />$
+
           </motion.div>
         </div>
       </div>
