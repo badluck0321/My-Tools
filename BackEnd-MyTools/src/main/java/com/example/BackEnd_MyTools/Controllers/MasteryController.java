@@ -1,19 +1,25 @@
 package com.example.BackEnd_MyTools.Controllers;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.BackEnd_MyTools.DTO.DtoGetMastery;
 import com.example.BackEnd_MyTools.Entitys.Mastery;
 import com.example.BackEnd_MyTools.Mapper.MasteryMapper;
 import com.example.BackEnd_MyTools.Services.MasteryService;
 import com.example.BackEnd_MyTools.Services.PhotoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.MediaType;
+
 @RestController
 @RequestMapping("/masterys")
 public class MasteryController {
@@ -27,124 +33,74 @@ public class MasteryController {
         this.masteryMapper = masteryMapper;
     }
 
-
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> AddMastery(@RequestPart("mastery") String masteryJson,
-            @RequestPart(value = "photo", required = false) MultipartFile photo, @AuthenticationPrincipal Jwt jwt) 
-                {
-                    try {
-                // ✅ Manually convert JSON to Product
-                String sub = jwt.getClaim("sub");
-                if (sub == null || sub.isEmpty()) {
-                    return ResponseEntity.status(401).body("Utilisateur non authentifié");
-                    
-                }
-                ObjectMapper mapper = new ObjectMapper();
-                Mastery mastery = mapper.readValue(masteryJson, Mastery.class);
-                if (photo != null && !photo.isEmpty()) {
-                    String photoId = null;
-                        String id = photoService.savePhoto(photo);
-                        photoId = id;
-                    mastery.setPhotoId(photoId);
-                }
-
-                Mastery addedmastery = masteryService.createMastery(mastery);
-                return ResponseEntity.ok(addedmastery);
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return ResponseEntity.status(500)
-                        .body("Erreur lors de la création : " + ex.getMessage());
+    public ResponseEntity<?> addMastery(@RequestPart("mastery") String masteryJson,
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            @AuthenticationPrincipal Jwt jwt) {
+        try {
+            Mastery mastery = new ObjectMapper().readValue(masteryJson, Mastery.class);
+            if (photos != null && !photos.isEmpty()) {
+                List<String> photoIds = new ArrayList<>();
+                for (MultipartFile photo : photos)
+                    photoIds.add(photoService.savePhoto(photo));
+                mastery.setPhotoUrls(photoIds);
             }
+            return ResponseEntity.ok(masteryService.createMastery(mastery, jwt));
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Erreur lors de la création : " + ex.getMessage());
         }
+    }
 
-
-    // ✅ GET ALL Masterys
     @GetMapping("specials")
     public ResponseEntity<List<DtoGetMastery>> getAllMasterysSpect(HttpServletRequest request,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Integer typeId
-            ) {
-        try {
-            List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId);
-
-            if (masterys.isEmpty())
-                return ResponseEntity.noContent().build();
-            String baseUrl = String.format("%s://%s:%d%s", request.getScheme(),
-            request.getServerName(),
-            request.getServerPort(), request.getContextPath());
-            List<DtoGetMastery> getMasteryDtos = masteryMapper.toDtoList(masterys, baseUrl);
-            return ResponseEntity.ok(getMasteryDtos);
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).build();
-        }
-    
+            @RequestParam(required = false) Integer typeId) {
+        List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId);
+        if (masterys.isEmpty())
+            return ResponseEntity.noContent().build();
+        String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),
+                request.getServerPort(), request.getContextPath());
+        return ResponseEntity.ok(masteryMapper.toDtoList(masterys, baseUrl));
     }
 
-
-    @GetMapping("/Id")
-    public ResponseEntity<?> GetMastery(String Id) {
-        try {
-            Mastery mastery = masteryService.getMasteryById(Id);
-            return ResponseEntity.ok(mastery);
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getMastery(@PathVariable String id) {
+        Mastery mastery = masteryService.getMasteryById(id);
+        if (mastery == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(mastery);
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<?> UpdateMastery(String Id, Mastery mastery) {
-    //     try {
-    //         Mastery updatedmastery = masteryService.updateMastery(Id, mastery);
-    //         return ResponseEntity.ok(updatedmastery);
-    //     } catch (Exception ex) {
-    //         return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
-    //     }
-    // }
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> UpdateMastery(
-            @PathVariable String id,
+    public ResponseEntity<?> updateMastery(@PathVariable String id,
             @RequestPart("mastery") String updatedMasteryJson,
-            @RequestPart(value = "photos", required = false) List<MultipartFile> newPhotos) {
+            @RequestPart(value = "photo", required = false) List<MultipartFile> newPhotos,
+            @AuthenticationPrincipal Jwt jwt) {
         try {
-
-            ObjectMapper mapper = new ObjectMapper();
-            Mastery updatedMastery = mapper.readValue(updatedMasteryJson, Mastery.class);
-            
+            Mastery updatedMastery = new ObjectMapper().readValue(updatedMasteryJson, Mastery.class);
             if (newPhotos != null && !newPhotos.isEmpty()) {
-                String photoId = null;
-                for (MultipartFile photo : newPhotos) {
-                    String id1 = photoService.savePhoto(photo);
-                    photoId = id1;
-                }
-                updatedMastery.setPhotoId(photoId);
+                List<String> photoIds = new ArrayList<>();
+                for (MultipartFile photo : newPhotos)
+                    photoIds.add(photoService.savePhoto(photo));
+                updatedMastery.setPhotoUrls(photoIds);
             }
-
-            masteryService.updateMastery(id, updatedMastery);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(masteryService.updateMastery(id, updatedMastery, jwt));
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la mise à jour : " + ex.getMessage());
         }
     }
 
-    // ✅ GET PHOTO BY ID (for React display)
-    @GetMapping("/photo/{photoId}")
-    public ResponseEntity<byte[]> getPhoto(@PathVariable String photoId) throws IOException {
-        return photoService.getPhoto(photoId)
-                .map(photoData -> ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(photoData.contentType()))
+    @GetMapping("/photo/{photoUrls}")
+    public ResponseEntity<byte[]> getPhoto(@PathVariable String photoUrls) throws IOException {
+        return photoService.getPhoto(photoUrls)
+                .map(photoData -> ResponseEntity.ok().contentType(MediaType.parseMediaType(photoData.contentType()))
                         .body(photoData.bytes()))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/Id")
-    public ResponseEntity<?> DeleteMastery(String Id) {
-        try {
-            masteryService.deleteMastery(Id);
-            return ResponseEntity.ok().build();
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("Execption mds :" + ex.getMessage());
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMastery(@PathVariable String id, @AuthenticationPrincipal Jwt jwt) {
+        masteryService.deleteMastery(id, jwt);
+        return ResponseEntity.ok().build();
     }
-
 }

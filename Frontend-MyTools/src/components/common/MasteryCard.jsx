@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
-import { Heart } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { formatPrice, getImageUrl } from '../../utils/helpers';
-import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { formatPrice, getImageUrl } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
   const navigate = useNavigate();
@@ -18,14 +18,13 @@ const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
     <div onClick={() => navigate(`/masterys/${mastery.id}`)}>
       <motion.div
         whileHover={{ y: -8 }}
-        className="card-elegant overflow-hidden group cursor-pointer"
-      >
+        className="card-elegant overflow-hidden group cursor-pointer">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden">
           <img
             src={
-              mastery.photoId
-                ? getImageUrl(mastery.photoId)
+              mastery.photoUrls
+                ? getImageUrl(mastery.photoUrls[0])
                 : "/no-image.png"
             }
             alt={mastery.title}
@@ -39,10 +38,11 @@ const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
           <button
             onClick={handleLike}
             className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
-              isLiked ? 'bg-red-500 text-white' : 'bg-white/80 text-gray-700 hover:bg-white'
-            }`}
-          >
-            <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
+              isLiked
+                ? "bg-red-500 text-white"
+                : "bg-white/80 text-gray-700 hover:bg-white"
+            }`}>
+            <Heart className={`w-5 h-5 ${isLiked ? "fill-current" : ""}`} />
           </button>
         </div>
 
@@ -72,7 +72,7 @@ const MasteryCard = ({ mastery, onLike, isLiked = false }) => {
         </div>
       </motion.div>
     </div>
-    //</Link> 
+    //</Link>
   );
 };
 

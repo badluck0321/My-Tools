@@ -7,6 +7,7 @@ import ProductsIndex from "../pages/Products/ProductsIndex";
 import ProductInfos from "../pages/Products/ProductInfos";
 import MasteryInfos from "../pages/Masterys/MasteryInfos";
 import MasterysIndex from "../pages/Masterys/MasterysIndex";
+import CartPage from "../pages/cart/CartPage";
 
 export const publicRoutes = [
   { path: "/", element: <Home /> },
@@ -21,4 +22,5 @@ export const protectedRoutes = [
   { path: "/dashboard/*", element: <Dashboard /> },
   { path: "/events/create", element: <EventFormPage /> },
   { path: "/events/edit/:slug", element: <EventFormPage /> },
+  { path: "/cart", element: <CartPage /> },
 ];

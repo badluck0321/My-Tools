@@ -22,8 +22,8 @@ const fetchMyStore = async () => {
   } catch { return null; }
 };
 
-const fetchMyProducts = async (ownerId) => {
-  const res = await interceptor.get(`/products?ownerId=${ownerId}`);
+const fetchMyProducts = async () => {
+  const res = await interceptor.get('/products/mine');
   return Array.isArray(res.data) ? res.data : [];
 };
 
@@ -264,7 +264,7 @@ const ProductFormModal = ({ initial, ownerId, onClose, onSaved }) => {
             <div className="flex flex-wrap gap-1.5">
 
               {/* Existing photos — only in edit mode, shown greyed if new ones selected */}
-              {isEdit && photos.length === 0 && initial.photoIds?.map((id, i) => (
+              {isEdit && photos.length === 0 && initial.photoUrls?.map((id, i) => (
                 <div
                   key={id}
                   className="w-8 h-8 rounded-md overflow-hidden border border-[#d4cfc9] dark:border-[#4a4642] flex-shrink-0"
@@ -429,7 +429,7 @@ const MyProducts = () => {
     if (!ownerId) return;
     setLoading(true);
     try {
-      setProducts(await fetchMyProducts(ownerId));
+      setProducts(await fetchMyProducts());
     } catch (err) {
       console.error(err);
     } finally {

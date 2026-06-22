@@ -1,41 +1,43 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Tag,
-  CheckCircle,
-  XCircle,
-  Heart,
-  ShoppingCart,
+  Phone,
+  MapPin,
+  Briefcase,
+  Award,
   Share2,
-} from 'lucide-react';
-import { Loading } from '../../components/common';
-import { productService } from '../../services/productService';
+  CheckCircle,
+} from "lucide-react";
+
+import { Loading } from "../../components/common";
+import { masteryService } from "../../services/MasteryService";
 
 /* ─── PhotoImage: fetches one photo via service, renders it ── */
-const PhotoImage = ({ photoId, alt, className }) => {
+const PhotoImage = ({ photoUrls, alt, className }) => {
   const [src, setSrc] = useState(null);
 
   useEffect(() => {
     let objectUrl = null;
-    productService.getProductPhoto(photoId)
+    masteryService
+      .getMasteryPhoto(photoUrls)
       .then((url) => {
         objectUrl = url;
         setSrc(url);
       })
       .catch(() => setSrc(null));
 
-    // revoke the blob URL when the component unmounts or photoId changes
-    return () => { if (objectUrl) URL.revokeObjectURL(objectUrl); };
-  }, [photoId]);
+    // revoke the blob URL when the component unmounts or photoUrls changes
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [photoUrls]);
 
   if (!src)
     return (
-      <div className={`${className} bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580] text-sm`}>
+      <div
+        className={`${className} bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580] text-sm`}>
         Loading…
       </div>
     );
@@ -62,10 +64,9 @@ const Gallery = ({ photoUrls }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.3 }}
-            className="w-full h-full"
-          >
+            className="w-full h-full">
             <PhotoImage
-              photoId={photoUrls[current]}
+              photoUrls={photoUrls[current]}
               alt={`Photo ${current + 1}`}
               className="w-full h-full object-cover"
             />
@@ -77,14 +78,12 @@ const Gallery = ({ photoUrls }) => {
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow hover:scale-110 transition-transform"
-            >
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow hover:scale-110 transition-transform">
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow hover:scale-110 transition-transform"
-            >
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow hover:scale-110 transition-transform">
               <ChevronRight size={20} />
             </button>
 
@@ -105,12 +104,11 @@ const Gallery = ({ photoUrls }) => {
               onClick={() => setCurrent(i)}
               className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
                 i === current
-                  ? 'border-[#6d2842] scale-105'
-                  : 'border-transparent opacity-60 hover:opacity-100'
-              }`}
-            >
+                  ? "border-[#6d2842] scale-105"
+                  : "border-transparent opacity-60 hover:opacity-100"
+              }`}>
               <PhotoImage
-                photoId={id}
+                photoUrls={id}
                 alt={`Thumb ${i + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -121,175 +119,191 @@ const Gallery = ({ photoUrls }) => {
     </div>
   );
 };
-
-/* ─── Badge ───────────────────────────────────────── */
-const Badge = ({ children, color = 'default' }) => {
+/* ───────────────────────────────────────────── */
+/* Badge */
+/* ───────────────────────────────────────────── */
+const Badge = ({ children, color = "default" }) => {
   const colors = {
-    default: 'bg-[#f0eeeb] dark:bg-[#3a3633] text-[#5d5955] dark:text-[#c4bfb9]',
-    green: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400',
-    red: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400',
-    primary: 'bg-[#6d2842]/10 text-[#6d2842] dark:bg-[#6d2842]/30 dark:text-[#e8a0b4]',
+    default:
+      "bg-[#f0eeeb] dark:bg-[#3a3633] text-[#5d5955] dark:text-[#c4bfb9]",
+    green:
+      "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400",
+    primary:
+      "bg-[#6d2842]/10 text-[#6d2842] dark:bg-[#6d2842]/30 dark:text-[#e8a0b4]",
   };
+
   return (
-    <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${colors[color]}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${colors[color]}`}>
       {children}
     </span>
   );
 };
 
-/* ─── Info Row ────────────────────────────────────── */
+/* ───────────────────────────────────────────── */
+/* Info Row */
+/* ───────────────────────────────────────────── */
 const InfoRow = ({ label, value }) => (
   <div className="flex justify-between items-center py-3 border-b border-[#e8e7e5] dark:border-[#3a3633] last:border-0">
     <span className="text-sm text-[#8a8580] dark:text-[#7a756f]">{label}</span>
-    <span className="text-sm font-medium text-[#2d2a27] dark:text-[#e8e4e0]">{value}</span>
+    <span className="text-sm font-medium text-[#2d2a27] dark:text-[#e8e4e0]">
+      {value}
+    </span>
   </div>
 );
 
-/* ─── Main Component ──────────────────────────────── */
+/* ───────────────────────────────────────────── */
+/* Main Component */
+/* ───────────────────────────────────────────── */
 const MasteryInfos = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
+
+  const [mastery, setMastery] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    productService.getProductById(id)
-      .then(setProduct)
-      .catch((err) => setError(err?.message ?? 'Failed to load product'))
+
+    masteryService
+      .getMasteryById(id)
+      .then(setMastery)
+      .catch((err) =>
+        setError(err?.message ?? "Failed to load mastery information")
+      )
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <Loading text="Loading product..." />;
+  if (loading) {
+    return <Loading text="Loading mastery..." />;
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="text-[#6d2842] font-medium">{error}</p>
+
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-sm underline"
-        >
-          <ArrowLeft size={16} /> Go back
+          className="flex items-center gap-2 text-sm underline">
+          <ArrowLeft size={16} />
+          Go Back
         </button>
       </div>
     );
-
-  const listedForLabel =
-    product.listedForId === 0 ? 'Sale' : product.listedForId === 1 ? 'Rent' : 'Both';
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
       <div className="container-custom py-12">
-
-        {/* Back button */}
+        {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-sm text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#e8a0b4] transition-colors mb-8 group"
-        >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Products
+          className="flex items-center gap-2 text-sm text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#e8a0b4] transition-colors mb-8 group">
+          <ArrowLeft
+            size={16}
+            className="group-hover:-translate-x-1 transition-transform"
+          />
+          Back to Masteries
         </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-          {/* ── Left: Gallery ── */}
+          {/* Left Side Image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {product.photoUrls && product.photoUrls.length > 0 ? (
-              <Gallery photoUrls={product.photoUrls} />
-            ) : (
-              <div className="aspect-[4/3] rounded-2xl bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580]">
-                No image available
-              </div>
-            )}
+            animate={{ opacity: 1, y: 0 }}>
+            <MasteryImage photoUrls={mastery.photoUrls} />
           </motion.div>
 
-          {/* ── Right: Info ── */}
+          {/* Right Side Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex flex-col gap-6"
-          >
-            {/* Badges row */}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col gap-6">
+            {/* Badges */}
             <div className="flex flex-wrap gap-2">
-              <Badge color={product.isavailable ? 'green' : 'red'}>
-                {product.isavailable ? (
-                  <><CheckCircle size={12} /> Available</>
-                ) : (
-                  <><XCircle size={12} /> Unavailable</>
-                )}
+              <Badge color="green">
+                <CheckCircle size={12} />
+                {mastery.masteryStatuId}
               </Badge>
+
               <Badge color="primary">
-                <Tag size={12} /> {listedForLabel}
+                <Briefcase size={12} />
+                {mastery.pricingType}
               </Badge>
-              {product.duration > 0 && (
-                <Badge>
-                  <Clock size={12} /> {product.duration} months
-                </Badge>
-              )}
             </div>
 
-            {/* Title & Price */}
+            {/* Title */}
             <div>
               <h1 className="text-4xl md:text-5xl font-display font-bold mb-3 text-[#1a1816] dark:text-[#f0ece8]">
-                {product.name}
+                {mastery.title}
               </h1>
+
               <p className="text-3xl font-bold bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
-                ${Number(product.price).toFixed(2)}
+                {mastery.price} MAD
               </p>
             </div>
 
             {/* Description */}
-            {product.description && (
-              <p className="text-[#5d5955] dark:text-[#c4bfb9] leading-relaxed text-base">
-                {product.description}
-              </p>
-            )}
+            <div className="glass dark:glass-dark rounded-2xl p-5">
+              <h3 className="font-semibold text-lg mb-3">About this Mastery</h3>
 
-            {/* Details table */}
-            <div className="glass dark:glass-dark rounded-2xl px-5 py-1">
-              <InfoRow label="Serie No." value={`#${product.serieNum}`} />
-              <InfoRow label="Category ID" value={product.categoryId} />
-              <InfoRow label="Mark ID" value={product.markId} />
-              {product.ownerId && (
-                <InfoRow label="Owner" value={product.ownerId} />
-              )}
-              <InfoRow
-                label="Photos"
-                value={`${product.photoUrls?.length ?? 0} image${product.photoUrls?.length !== 1 ? 's' : ''}`}
-              />
+              <p className="text-[#5d5955] dark:text-[#c4bfb9] leading-relaxed">
+                {mastery.description}
+              </p>
             </div>
 
-            {/* Action buttons */}
+            {/* Master Information */}
+            <div className="glass dark:glass-dark rounded-2xl p-5">
+              <h3 className="font-semibold text-lg mb-4">Master Information</h3>
+
+              <InfoRow label="Master" value={mastery.masterName} />
+
+              <InfoRow label="Master ID" value={mastery.masterId} />
+
+              <InfoRow label="Phone" value={mastery.masterPhone} />
+
+              <InfoRow label="City" value={mastery.city} />
+
+              <InfoRow
+                label="Experience"
+                value={`${mastery.experienceYears} Years`}
+              />
+
+              <InfoRow label="Pricing Type" value={mastery.pricingType} />
+
+              <InfoRow label="Status" value={mastery.masteryStatuId} />
+            </div>
+
+            {/* Highlights */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="glass dark:glass-dark rounded-xl p-4 text-center">
+                <Award size={22} className="mx-auto mb-2 text-[#6d2842]" />
+                <p className="text-lg font-bold">{mastery.experienceYears}</p>
+                <p className="text-xs text-[#8a8580]">Years Experience</p>
+              </div>
+
+              <div className="glass dark:glass-dark rounded-xl p-4 text-center">
+                <MapPin size={22} className="mx-auto mb-2 text-[#6d2842]" />
+                <p className="text-lg font-bold">{mastery.city}</p>
+                <p className="text-xs text-[#8a8580]">Service Location</p>
+              </div>
+            </div>
+
+            {/* Actions */}
             <div className="flex gap-3 mt-auto">
-              <button
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20"
-              >
-                <ShoppingCart size={18} />
-                {product.listedForId === 1 ? 'Rent Now' : 'Add to Cart'}
-              </button>
+              <a
+                href={`tel:${mastery.masterPhone}`}
+                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20">
+                <Phone size={18} />
+                Contact Master
+              </a>
 
-              <button
-                onClick={() => setIsLiked((v) => !v)}
-                className={`p-3.5 rounded-xl border transition-all active:scale-95 ${
-                  isLiked
-                    ? 'bg-[#6d2842] border-[#6d2842] text-white'
-                    : 'border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842]'
-                }`}
-              >
-                <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
-              </button>
-
-              <button className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842] transition-all active:scale-95">
+              <button className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842] transition-all">
                 <Share2 size={18} />
               </button>
             </div>

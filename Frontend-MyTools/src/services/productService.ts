@@ -11,10 +11,17 @@ export const productService = {
     const response = await interceptor.get(`/products/${id}`);
     return response.data as Product;
   },
-  async getProductPhoto(photoId: string): Promise<string> {
-    const response = await interceptor.get(`/products/photos/${photoId}`, {
+  async getProductPhoto(photoUrls: string): Promise<string> {
+    const response = await interceptor.get(`/products/photos/${photoUrls}`, {
       responseType: "blob",
     });
     return URL.createObjectURL(response.data);
+  },
+  async getMyProducts(): Promise<Product[]> {
+    const response = await interceptor.get("/products/mine");
+    return response.data as Product[];
+  },
+  async deleteProduct(id: string): Promise<void> {
+    await interceptor.delete(`/products/${id}`);
   },
 };

@@ -5,5 +5,5 @@ export interface Mastery {
   typeId: number;
   price: string;
   description: string;
-  photoId: string;
+  photoUrls: string[];
 }

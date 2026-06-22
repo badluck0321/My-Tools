@@ -1,4 +1,7 @@
 package com.example.BackEnd_MyTools.DTO;
+
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import lombok.Data;
 
@@ -11,6 +14,6 @@ public class DtoGetMastery {
     public int typeId;
     public int price;
     public String description;
-    public String photoId;
+    public List<String> photoUrls;
 
 }

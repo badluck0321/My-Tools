@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { formatPrice, getImageUrl } from '../../utils/helpers';
 import { useKeycloak } from '../../providers/KeycloakProvider'; // adjust path
 import interceptor from '../../interceptors/auth.interceptor'; // adjust path
+import { cartService } from '../../services/cartService';
 
 /* ─── API helpers ─────────────────────────────────── */
 const addToCart = (productId, listingType = 'SALE') =>
-  interceptor.post('/cart/items', { productId, listingType });
+  cartService.addItem({ productId, listingType });
 
 const toggleFavorite = (productId) =>
   interceptor.post(`/favorites/${productId}`);
@@ -48,7 +49,7 @@ const ProductCard = ({ product }) => {
     try {
       await addToCart(
         product.id,
-        product.listedFor === 1 ? 'RENT' : 'SALE'
+        product.listedForId === 1 ? 'SALE' : 'SALE'
       );
       setCartStatus('added');
       setTimeout(() => setCartStatus('idle'), 2000);
