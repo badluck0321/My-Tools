@@ -103,6 +103,16 @@ const Navbar = () => {
               )}
             </button>
 
+            {authenticated && (
+              <Link
+                to="/cart"
+                className="p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors"
+                title="Cart"
+              >
+                <ShoppingBag className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
+              </Link>
+            )}
+
             {authenticated ? (
               <div className="relative">
                 <button
@@ -166,7 +176,7 @@ const Navbar = () => {
 
                     <div className="py-2">
                       <Link
-                        to="/Dashboard"
+                        to="/dashboard"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <User className="w-5 h-5" />
@@ -182,14 +192,14 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        to="/dashboard/purchases"
+                        to="/dashboard/orders"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <ShoppingBag className="w-5 h-5" />
-                        <span className="font-medium">Purchases</span>
+                        <span className="font-medium">Orders</span>
                       </Link>
                       <Link
-                        to="/dashboard/purchases"
+                        to="/dashboard/MyStore"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <ShoppingBag className="w-5 h-5" />
