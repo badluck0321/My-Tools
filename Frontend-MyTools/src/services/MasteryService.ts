@@ -11,8 +11,8 @@ export const masteryService = {
     const response = await interceptor.get(`/masterys/${id}`);
     return response.data as Mastery;
   },
-  async getMasteryPhoto(photoId: string): Promise<string> {
-    const response = await interceptor.get(`/masterys/photos/${photoId}`, {
+  async getMasteryPhoto(photoUrls: string): Promise<string> {
+    const response = await interceptor.get(`/masterys/photos/${photoUrls}`, {
       responseType: "blob",
     });
     return URL.createObjectURL(response.data);

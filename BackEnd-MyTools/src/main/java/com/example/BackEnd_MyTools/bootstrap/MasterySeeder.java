@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,17 +73,19 @@ public class MasterySeeder {
         m.city = (String) data.get("city");
         m.experienceYears = (Integer) data.get("experienceYears");
         m.description = (String) data.get("description");
-
         // ✅ CLOUDINARY IMAGE HANDLING
-        String imageUrl = (String) data.get("seedImageUrl");
-
-        if (imageUrl != null && !imageUrl.isBlank()) {
-            try {
-                m.photoId = saveCloudinaryImage(imageUrl);
-            } catch (Exception e) {
-                System.err.println("[Seeder] Image upload failed for: " + m.title);
-                e.printStackTrace();
+        List<String> imagesUrlsList = (List<String>) data.get("seedImageUrl");
+        if (imagesUrlsList != null && !imagesUrlsList.isEmpty()) {
+            m.photoUrls = new ArrayList<>();
+            for (String imageUrl : imagesUrlsList) {
+                try {
+                    m.photoUrls.add(saveCloudinaryImage(imageUrl));
+                } catch (Exception e) {
+                    System.err.println("[Seeder] Image upload failed for: " + m.title);
+                    e.printStackTrace();
+                }
             }
+
         }
 
         return m;

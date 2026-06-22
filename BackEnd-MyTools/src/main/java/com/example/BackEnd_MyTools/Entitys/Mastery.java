@@ -1,5 +1,7 @@
 package com.example.BackEnd_MyTools.Entitys;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
@@ -21,5 +23,5 @@ public class Mastery {
     public String city;
     public int experienceYears;
     public String description;
-    public String photoId;
+    public List<String> photoUrls;
 }

@@ -10,6 +10,9 @@ import Profile from './Profile';
 import MyStore from './MyStore';
 import MyProducts from './MyProducts';
 import MyFavorites from './MyFavorites';
+import MyOrders from './MyOrders';
+import Notifications from './Notifications';
+import Messages from './Messages';
 
 const Dashboard = () => {
   const { user } = useKeycloak();
@@ -47,10 +50,22 @@ const Dashboard = () => {
       color: 'from-[#508978] to-[#70a596]' // Sage
     },
     { 
-      id: 'purchases', 
-      name: 'Purchases', 
+      id: 'orders', 
+      name: 'Orders', 
       icon: ShoppingBag,
       color: 'from-[#6d2842] to-[#b8862f]' // Burgundy to Gold
+    },
+    { 
+      id: 'notifications', 
+      name: 'Notifications', 
+      icon: ShoppingBag,
+      color: 'from-[#b8862f] to-[#d4a343]'
+    },
+    { 
+      id: 'messages', 
+      name: 'Messages', 
+      icon: ShoppingBag,
+      color: 'from-[#508978] to-[#70a596]'
     },
     { 
       id: 'settings', 
@@ -149,7 +164,9 @@ const Dashboard = () => {
                 <Route path="MyStore" element={<MyStore />} />
                 <Route path="MyProducts"  element={<MyProducts />} />
                 <Route path="favorites" element={<MyFavorites />} />
-                <Route path="purchases" element={<PurchasesSection />} />
+                <Route path="orders" element={<MyOrders />} />
+                <Route path="notifications" element={<Notifications />} />
+                <Route path="messages" element={<Messages />} />
                 <Route path="settings" element={<SettingsSection />} />
               </Routes>
             </motion.div>

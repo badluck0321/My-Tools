@@ -5,9 +5,13 @@ export interface Product {
   markId: number;
   serieNum: number;
   description: string;
-  price: string;
+  price: number | string;
   listedForId: number;
   duration: number;
+  ownerId?: string;
+  city?: string;
+  latitude?: number;
+  longitude?: number;
   isavailable: boolean;
   photoUrls: string[];
 }

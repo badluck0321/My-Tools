@@ -14,6 +14,10 @@ public class DtoGetProduct {
     private int price;
     private int listedForId;
     private int duration;
+    private String ownerId;
+    private String city;
+    private Double latitude;
+    private Double longitude;
     private boolean isavailable;
     private List<String> photoUrls;
 }
