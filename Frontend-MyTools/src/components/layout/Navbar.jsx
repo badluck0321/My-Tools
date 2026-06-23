@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { ProductCard, Loading, Input, Button } from '../../components/common';
+import { ProductCard, Loading, Input, Button } from "../../components/common";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -38,7 +38,6 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/Products" },
-    { name: "Events", path: "/events" },
     { name: "Masterys", path: "/Masterys" },
     { name: "Stores", path: "/stores" },
   ];
@@ -68,25 +67,24 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-        <div className="mb space-y-4">
-          {/* Search Bar */}
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <Input
-                type="text"
-                placeholder="Search ..."
-                // onChange={(e) => setSearchTerm(e.target.value)}
-                icon={Search}
-              />
-            </div>
-            <Button
-              variant="outline"
-              // icon={Filter}
-              // onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden"
-            >
-              Filters
-            </Button>
+          <div className="mb space-y-4">
+            {/* Search Bar */}
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <Input
+                  type="text"
+                  placeholder="Search ..."
+                  // onChange={(e) => setSearchTerm(e.target.value)}
+                  icon={Search}
+                />
+              </div>
+              <Button
+                variant="outline"
+                // icon={Filter}
+                // onClick={() => setShowFilters(!showFilters)}
+                className="lg:hidden">
+                Filters
+              </Button>
             </div>
           </div>
           {/* Right Side Actions */}
@@ -107,8 +105,7 @@ const Navbar = () => {
               <Link
                 to="/cart"
                 className="p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors"
-                title="Cart"
-              >
+                title="Cart">
                 <ShoppingBag className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
               </Link>
             )}
