@@ -18,30 +18,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> {})
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authz -> authz
-                .requestMatchers(
-                    "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
-                    "/webjars/**", "/actuator/**", "/products/photos/**", "/masterys/photo/**", "/ws/**")
-                .permitAll()
-                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/masterys/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/stores", "/stores/{id}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/Lookups/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/ai/search/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/bookings/availability", "/bookings/product/**").permitAll()
-                .requestMatchers("/chat").permitAll()
-                .anyRequest().authenticated())
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())));
+                .cors(cors -> {
+                })
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(
+                                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
+                                "/webjars/**", "/actuator/**", "/product/photos/**", "/masterys/photos/**", "/ws/**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/masterys/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/stores", "/stores/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/Lookups/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ai/search/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/bookings/availability", "/bookings/product/**").permitAll()
+                        .requestMatchers("/chat").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())));
         return http.build();
     }
 
     public static String getUserInfo() {
         var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
+        if (auth != null && auth.isAuthenticated()
+                && auth.getPrincipal() instanceof org.springframework.security.oauth2.jwt.Jwt jwt) {
             return jwt.getClaimAsString("preferred_username");
         }
         return "anonymous";
