@@ -64,11 +64,13 @@ public class MasteryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getMastery(@PathVariable String id) {
+    public ResponseEntity<DtoGetMastery> getMastery(@PathVariable String id, HttpServletRequest request) {
         Mastery mastery = masteryService.getMasteryById(id);
         if (mastery == null)
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(mastery);
+        String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),
+                request.getServerPort(), request.getContextPath());
+        return ResponseEntity.ok(masteryMapper.toDto(mastery, baseUrl));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -90,7 +92,7 @@ public class MasteryController {
         }
     }
 
-    @GetMapping("/photo/{photoUrls}")
+    @GetMapping("/photos/{photoUrls}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable String photoUrls) throws IOException {
         return photoService.getPhoto(photoUrls)
                 .map(photoData -> ResponseEntity.ok().contentType(MediaType.parseMediaType(photoData.contentType()))

@@ -1,30 +1,35 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 // eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion';
-import { Search, Filter, X } from 'lucide-react';
-import { ArtworkCard, Loading, Input, Button } from '../../components/common';
-import { ART_CATEGORIES, PRICE_RANGES, SORT_OPTIONS } from '../../utils/constants';
-import { masteryService } from '../../services/MasteryService';
-import MasteryCard from '../../components/common/MasteryCard';
+import { motion } from "framer-motion";
+import { Search, Filter, X } from "lucide-react";
+import { ArtworkCard, Loading, Input, Button } from "../../components/common";
+import {
+  ART_CATEGORIES,
+  PRICE_RANGES,
+  SORT_OPTIONS,
+} from "../../utils/constants";
+import { masteryService } from "../../services/MasteryService";
+import MasteryCard from "../../components/common/MasteryCard";
 
 const MasterysIndex = () => {
   const [masterys, setMasterys] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedPriceRange, setSelectedPriceRange] = useState('all');
-  const [selectedSort, setSelectedSort] = useState('newest');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("all");
+  const [selectedSort, setSelectedSort] = useState("newest");
   const [showFilters, setShowFilters] = useState(false);
   const [likedMasterys, setLikedMasterys] = useState(new Set());
   // Infinite scroll states
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
 
   // Fetch masterys from API
   useEffect(() => {
     setLoading(true);
-    masteryService.getMasterys()
+    masteryService
+      .getMasterys()
       .then((data) => {
         setMasterys(data);
       })
@@ -42,16 +47,21 @@ const MasterysIndex = () => {
   };
 
   const filteredMasterys = masterys.filter((mastery) => {
-    const matchesSearch =
-      mastery.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = mastery.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
-    if (selectedCategory !== 'all' && mastery.typeId !== selectedCategory) {
+    if (selectedCategory !== "all" && mastery.typeId !== selectedCategory) {
       return false;
     }
 
-    if (selectedPriceRange !== 'all') {
+    if (selectedPriceRange !== "all") {
       const range = PRICE_RANGES.find((r) => r.id === selectedPriceRange);
-      return matchesSearch && Number(mastery.price) >= range.min && Number(mastery.price) <= range.max;
+      return (
+        matchesSearch &&
+        Number(mastery.price) >= range.min &&
+        Number(mastery.price) <= range.max
+      );
     }
 
     return matchesSearch;
@@ -80,7 +90,7 @@ const MasterysIndex = () => {
       {
         root: null,
         rootMargin: "200px",
-        threshold: 0
+        threshold: 0,
       }
     );
 
@@ -94,13 +104,11 @@ const MasterysIndex = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633] py-16">
       <div className="container-custom">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
+          className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6">
             <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
               Masterys / Services
@@ -128,19 +136,19 @@ const MasterysIndex = () => {
               variant="outline"
               icon={Filter}
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden"
-            >
+              className="lg:hidden">
               Filters
             </Button>
           </div>
 
-          <div className={`${showFilters ? 'block' : 'hidden lg:block'}`}>
+          <div className={`${showFilters ? "block" : "hidden lg:block"}`}>
             <div className="glass dark:glass-dark rounded-2xl p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                 {/* Categories */}
                 <div>
-                  <label className="block text-sm font-medium mb-3">Category</label>
+                  <label className="block text-sm font-medium mb-3">
+                    Category
+                  </label>
                   <div className="flex flex-wrap gap-2">
                     {ART_CATEGORIES.map((category) => (
                       <button
@@ -148,10 +156,9 @@ const MasterysIndex = () => {
                         onClick={() => setSelectedCategory(category.id)}
                         className={`px-4 py-2 rounded-xl text-sm font-medium ${
                           selectedCategory === category.id
-                            ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white'
-                            : 'bg-white dark:bg-gray-800'
-                        }`}
-                      >
+                            ? "bg-gradient-to-r from-primary-600 to-secondary-600 text-white"
+                            : "bg-white dark:bg-gray-800"
+                        }`}>
                         {category.icon} {category.name}
                       </button>
                     ))}
@@ -160,12 +167,13 @@ const MasterysIndex = () => {
 
                 {/* Price */}
                 <div>
-                  <label className="block text-sm font-medium mb-3">Price Range</label>
+                  <label className="block text-sm font-medium mb-3">
+                    Price Range
+                  </label>
                   <select
                     value={selectedPriceRange}
                     onChange={(e) => setSelectedPriceRange(e.target.value)}
-                    className="w-full px-4 py-2 rounded-xl"
-                  >
+                    className="w-full px-4 py-2 rounded-xl">
                     {PRICE_RANGES.map((range) => (
                       <option key={range.id} value={range.id}>
                         {range.label}
@@ -176,12 +184,13 @@ const MasterysIndex = () => {
 
                 {/* Sort */}
                 <div>
-                  <label className="block text-sm font-medium mb-3">Sort By</label>
+                  <label className="block text-sm font-medium mb-3">
+                    Sort By
+                  </label>
                   <select
                     value={selectedSort}
                     onChange={(e) => setSelectedSort(e.target.value)}
-                    className="w-full px-4 py-2 rounded-xl"
-                  >
+                    className="w-full px-4 py-2 rounded-xl">
                     {SORT_OPTIONS.map((option) => (
                       <option key={option.id} value={option.id}>
                         {option.label}
@@ -189,21 +198,21 @@ const MasterysIndex = () => {
                     ))}
                   </select>
                 </div>
-
               </div>
 
-              {(searchTerm || selectedCategory !== 'all' || selectedPriceRange !== 'all') && (
+              {(searchTerm ||
+                selectedCategory !== "all" ||
+                selectedPriceRange !== "all") && (
                 <div className="mt-4 flex justify-end">
                   <Button
                     variant="ghost"
                     size="sm"
                     icon={X}
                     onClick={() => {
-                      setSearchTerm('');
-                      setSelectedCategory('all');
-                      setSelectedPriceRange('all');
-                    }}
-                  >
+                      setSearchTerm("");
+                      setSelectedCategory("all");
+                      setSelectedPriceRange("all");
+                    }}>
                     Clear Filters
                   </Button>
                 </div>
@@ -214,7 +223,7 @@ const MasterysIndex = () => {
 
         <div className="mb-6">
           Showing {filteredMasterys.length} Masterys
-          {filteredMasterys.length !== 1 && 's'}
+          {filteredMasterys.length !== 1 && "s"}
         </div>
 
         {loading ? (
@@ -225,8 +234,7 @@ const MasterysIndex = () => {
           <>
             <motion.div
               layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredMasterys.slice(0, visibleCount).map((mastery) => (
                 <MasteryCard
                   key={mastery.id}
@@ -236,7 +244,7 @@ const MasterysIndex = () => {
                 />
               ))}
             </motion.div>
-{/* <MasteryCard></MasteryCard> */}
+            {/* <MasteryCard></MasteryCard> */}
             {/* Infinite scroll loader */}
             <div ref={loaderRef} className="flex justify-center py-10">
               {hasMore && <Loading text="Loading more masterys..." />}

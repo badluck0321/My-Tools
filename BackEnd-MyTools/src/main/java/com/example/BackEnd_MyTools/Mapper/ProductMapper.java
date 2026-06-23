@@ -23,7 +23,7 @@ public interface ProductMapper {
             dto.setPhotoUrls(
                     product.getPhotoUrls()
                             .stream()
-                            .map(id -> baseUrl + "/products/photos/" + id)
+                            .map(id -> baseUrl + "/product/photos/" + id)
                             .toList());
         }
     }
