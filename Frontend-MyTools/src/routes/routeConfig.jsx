@@ -8,14 +8,16 @@ import ProductInfos from "../pages/Products/ProductInfos";
 import MasteryInfos from "../pages/Masterys/MasteryInfos";
 import MasterysIndex from "../pages/Masterys/MasterysIndex";
 import CartPage from "../pages/cart/CartPage";
+import ForumPage from "../pages/Forum/ForumPage";
 
 export const publicRoutes = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <About /> },
   { path: "/Products", element: <ProductsIndex /> },
-  { path:"/products/:id", element:<ProductInfos />},
+  { path: "/products/:id", element: <ProductInfos /> },
   { path: "/Masterys", element: <MasterysIndex /> },
   { path: "/Masterys/:id", element: <MasteryInfos /> },
+  { path: "/forum", element: <ForumPage /> },
 ];
 
 export const protectedRoutes = [
