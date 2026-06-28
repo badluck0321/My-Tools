@@ -63,9 +63,10 @@ public class ProductController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double latitude,
             @RequestParam(required = false) Double longitude,
-            @RequestParam(required = false) Double radiusKm) {
+            @RequestParam(required = false) Double radiusKm,
+            @RequestParam(required = false) String ownerId) {
         List<Product> products = productService.getAllProductsSpecs(categoryId, markId, available, name, latitude,
-                longitude, radiusKm);
+                longitude, radiusKm, ownerId);
         if (products.isEmpty())
             return ResponseEntity.noContent().build();
         String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),

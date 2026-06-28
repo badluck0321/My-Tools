@@ -32,26 +32,35 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsSpecs(Integer categoryId, Integer markId, Boolean available, String name,
-            Double latitude, Double longitude, Double radiusKm) {
+            Double latitude, Double longitude, Double radiusKm, String ownerId) {
         List<Criteria> criteriaList = new ArrayList<>();
 
         Criteria c1 = ProductSpecs.hasCategoryId(categoryId);
         Criteria c2 = ProductSpecs.hasMarkId(markId);
         Criteria c3 = ProductSpecs.isAvailable(available);
         Criteria c4 = ProductSpecs.hasNameLike(name);
+        Criteria c5 = ProductSpecs.hasOwnerId(ownerId);
 
-        if (c1 != null) criteriaList.add(c1);
-        if (c2 != null) criteriaList.add(c2);
-        if (c3 != null) criteriaList.add(c3);
-        if (c4 != null) criteriaList.add(c4);
-        criteriaList.add(new Criteria().orOperator(Criteria.where("hidden").exists(false), Criteria.where("hidden").is(false)));
+        if (c1 != null)
+            criteriaList.add(c1);
+        if (c2 != null)
+            criteriaList.add(c2);
+        if (c3 != null)
+            criteriaList.add(c3);
+        if (c4 != null)
+            criteriaList.add(c4);
+        if (c5 != null)
+            criteriaList.add(c5);
+        criteriaList.add(
+                new Criteria().orOperator(Criteria.where("hidden").exists(false), Criteria.where("hidden").is(false)));
 
         Query query = new Query();
         if (!criteriaList.isEmpty()) {
             query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
         }
         if (latitude != null && longitude != null && radiusKm != null && radiusKm > 0) {
-            query.addCriteria(Criteria.where("location").nearSphere(new Point(longitude, latitude)).maxDistance(radiusKm / 6378.1));
+            query.addCriteria(Criteria.where("location").nearSphere(new Point(longitude, latitude))
+                    .maxDistance(radiusKm / 6378.1));
         }
 
         return mongoTemplate.find(query, Product.class);
@@ -59,7 +68,8 @@ public class ProductService {
 
     public Product getProductById(String id) {
         Product product = productRepo.findById(id).orElse(null);
-        if (product != null && product.isHidden()) return null;
+        if (product != null && product.isHidden())
+            return null;
         return product;
     }
 
@@ -110,7 +120,8 @@ public class ProductService {
     }
 
     public Product hideProduct(String id, Jwt jwt) {
-        if (!SecurityUtils.isAdmin(jwt)) throw new SecurityException("Admin role required");
+        if (!SecurityUtils.isAdmin(jwt))
+            throw new SecurityException("Admin role required");
         Product product = productRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Product not found"));
         product.setHidden(true);
         product.setModerationStatus("HIDDEN");

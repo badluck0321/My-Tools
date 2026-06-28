@@ -3,9 +3,10 @@ import { useAuth } from "../context/AuthContext";
 import { Mastery } from "../models/Mastery";
 
 export const masteryService = {
-  async getMasterys(): Promise<Mastery[]> {
-    const response = await interceptor.get("/masterys/specials");
-    return response.data as Mastery[]; // <-- Correct
+  async getMasterys(masterId?: string): Promise<Mastery[]> {
+    const query = masterId ? `?masterId=${encodeURIComponent(masterId)}` : "";
+    const response = await interceptor.get(`/masterys/specials${query}`);
+    return response.data as Mastery[];
   },
   async getMasteryById(id: string): Promise<Mastery> {
     const response = await interceptor.get(`/masterys/${id}`);

@@ -8,8 +8,13 @@ public class MasterySpecs {
     }
 
     public static Criteria hasTypeId(Integer typeId) {
-        return typeId != null ? Criteria.where("typeId").is(typeId) : null;
+        return typeId != null ? Criteria.where("masteryTypeId").is(typeId) : null;
     }
+
+    public static Criteria hasMasterId(String masterId) {
+        return masterId != null ? Criteria.where("masterId").is(masterId) : null;
+    }
+
     public static Criteria hasPriceBetween(Integer minPrice, Integer maxPrice) {
         if (minPrice != null && maxPrice != null) {
             return Criteria.where("price").gte(minPrice).lte(maxPrice);
@@ -21,6 +26,5 @@ public class MasterySpecs {
             return null;
         }
     }
-
 
 }

@@ -1,4 +1,5 @@
 package com.example.BackEnd_MyTools.Controllers;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 
@@ -19,12 +20,12 @@ public class StoreController {
 
     // @PostMapping("")
     // public ResponseEntity<?> AddStore(Store store) {
-    //     try {
-    //         Store addedstore = storeService.addStore(store);
-    //         return ResponseEntity.ok(addedstore);
-    //     } catch (Exception ex) {
-    //         return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
-    //     }
+    // try {
+    // Store addedstore = storeService.addStore(store);
+    // return ResponseEntity.ok(addedstore);
+    // } catch (Exception ex) {
+    // return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
+    // }
     // }
 
     @PostMapping("")
@@ -42,16 +43,16 @@ public class StoreController {
         boolean alreadyAssociate = storeService.existsByAssociate(sub);
         if (alreadyOwns || alreadyAssociate) {
             return ResponseEntity.status(409)
-                .body("You are already linked to a store");
+                    .body("You are already linked to a store");
         }
 
         // // Option B — block owners only (comment out alreadyAssociate check)
         // if (alreadyOwns) {
-        //     return ResponseEntity.status(409)
-        //         .body("You already own a store");
+        // return ResponseEntity.status(409)
+        // .body("You already own a store");
         // }
 
-        store.setOwnerId(List.of(sub));   // force ownerId from token, not from body
+        store.setOwnerId(List.of(sub)); // force ownerId from token, not from body
         Store created = storeService.addStore(store);
         return ResponseEntity.ok(created);
     }
@@ -66,11 +67,21 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/Id")
-    public ResponseEntity<?> GetStore(String Id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> GetStore(@PathVariable("id") String id) {
         try {
-            Store store = storeService.getStore(Id);
-            return ResponseEntity.ok(store);
+            Store store = storeService.getStore(id);
+            return store != null ? ResponseEntity.ok(store) : ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
+        }
+    }
+
+    @GetMapping("/owner/{ownerId}")
+    public ResponseEntity<?> GetStoreByOwner(@PathVariable("ownerId") String ownerId) {
+        try {
+            Store store = storeService.findByOwnerId(ownerId);
+            return store != null ? ResponseEntity.ok(store) : ResponseEntity.notFound().build();
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
         }
@@ -89,7 +100,7 @@ public class StoreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> UpdateStore(String Id, Store store) {
+    public ResponseEntity<?> UpdateStore(@PathVariable("id") String Id, @RequestBody Store store) {
         try {
             Store updatedstore = storeService.updateStore(Id, store);
             return ResponseEntity.ok(updatedstore);
@@ -98,8 +109,8 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/Id")
-    public ResponseEntity<?> DeleteStore(String Id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> DeleteStore(@PathVariable("id") String Id) {
         try {
             storeService.deleteStore(Id);
             return ResponseEntity.ok().build();

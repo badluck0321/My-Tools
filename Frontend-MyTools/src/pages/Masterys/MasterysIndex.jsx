@@ -26,17 +26,28 @@ const MasterysIndex = () => {
   const loaderRef = useRef(null);
 
   // Fetch masterys from API
+  // useEffect(() => {
+  //   setLoading(true);
+  //   masteryService
+  //     .getMasterys()
+  //     .then((data) => {
+  //       setMasterys(data);
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => setLoading(false));
+  // }, []);
+
   useEffect(() => {
     setLoading(true);
     masteryService
       .getMasterys()
       .then((data) => {
-        setMasterys(data);
+        // If data is null/undefined (like a 204 response), default to an empty array
+        setMasterys(Array.isArray(data) ? data : []);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
-
   // Local-only like toggle
   const handleLike = (masteryId) => {
     setLikedMasterys((prev) => {
