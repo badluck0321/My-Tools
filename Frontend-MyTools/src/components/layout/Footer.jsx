@@ -1,35 +1,44 @@
-import { Link } from 'react-router-dom';
-import { Palette, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Link } from "react-router-dom";
+import {
+  Palette,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     explore: [
-      { name: 'Products', path: '/Products' },
-      { name: 'Masterys', path: '/Masterys' },
-      { name: 'Stores', path: '/stores' },
-      { name: 'Categories', path: '/categories' },
+      { name: "Products", path: "/Products" },
+      { name: "Masterys", path: "/Masterys" },
+      { name: "Stores", path: "/stores" },
+      { name: "Categories", path: "/categories" },
     ],
     company: [
-      { name: 'About Us', path: '/about' },
-      { name: 'Contact', path: '/contact' },
-      { name: 'Careers', path: '/careers' },
-      { name: 'Blog', path: '/blog' },
+      { name: "About Us", path: "/about" },
+      { name: "Contact", path: "/contact" },
+      { name: "Careers", path: "/careers" },
+      { name: "Blog", path: "/blog" },
     ],
     legal: [
-      { name: 'Privacy Policy', path: '/privacy' },
-      { name: 'Terms of Service', path: '/terms' },
-      { name: 'Cookie Policy', path: '/cookies' },
-      { name: 'Refund Policy', path: '/refund' },
+      { name: "Privacy Policy", path: "/privacy" },
+      { name: "Terms of Service", path: "/terms" },
+      { name: "Cookie Policy", path: "/cookies" },
+      { name: "Refund Policy", path: "/refund" },
     ],
   };
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, url: 'https://facebook.com' },
-    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com' },
-    { name: 'Instagram', icon: Instagram, url: 'https://instagram.com' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com' },
+    { name: "Facebook", icon: Facebook, url: "https://facebook.com" },
+    { name: "Twitter", icon: Twitter, url: "https://twitter.com" },
+    { name: "Instagram", icon: Instagram, url: "https://instagram.com" },
+    { name: "LinkedIn", icon: Linkedin, url: "https://linkedin.com" },
   ];
 
   return (
@@ -46,39 +55,47 @@ const Footer = () => {
                 My-Tools
               </span>
             </Link>
-            
+
             <p className="text-[#5d5955] dark:text-[#c4bfb9] mb-6 max-w-md">
-              Empowering global artists by connecting creativity with technology. 
-              Discover, collect, and celebrate art from talented creators worldwide.
+              Empowering global artists by connecting creativity with
+              technology. Discover, collect, and celebrate art from talented
+              creators worldwide.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
-                <span className="text-[#5d5955] dark:text-[#c4bfb9]">info@MyTools.com</span>
+                <span className="text-[#5d5955] dark:text-[#c4bfb9]">
+                  info@MyTools.com
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
-                <span className="text-[#5d5955] dark:text-[#c4bfb9]">+1 (555) 123-4567</span>
+                <span className="text-[#5d5955] dark:text-[#c4bfb9]">
+                  +1 (555) 123-4567
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
-                <span className="text-[#5d5955] dark:text-[#c4bfb9]">123 Art Street, Creative City, CC 12345</span>
+                <span className="text-[#5d5955] dark:text-[#c4bfb9]">
+                  123 Art Street, Creative City, CC 12345
+                </span>
               </div>
             </div>
           </div>
 
           {/* Explore Links */}
           <div>
-            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">Explore</h3>
+            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">
+              Explore
+            </h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors"
-                  >
+                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -88,14 +105,15 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">Company</h3>
+            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">
+              Company
+            </h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors"
-                  >
+                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -105,14 +123,15 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">Legal</h3>
+            <h3 className="text-[#2d2a27] dark:text-white font-semibold text-lg mb-4">
+              Legal
+            </h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors"
-                  >
+                    className="text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -128,7 +147,8 @@ const Footer = () => {
               Subscribe to Our Newsletter
             </h3>
             <p className="text-[#5d5955] dark:text-[#c4bfb9] mb-6">
-              Get the latest art news, featured artists, and exclusive offers delivered to your inbox.
+              Get the latest art news, featured artists, and exclusive offers
+              delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
@@ -160,8 +180,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white dark:bg-[#1a1816] border border-[#e8e7e5] dark:border-[#4a4642] hover:bg-gradient-to-br hover:from-[#6d2842] hover:to-[#a64d6d] text-[#5d5955] dark:text-[#c4bfb9] hover:text-white hover:border-transparent transition-all"
-                  aria-label={social.name}
-                >
+                  aria-label={social.name}>
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
