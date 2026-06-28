@@ -8,18 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("dev")
 public class DataSeeder implements ApplicationRunner {
-
-    private final MasterySeeder masterySeeder;
-    private final ProductSeeder productSeeder;
-
-    public DataSeeder(MasterySeeder masterySeeder, ProductSeeder productSeeder) {
-        this.masterySeeder = masterySeeder;
-        this.productSeeder = productSeeder;
-    }
-
-    @Override
-    public void run(ApplicationArguments args) {
-        masterySeeder.seed();
-        productSeeder.seed();
-    }
+    private final AllEntitiesSeeder allEntitiesSeeder;
+    public DataSeeder(AllEntitiesSeeder allEntitiesSeeder) { this.allEntitiesSeeder = allEntitiesSeeder; }
+    @Override public void run(ApplicationArguments args) { allEntitiesSeeder.seedAll(); }
 }

@@ -21,6 +21,12 @@ export const productService = {
     const response = await interceptor.get("/products/mine");
     return response.data as Product[];
   },
+
+  async getProductsByOwner(ownerId: string): Promise<Product[]> {
+    const response = await interceptor.get(`/products?ownerId=${ownerId}`);
+    return response.data as Product[];
+  },
+
   async deleteProduct(id: string): Promise<void> {
     await interceptor.delete(`/products/${id}`);
   },

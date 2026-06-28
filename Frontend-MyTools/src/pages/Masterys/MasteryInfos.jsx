@@ -257,7 +257,19 @@ const MasteryInfos = () => {
             {/* Master Information */}
             <div className="glass dark:glass-dark rounded-2xl p-5">
               <h3 className="font-semibold text-lg mb-4">Master Information</h3>
-              <InfoRow label="Master" value={mastery.masterName} />
+              <div className="flex justify-between items-center py-3 border-b border-[#e8e7e5] dark:border-[#3a3633] last:border-0">
+                <span className="text-sm text-[#8a8580] dark:text-[#7a756f]">
+                  Master
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/Masterys/history/${mastery.masterId}`)
+                  }
+                  className="text-sm font-medium text-[#6d2842] dark:text-[#a4c9b3] underline">
+                  {mastery.masterName}
+                </button>
+              </div>
               <InfoRow label="Master ID" value={mastery.masterId} />
               <InfoRow label="Phone" value={mastery.masterPhone} />
               <InfoRow label="City" value={mastery.city} />

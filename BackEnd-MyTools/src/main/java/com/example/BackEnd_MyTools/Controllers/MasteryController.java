@@ -54,8 +54,9 @@ public class MasteryController {
     @GetMapping("specials")
     public ResponseEntity<List<DtoGetMastery>> getAllMasterysSpect(HttpServletRequest request,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Integer typeId) {
-        List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId);
+            @RequestParam(required = false) Integer typeId,
+            @RequestParam(required = false) String masterId) {
+        List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId, masterId);
         if (masterys.isEmpty())
             return ResponseEntity.noContent().build();
         String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),

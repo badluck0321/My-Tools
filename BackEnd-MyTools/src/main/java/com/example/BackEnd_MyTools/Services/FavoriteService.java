@@ -34,7 +34,7 @@ private final KafkaProducerService kafka;
 
     if (existing.isPresent()) {
         favoriteRepository.delete(existing.get());
-        kafka.sendActivity(userId, "UNFAVORITED", productId, "PRODUCT");
+        try { kafka.sendActivity(userId, "UNFAVORITED", productId, "PRODUCT"); } catch (Exception ignored) {}
         return false;
     }
 
@@ -49,15 +49,13 @@ private final KafkaProducerService kafka;
         favorite.setSavedAt(LocalDateTime.now());
         favoriteRepository.save(favorite);
 
-            // ... save favorite ...
-    kafka.sendActivity(userId, "FAVORITED", productId, "PRODUCT");
-    kafka.sendNotification(
-        product.getOwnerId() != null ? product.getOwnerId() : null,
-        "PRODUCT_FAVORITED",
-        "Someone liked your product!",
-        product.getName() + " was added to a wishlist",
-        productId
-    );
+            // Non-critical Kafka notifications must not break the user action.
+    try {
+        kafka.sendActivity(userId, "FAVORITED", productId, "PRODUCT");
+        if (product.getOwnerId() != null && !product.getOwnerId().equals(userId)) {
+            kafka.sendNotification(product.getOwnerId(), "PRODUCT_FAVORITED", "Someone liked your product!", product.getName() + " was added to a wishlist", productId);
+        }
+    } catch (Exception ignored) {}
         return true;
     }
 

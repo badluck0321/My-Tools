@@ -1,14 +1,24 @@
 import interceptor from "../interceptors/auth.interceptor";
 import { Store } from "../models/Store";
-import { useAuth } from "../context/AuthContext";
 
 export const storeService = {
-  async getStore(): Promise<Store[]> {
+  async getStores(): Promise<Store[]> {
     const response = await interceptor.get("/stores");
-    return response.data as Store[]; // <-- Correct
+    return response.data as Store[];
   },
-    async addProduct(store: Store): Promise<Store[]> {
+
+  async getStoreById(id: string): Promise<Store> {
+    const response = await interceptor.get(`/stores/${id}`);
+    return response.data as Store;
+  },
+
+  async getStoreByOwner(ownerId: string): Promise<Store> {
+    const response = await interceptor.get(`/stores/owner/${ownerId}`);
+    return response.data as Store;
+  },
+
+  async createStore(store: Store): Promise<Store> {
     const response = await interceptor.post("/stores", store);
-    return response.data as Store[]; // <-- Correct
+    return response.data as Store;
   },
 };

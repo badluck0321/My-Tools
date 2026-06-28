@@ -16,11 +16,13 @@ public class SmartSearchService {
     private final ProductService productService;
 
     public List<Product> searchProducts(String query) {
-        if (query == null || query.isBlank()) return productService.getAllProductsSpecs(null, null, true, null, null, null, null);
+        if (query == null || query.isBlank())
+            return productService.getAllProductsSpecs(null, null, true, null, null, null, null, null);
         String normalized = query.toLowerCase();
         Integer categoryId = inferCategory(normalized);
         String name = normalized.replaceAll("under\\s+\\d+", "").replaceAll("less than\\s+\\d+", "").trim();
-        List<Product> results = productService.getAllProductsSpecs(categoryId, null, true, name.isBlank() ? null : name, null, null, null);
+        List<Product> results = productService.getAllProductsSpecs(categoryId, null, true, name.isBlank() ? null : name,
+                null, null, null, null);
         Integer maxPrice = inferMaxPrice(normalized);
         if (maxPrice != null) {
             results = results.stream().filter(p -> p.getPrice() <= maxPrice).toList();
@@ -29,10 +31,14 @@ public class SmartSearchService {
     }
 
     private Integer inferCategory(String q) {
-        if (q.contains("drill") || q.contains("tool") || q.contains("construction")) return 1;
-        if (q.contains("camera") || q.contains("photo")) return 2;
-        if (q.contains("garden") || q.contains("lawn")) return 3;
-        if (q.contains("computer") || q.contains("laptop")) return 4;
+        if (q.contains("drill") || q.contains("tool") || q.contains("construction"))
+            return 1;
+        if (q.contains("camera") || q.contains("photo"))
+            return 2;
+        if (q.contains("garden") || q.contains("lawn"))
+            return 3;
+        if (q.contains("computer") || q.contains("laptop"))
+            return 4;
         return null;
     }
 

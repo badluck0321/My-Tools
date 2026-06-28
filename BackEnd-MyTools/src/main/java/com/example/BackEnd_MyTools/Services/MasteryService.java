@@ -28,14 +28,17 @@ public class MasteryService {
         return masteryRepo.findAll();
     }
 
-    public List<Mastery> getAllMasterysSpecs(String title, Integer typeId) {
+    public List<Mastery> getAllMasterysSpecs(String title, Integer typeId, String masterId) {
         List<Criteria> criteriaList = new ArrayList<>();
         Criteria c1 = MasterySpecs.hasTitleLike(title);
         Criteria c2 = MasterySpecs.hasTypeId(typeId);
+        Criteria c3 = MasterySpecs.hasMasterId(masterId);
         if (c1 != null)
             criteriaList.add(c1);
         if (c2 != null)
             criteriaList.add(c2);
+        if (c3 != null)
+            criteriaList.add(c3);
         Query query = new Query();
         if (!criteriaList.isEmpty())
             query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
@@ -66,7 +69,7 @@ public class MasteryService {
             mastery.setCity(updatedmastery.getCity());
             mastery.setExperienceYears(updatedmastery.getExperienceYears());
             mastery.setDescription(updatedmastery.getDescription());
-            if (updatedmastery.getPhotoUrls() != null || updatedmastery.getPhotoUrls().isEmpty())
+            if (updatedmastery.getPhotoUrls() != null && !updatedmastery.getPhotoUrls().isEmpty())
                 mastery.setPhotoUrls(updatedmastery.getPhotoUrls());
             return masteryRepo.save(mastery);
         }).orElseThrow(() -> new IllegalArgumentException("Mastery not found"));

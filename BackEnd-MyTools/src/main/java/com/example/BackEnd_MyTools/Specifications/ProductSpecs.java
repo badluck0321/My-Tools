@@ -37,6 +37,10 @@ public class ProductSpecs {
         return duration != null ? Criteria.where("duration").is(duration) : null;
     }
 
+    public static Criteria hasOwnerId(String ownerId) {
+        return ownerId != null ? Criteria.where("ownerId").is(ownerId) : null;
+    }
+
     public static Criteria hasListedFor(Integer listedForId) {
         return listedForId != null ? Criteria.where("listedForId").is(listedForId) : null;
     }

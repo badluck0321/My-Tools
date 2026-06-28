@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Loading } from "../../components/common";
 import { productService } from "../../services/productService";
+import { storeService } from "../../services/storeService";
 import { useKeycloak } from "../../providers/KeycloakProvider"; // adjust path
 import { cartService } from "../../services/cartService";
 import ReviewSection from "../../components/common/ReviewSection"; // adjust path
@@ -168,6 +169,8 @@ const ProductInfos = () => {
   const [quantity, setQuantity] = useState(1);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [store, setStore] = useState(null);
+  const [storeLoading, setStoreLoading] = useState(true);
   const { authenticated, login } = useKeycloak();
 
   const handleAddToCart = async (e) => {
@@ -211,9 +214,24 @@ const ProductInfos = () => {
     productService
       .getProductById(id)
       .then(setProduct)
+
       .catch((err) => setError(err?.message ?? "Failed to load product"))
       .finally(() => setLoading(false));
   }, [id]);
+
+  useEffect(() => {
+    if (!product?.ownerId) {
+      setStore(null);
+      setStoreLoading(false);
+      return;
+    }
+    setStoreLoading(true);
+    storeService
+      .getStoreByOwner(product.ownerId)
+      .then(setStore)
+      .catch(() => setStore(null))
+      .finally(() => setStoreLoading(false));
+  }, [product]);
 
   if (loading) return <Loading text="Loading product..." />;
 
@@ -319,7 +337,25 @@ const ProductInfos = () => {
               <InfoRow label="Category ID" value={product.categoryId} />
               <InfoRow label="Mark ID" value={product.markId} />
               {product.ownerId && (
-                <InfoRow label="Owner" value={product.ownerId} />
+                <InfoRow
+                  label="Store"
+                  value={
+                    storeLoading ? (
+                      "Loading store..."
+                    ) : store ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          navigate(`/stores/owner/${product.ownerId}`)
+                        }
+                        className="text-[#6d2842] hover:text-[#8b3654] underline">
+                        {store.name}
+                      </button>
+                    ) : (
+                      product.ownerId
+                    )
+                  }
+                />
               )}
               <InfoRow
                 label="Photos"

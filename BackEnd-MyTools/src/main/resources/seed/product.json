@@ -13,7 +13,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/drill.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646814/Drill_q4qdqa.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:00:00Z"
   },
@@ -31,7 +33,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/hammerdrill.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646834/hammer_drill_elcwbd.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:01:00Z"
   },
@@ -49,7 +53,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 60,
-    "photoUrls": ["https://example.com/welding.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646832/Welding_Machine_exnuzj.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:02:00Z"
   },
@@ -67,7 +73,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/compressor.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646816/air_compressor_mqlshu.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:03:00Z"
   },
@@ -85,7 +93,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/ladder.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646824/lader_zf1q1g.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:04:00Z"
   },
@@ -103,7 +113,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/sprayer.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646811/paint_sprayer_edzpam.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:05:00Z"
   },
@@ -121,7 +133,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/laser.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646812/Laser_Distance_Meter_Bosch_zsmcog.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:06:00Z"
   },
@@ -139,7 +153,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 90,
-    "photoUrls": ["https://example.com/mixer.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646850/Concrete_Mixer_Machine_f6svwe.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:07:00Z"
   },
@@ -157,7 +173,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/grinder.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646813/Electric_Angle_Grinder_njvjdp.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:08:00Z"
   },
@@ -175,7 +193,9 @@
     "listedForId": 1,
     "currencyId": "MAD",
     "duration": 30,
-    "photoUrls": ["https://example.com/helmet.jpg"],
+    "photoUrls": [
+      "https://res.cloudinary.com/dkmhbowlx/image/upload/v1782646816/Construction_Safety_Helmet_Set_tim6so.png"
+    ],
     "isavailable": true,
     "createdAt": "2026-05-25T10:09:00Z"
   }

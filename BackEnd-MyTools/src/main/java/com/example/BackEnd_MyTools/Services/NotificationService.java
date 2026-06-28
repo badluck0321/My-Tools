@@ -19,6 +19,9 @@ public class NotificationService {
     private final ObjectProvider<SimpMessagingTemplate> messagingTemplateProvider;
 
     public Notification create(String userId, String type, String title, String message, String referenceId) {
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("Notification userId is required");
+        }
         Notification notification = Notification.builder()
             .userId(userId)
             .type(type)
