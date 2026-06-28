@@ -1,7 +1,8 @@
 import interceptor from '../interceptors/auth.interceptor';
 
-
 export const forumService = {
+
+  // Public — no auth needed
   getQuestions: (params) =>
     interceptor.get('/forum/questions', { params }),
 
@@ -11,6 +12,7 @@ export const forumService = {
   getAnswers: (questionId) =>
     interceptor.get(`/forum/questions/${questionId}/answers`),
 
+  // Auth required
   askQuestion: (questionJson, photos = []) => {
     const fd = new FormData();
     fd.append('question', JSON.stringify(questionJson));
@@ -20,20 +22,29 @@ export const forumService = {
     });
   },
 
-  postAnswer: (answerJson, photos = []) => {
+  postAnswer: (questionId, answerJson, photos = []) => {
     const fd = new FormData();
     fd.append('answer', JSON.stringify(answerJson));
     photos.forEach(f => fd.append('photos', f));
-    return interceptor.post('/forum/answers', fd, {
+    return interceptor.post(`/forum/questions/${questionId}/answers`, fd, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
   },
 
-  upvoteQuestion: (id) => interceptor.post(`/forum/questions/${id}/upvote`),
-  upvoteAnswer:   (id) => interceptor.post(`/forum/answers/${id}/upvote`),
-  acceptAnswer:   (id) => interceptor.post(`/forum/answers/${id}/accept`),
-  deleteQuestion: (id) => interceptor.delete(`/forum/questions/${id}`),
-  deleteAnswer:   (id) => interceptor.delete(`/forum/answers/${id}`),
+  voteQuestion: (id, type = 'up') =>
+    interceptor.put(`/forum/questions/${id}/vote`, null, { params: { type } }),
+
+  voteAnswer: (id, type = 'up') =>
+    interceptor.put(`/forum/answers/${id}/vote`, null, { params: { type } }),
+
+  acceptAnswer: (id) =>
+    interceptor.put(`/forum/answers/${id}/accept`),
+
+  deleteQuestion: (id) =>
+    interceptor.delete(`/forum/questions/${id}`),
+
+  deleteAnswer: (id) =>
+    interceptor.delete(`/forum/answers/${id}`),
 
   getPhoto: (photoId) =>
     interceptor.get(`/forum/photos/${photoId}`, { responseType: 'blob' })
