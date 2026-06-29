@@ -34,6 +34,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ai/search/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/bookings/availability", "/bookings/product/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/forum/questions/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/forum/feed").permitAll()
                         .requestMatchers("/chat").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())));
