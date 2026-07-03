@@ -10,6 +10,7 @@ import java.util.List;
 public interface MasteryMapper {
 
     @Mapping(target = "photoUrls", ignore = true)
+    @Mapping(target = "typeId", source = "masteryTypeId")
 
     DtoGetMastery toDto(Mastery mastery, @Context String baseUrl);
 
@@ -24,8 +25,14 @@ public interface MasteryMapper {
             dto.setPhotoUrls(
                     mastery.getPhotoUrls()
                             .stream()
-                            .map(id -> baseUrl + "/masterys/photos/" + id)
+                            .map(ref -> mapPhotoRef(ref, baseUrl, "masterys"))
                             .toList());
         }
     }
+    default String mapPhotoRef(String ref, String baseUrl, String endpoint) {
+        if (ref == null || ref.isBlank()) return ref;
+        if (ref.startsWith("http://") || ref.startsWith("https://") || ref.startsWith("data:")) return ref;
+        return baseUrl + "/" + endpoint + "/photos/" + ref;
+    }
+
 }

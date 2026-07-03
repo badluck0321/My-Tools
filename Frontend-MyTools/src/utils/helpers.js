@@ -4,7 +4,7 @@ import { STORAGE_KEYS } from './constants';
 export const formatPrice = (price) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'MAD',
   }).format(price);
 };
 
@@ -55,7 +55,7 @@ export const isAuthenticated = () => {
 export const getImageUrl = (imagePath) => {
   if (!imagePath) return '/placeholder-art.jpg';
   if (imagePath.startsWith('http')) return imagePath;
-  return `http://localhost:8000${imagePath}`;
+  return imagePath;
 };
 
 // Debounce function

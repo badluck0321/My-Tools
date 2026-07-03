@@ -100,23 +100,16 @@ public class StoreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> UpdateStore(@PathVariable("id") String Id, @RequestBody Store store) {
-        try {
-            Store updatedstore = storeService.updateStore(Id, store);
-            return ResponseEntity.ok(updatedstore);
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("execption msg :" + ex.getMessage());
-        }
+    public ResponseEntity<?> UpdateStore(@PathVariable("id") String Id, @RequestBody Store store,
+            @AuthenticationPrincipal Jwt jwt) {
+        Store updatedstore = storeService.updateStore(Id, store, jwt);
+        return ResponseEntity.ok(updatedstore);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> DeleteStore(@PathVariable("id") String Id) {
-        try {
-            storeService.deleteStore(Id);
-            return ResponseEntity.ok().build();
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body("Execption mds :" + ex.getMessage());
-        }
+    public ResponseEntity<?> DeleteStore(@PathVariable("id") String Id, @AuthenticationPrincipal Jwt jwt) {
+        storeService.deleteStore(Id, jwt);
+        return ResponseEntity.ok().build();
     }
 
 }

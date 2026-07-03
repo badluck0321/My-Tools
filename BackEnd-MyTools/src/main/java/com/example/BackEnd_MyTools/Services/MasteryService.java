@@ -28,6 +28,10 @@ public class MasteryService {
         return masteryRepo.findAll();
     }
 
+    public List<Mastery> getMyMasterys(String masterId) {
+        return masteryRepo.findByMasterIdOrderByIdDesc(masterId);
+    }
+
     public List<Mastery> getAllMasterysSpecs(String title, Integer typeId, String masterId) {
         List<Criteria> criteriaList = new ArrayList<>();
         Criteria c1 = MasterySpecs.hasTitleLike(title);

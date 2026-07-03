@@ -8,6 +8,7 @@ import {
   Briefcase,
   Award,
   Share2,
+  Heart,
   CheckCircle,
   ChevronLeft, // Added ChevronLeft
   ChevronRight, // Added ChevronRight
@@ -15,6 +16,11 @@ import {
 
 import { Loading } from "../../components/common";
 import { masteryService } from "../../services/MasteryService";
+import BookingCalendar from "../../components/booking/BookingCalendar";
+import { favoriteService } from "../../services/favoriteService";
+import { useKeycloak } from "../../providers/KeycloakProvider";
+import { useLookups } from "../../hooks/useLookups";
+import { LOOKUP_TYPES, lookupLabel } from "../../utils/lookupUtils";
 
 /* ─── PhotoImage: Renders a single photo using the full URL ── */
 const PhotoImage = ({ photoUrl, alt, className }) => {
@@ -167,6 +173,10 @@ const MasteryInfos = () => {
   const [mastery, setMastery] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
+  const { authenticated, login } = useKeycloak();
+  const { lookups } = useLookups();
 
   useEffect(() => {
     setLoading(true);
@@ -178,6 +188,25 @@ const MasteryInfos = () => {
       )
       .finally(() => setLoading(false));
   }, [id]);
+
+  useEffect(() => {
+    if (!authenticated || !id) return;
+    favoriteService.statusMastery(id)
+      .then((res) => setIsLiked(Boolean(res.data?.favorited)))
+      .catch(() => setIsLiked(false));
+  }, [authenticated, id]);
+
+  const handleToggleFavorite = async () => {
+    if (!authenticated) { login(); return; }
+    if (favLoading) return;
+    setFavLoading(true);
+    try {
+      const res = await favoriteService.toggleMastery(mastery.id);
+      setIsLiked(Boolean(res.data?.favorited));
+    } finally {
+      setFavLoading(false);
+    }
+  };
 
   if (loading) return <Loading text="Loading mastery..." />;
 
@@ -193,6 +222,10 @@ const MasteryInfos = () => {
       </div>
     );
   }
+
+  const typeLabel = lookupLabel(lookups, LOOKUP_TYPES.MASTERY_TYPE, mastery.typeId ?? mastery.masteryTypeId, "Service");
+  const statusLabel = lookupLabel(lookups, LOOKUP_TYPES.MASTERY_STATUS, mastery.masteryStatuId, mastery.masteryStatuId || "—");
+  const pricingLabel = lookupLabel(lookups, LOOKUP_TYPES.PRICING_TYPE, mastery.pricingType, mastery.pricingType || "—");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
@@ -228,11 +261,11 @@ const MasteryInfos = () => {
             <div className="flex flex-wrap gap-2">
               <Badge color="green">
                 <CheckCircle size={12} />
-                {mastery.masteryStatuId}
+                {statusLabel}
               </Badge>
               <Badge color="primary">
                 <Briefcase size={12} />
-                {mastery.pricingType}
+                {pricingLabel}
               </Badge>
             </div>
 
@@ -277,8 +310,8 @@ const MasteryInfos = () => {
                 label="Experience"
                 value={`${mastery.experienceYears} Years`}
               />
-              <InfoRow label="Pricing Type" value={mastery.pricingType} />
-              <InfoRow label="Status" value={mastery.masteryStatuId} />
+              <InfoRow label="Pricing Type" value={pricingLabel} />
+              <InfoRow label="Status" value={statusLabel} />
             </div>
 
             {/* Highlights */}
@@ -295,6 +328,8 @@ const MasteryInfos = () => {
               </div>
             </div>
 
+            <BookingCalendar resourceType="MASTERY" resourceId={mastery.id} title="Mastery booking calendar" quantityEnabled={false} />
+
             {/* Actions */}
             <div className="flex gap-3 mt-auto">
               <a
@@ -302,6 +337,9 @@ const MasteryInfos = () => {
                 className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20">
                 <Phone size={18} /> Contact Master
               </a>
+              <button onClick={handleToggleFavorite} disabled={favLoading} className={`p-3.5 rounded-xl border transition-all ${isLiked ? "bg-[#6d2842] border-[#6d2842] text-white" : "border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842]"}`}>
+                <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
+              </button>
               <button className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842] transition-all">
                 <Share2 size={18} />
               </button>
