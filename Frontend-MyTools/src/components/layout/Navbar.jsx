@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useState } from "react";
-import { ProductCard, Loading, Input, Button } from "../../components/common";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Search,
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { useKeycloak } from "../../providers/KeycloakProvider";
+import GlobalSearch from "../search/GlobalSearch";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,6 +41,7 @@ const Navbar = () => {
     { name: "Products", path: "/Products" },
     { name: "Masterys", path: "/Masterys" },
     { name: "Stores", path: "/stores" },
+    { name: "Demandes", path: "/demandes" },
   ];
 
   return (
@@ -67,25 +69,8 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="mb space-y-4">
-            {/* Search Bar */}
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <Input
-                  type="text"
-                  placeholder="Search ..."
-                  // onChange={(e) => setSearchTerm(e.target.value)}
-                  icon={Search}
-                />
-              </div>
-              <Button
-                variant="outline"
-                // icon={Filter}
-                // onClick={() => setShowFilters(!showFilters)}
-                className="lg:hidden">
-                Filters
-              </Button>
-            </div>
+          <div className="hidden lg:block flex-1 max-w-sm mx-4">
+            <GlobalSearch />
           </div>
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-4">
@@ -203,6 +188,13 @@ const Navbar = () => {
                         <span className="font-medium">My Store</span>
                       </Link>
                       <Link
+                        to="/dashboard/vendor-verification"
+                        className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
+                        onClick={() => setIsProfileOpen(false)}>
+                        <Settings className="w-5 h-5" />
+                        <span className="font-medium">Verification</span>
+                      </Link>
+                      <Link
                         to="/dashboard/settings"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
@@ -300,22 +292,16 @@ const Navbar = () => {
                 </>
               ) : (
                 <div className="space-y-3">
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
-                      Login
-                    </motion.button>
-                  </Link>
-                  <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
-                      Sign Up
-                    </motion.button>
-                  </Link>
+                  <button
+                    onClick={() => { setIsMenuOpen(false); handleLogin(); }}
+                    className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
+                    Login
+                  </button>
+                  <button
+                    onClick={() => { setIsMenuOpen(false); handleLogin(); }}
+                    className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
+                    Sign Up
+                  </button>
                 </div>
               )}
             </div>

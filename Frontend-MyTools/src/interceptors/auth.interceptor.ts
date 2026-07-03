@@ -1,17 +1,22 @@
 import axios from "axios";
 import getKeycloakInstance from "../keycloak";
+import { env } from "../config/env";
+
 const interceptor = axios.create({
-  baseURL: "http://localhost:8888",
+  baseURL: env.apiBaseUrl,
   withCredentials: true,
 });
 
 interceptor.interceptors.request.use(async (config) => {
-  const keycloak = getKeycloakInstance();
+  let keycloak = null;
+  try {
+    keycloak = getKeycloakInstance();
+  } catch {
+    keycloak = null;
+  }
 
-  if (keycloak && keycloak.token) {
-    // Refresh before expiration
+  if (keycloak?.token) {
     await keycloak.updateToken(30).catch(() => keycloak.login());
-    // Attach the token
     config.headers["Authorization"] = "Bearer " + keycloak.token;
   }
 

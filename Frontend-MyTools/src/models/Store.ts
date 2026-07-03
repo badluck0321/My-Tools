@@ -15,10 +15,14 @@ export interface Store {
   id: string;
   name: string;
   email: string;
+  phone?: string;
+  logo?: string;
+  address?: string;
   isActive: boolean;
   isVerified: boolean;
   createdAt: Date;
   ownerId: string[];
   associatsIds: string[];
   socialMedias: string[];
+  isDeliveryAvailable?: boolean;
 }

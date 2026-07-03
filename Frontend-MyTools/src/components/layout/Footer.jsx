@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  Palette,
+  Wrench,
   Mail,
   Phone,
   MapPin,
@@ -49,7 +49,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="p-2 bg-gradient-to-br from-[#6d2842] to-[#a64d6d] rounded-xl shadow-lg shadow-[#6d2842]/20">
-                <Palette className="w-6 h-6 text-white" />
+                <Wrench className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-display font-bold bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
                 My-Tools
@@ -57,9 +57,9 @@ const Footer = () => {
             </Link>
 
             <p className="text-[#5d5955] dark:text-[#c4bfb9] mb-6 max-w-md">
-              Empowering global artists by connecting creativity with
-              technology. Discover, collect, and celebrate art from talented
-              creators worldwide.
+              My-Tools connects customers with trusted stores, tools, rentals and
+              professional services. Browse equipment, book rentals, and manage
+              your orders from one secure platform.
             </p>
 
             {/* Contact Info */}
@@ -67,19 +67,19 @@ const Footer = () => {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
                 <span className="text-[#5d5955] dark:text-[#c4bfb9]">
-                  info@MyTools.com
+                  contact@my-tools.demo
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
                 <span className="text-[#5d5955] dark:text-[#c4bfb9]">
-                  +1 (555) 123-4567
+                  +212 600 000 000
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
                 <span className="text-[#5d5955] dark:text-[#c4bfb9]">
-                  123 Art Street, Creative City, CC 12345
+                  Rabat, Morocco
                 </span>
               </div>
             </div>
@@ -147,7 +147,7 @@ const Footer = () => {
               Subscribe to Our Newsletter
             </h3>
             <p className="text-[#5d5955] dark:text-[#c4bfb9] mb-6">
-              Get the latest art news, featured artists, and exclusive offers
+              Get the latest tools, services, platform updates, and exclusive offers
               delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
