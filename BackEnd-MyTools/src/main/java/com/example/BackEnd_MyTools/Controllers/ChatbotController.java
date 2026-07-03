@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.*;
 // import jakarta.annotation.security.PermitAll;
 
 @RestController
-// @PermitAll // allow anonymous (unauthenticated) access to this controller's
-// endpoints
 @RequestMapping("/chat")
 public class ChatbotController {
 
-    private final AIChatbotService aiChatbotService;
-
-    public ChatbotController(AIChatbotService aiChatbotService) {
-        this.aiChatbotService = aiChatbotService;
+        public ChatbotController() {
     }
+    // private final AIChatbotService aiChatbotService;
 
-    @PostMapping
-    public ChatMessageResponse chat(@RequestBody ChatMessageRequest request) {
-        String response = aiChatbotService.chat(request.message());
-        return new ChatMessageResponse(response);
-    }
+    // public ChatbotController(AIChatbotService aiChatbotService) {
+    //     this.aiChatbotService = aiChatbotService;
+    // }
+
+    // @PostMapping
+    // public ChatMessageResponse chat(@RequestBody ChatMessageRequest request) {
+    //     String response = aiChatbotService.chat(request.message());
+    //     return new ChatMessageResponse(response);
+    // }
 }

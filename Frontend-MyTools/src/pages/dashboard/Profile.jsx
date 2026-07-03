@@ -10,7 +10,7 @@ import {
   AlertCircle,
   Edit2,
   Loader,
-  Palette,
+  Wrench,
   Briefcase,
   CheckCircle2,
 } from "lucide-react";
@@ -149,16 +149,16 @@ const Profile = () => {
   };
 
   const getRoleInfo = () => {
-    if (user?.role === "artist") {
+    if (user?.role === "StoreOwner") {
       return {
-        label: "Artist",
-        icon: Palette,
+        label: "Store Owner",
+        icon: Wrench,
         color: "#a64d6d", // Burgundy pink
         bgColor: "rgba(109, 40, 66, 0.2)", // Burgundy with opacity
       };
     }
     return {
-      label: "Art Lover",
+      label: user?.role === "admin" ? "Administrator" : "Customer",
       icon: Briefcase,
       color: "#70a596", // Sage green
       bgColor: "rgba(80, 137, 120, 0.2)", // Sage with opacity

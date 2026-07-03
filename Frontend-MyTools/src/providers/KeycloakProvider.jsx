@@ -6,8 +6,19 @@ const parseJwt = (token) => {
   try { return JSON.parse(atob(token.split('.')[1])); } catch { return {}; }
 };
 
+const extractRoles = (claims = {}) => {
+  const roles = new Set();
+  (claims.realm_access?.roles || []).forEach((role) => roles.add(role));
+  Object.values(claims.resource_access || {}).forEach((client) => {
+    (client?.roles || []).forEach((role) => roles.add(role));
+  });
+  (claims.roles || []).forEach((role) => roles.add(role));
+  return Array.from(roles);
+};
+
 const toUser = (token, profile = {}) => {
   const claims = token ? parseJwt(token) : {};
+  const roles = extractRoles(claims);
   return {
     id: claims.sub,
     username: profile.username || claims.preferred_username || claims.name || claims.email || "User",
@@ -18,7 +29,8 @@ const toUser = (token, profile = {}) => {
     phone: profile.phone || "",
     city: profile.city || "",
     address: profile.address || "",
-    role: claims.realm_access?.roles?.includes("tools-admin") ? "admin" : claims.realm_access?.roles?.includes("StoreOwner") ? "StoreOwner" : "user",
+    roles,
+    role: roles.includes("tools-admin") ? "admin" : roles.includes("StoreOwner") ? "StoreOwner" : roles.includes("tools-basic") ? "tools-basic" : "user",
   };
 };
 
@@ -37,6 +49,10 @@ const KeycloakContext = createContext({
   authenticated: false,
   token: null,
   user: null,
+  roles: [],
+  hasRole: () => false,
+  isAdmin: false,
+  isStoreOwner: false,
   login: () => {},
   logout: () => {},
   refreshUserProfile: async () => {},
@@ -118,8 +134,13 @@ export const KeycloakProvider = ({ children }) => {
     );
   }
 
+  const roles = user?.roles || [];
+  const hasRole = (...accepted) => accepted.some((role) => roles.includes(role) || user?.role === role);
+  const isAdmin = hasRole("tools-admin", "admin", "ADMIN");
+  const isStoreOwner = hasRole("StoreOwner", "store-owner", "tools-store-owner");
+
   return (
-    <KeycloakContext.Provider value={{ initialized, authenticated, token, user, login, logout, refreshUserProfile, updateProfile }}>
+    <KeycloakContext.Provider value={{ initialized, authenticated, token, user, roles, hasRole, isAdmin, isStoreOwner, login, logout, refreshUserProfile, updateProfile }}>
       {children}
     </KeycloakContext.Provider>
   );
