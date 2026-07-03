@@ -19,8 +19,15 @@ import lombok.NoArgsConstructor;
 public class Booking {
     @Id
     private String id;
+
+    // Generic resource support. Product-specific fields below are retained for compatibility.
+    private ResourceType resourceType;
+    private String resourceId;
+    private String resourceName;
+
     private String productId;
     private String productName;
+    private String masteryId;
     private String ownerId;
     private String userId;
     private String orderId;
@@ -35,4 +42,5 @@ public class Booking {
     private LocalDateTime updatedAt;
 
     public enum BookingStatus { PENDING, CONFIRMED, CANCELLED, COMPLETED }
+    public enum ResourceType { PRODUCT, MASTERY }
 }
