@@ -16,6 +16,7 @@ import com.example.BackEnd_MyTools.Entitys.Mastery;
 import com.example.BackEnd_MyTools.Mapper.MasteryMapper;
 import com.example.BackEnd_MyTools.Services.MasteryService;
 import com.example.BackEnd_MyTools.Services.PhotoService;
+import com.example.BackEnd_MyTools.Security.SecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,22 +47,27 @@ public class MasteryController {
                 mastery.setPhotoUrls(photoIds);
             }
             return ResponseEntity.ok(masteryService.createMastery(mastery, jwt));
+        } catch (SecurityException | IllegalArgumentException ex) {
+            throw ex;
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la création : " + ex.getMessage());
         }
     }
 
-    @GetMapping("specials")
+    @GetMapping({"", "specials"})
     public ResponseEntity<List<DtoGetMastery>> getAllMasterysSpect(HttpServletRequest request,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Integer typeId,
             @RequestParam(required = false) String masterId) {
         List<Mastery> masterys = masteryService.getAllMasterysSpecs(title, typeId, masterId);
-        if (masterys.isEmpty())
-            return ResponseEntity.noContent().build();
         String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),
                 request.getServerPort(), request.getContextPath());
         return ResponseEntity.ok(masteryMapper.toDtoList(masterys, baseUrl));
+    }
+
+    @GetMapping("/mine")
+    public ResponseEntity<List<Mastery>> getMyMasterys(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(masteryService.getMyMasterys(SecurityUtils.currentUserId(jwt)));
     }
 
     @GetMapping("/{id}")
@@ -77,7 +83,7 @@ public class MasteryController {
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateMastery(@PathVariable String id,
             @RequestPart("mastery") String updatedMasteryJson,
-            @RequestPart(value = "photo", required = false) List<MultipartFile> newPhotos,
+            @RequestPart(value = "photos", required = false) List<MultipartFile> newPhotos,
             @AuthenticationPrincipal Jwt jwt) {
         try {
             Mastery updatedMastery = new ObjectMapper().readValue(updatedMasteryJson, Mastery.class);
@@ -88,6 +94,8 @@ public class MasteryController {
                 updatedMastery.setPhotoUrls(photoIds);
             }
             return ResponseEntity.ok(masteryService.updateMastery(id, updatedMastery, jwt));
+        } catch (SecurityException | IllegalArgumentException ex) {
+            throw ex;
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la mise à jour : " + ex.getMessage());
         }

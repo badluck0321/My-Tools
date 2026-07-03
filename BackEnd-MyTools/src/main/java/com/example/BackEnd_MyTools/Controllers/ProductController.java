@@ -50,6 +50,8 @@ public class ProductController {
             }
             Product createdProduct = productService.createProduct(product, SecurityUtils.currentUserId(jwt));
             return ResponseEntity.ok(createdProduct);
+        } catch (SecurityException | IllegalArgumentException ex) {
+            throw ex;
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la création : " + ex.getMessage());
         }
@@ -67,8 +69,6 @@ public class ProductController {
             @RequestParam(required = false) String ownerId) {
         List<Product> products = productService.getAllProductsSpecs(categoryId, markId, available, name, latitude,
                 longitude, radiusKm, ownerId);
-        if (products.isEmpty())
-            return ResponseEntity.noContent().build();
         String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(),
                 request.getServerPort(), request.getContextPath());
         return ResponseEntity.ok(productMapper.toDtoList(products, baseUrl));
@@ -104,6 +104,8 @@ public class ProductController {
                 updatedProduct.setPhotoUrls(photoIds);
             }
             return ResponseEntity.ok(productService.updateProduct(id, updatedProduct, jwt));
+        } catch (SecurityException | IllegalArgumentException ex) {
+            throw ex;
         } catch (Exception ex) {
             return ResponseEntity.status(500).body("Erreur lors de la mise à jour : " + ex.getMessage());
         }

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Palette, Heart, Globe, Users, Sparkles, Target } from 'lucide-react';
+import { Wrench, Heart, Globe, Users, Sparkles, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/common';
 
@@ -7,31 +7,31 @@ const About = () => {
   const values = [
     {
       icon: Heart,
-      title: 'Passion for Art',
-      description: 'We believe art enriches lives and connects communities across the globe.'
+      title: 'Trust First',
+      description: 'We help customers and sellers connect through clear listings, verified stores and reliable workflows.'
     },
     {
       icon: Globe,
-      title: 'Global Reach',
-      description: 'Connecting artists and collectors from every corner of the world.'
+      title: 'Local Access',
+      description: 'Making tools, rentals and services easier to find in Moroccan cities and communities.'
     },
     {
       icon: Users,
       title: 'Community First',
-      description: 'Building a supportive ecosystem where creativity thrives.'
+      description: 'Building a useful ecosystem where customers, store owners and service providers can work together.'
     },
     {
       icon: Sparkles,
       title: 'Innovation',
-      description: 'Using technology to make art more accessible and enjoyable.'
+      description: 'Using technology to make equipment, bookings, orders and service requests easier to manage.'
     }
   ];
 
   const stats = [
-    { number: '10K+', label: 'Artists' },
-    { number: '50K+', label: 'Artworks' },
-    { number: '100K+', label: 'Users' },
-    { number: '150+', label: 'Countries' }
+    { number: '200+', label: 'Tools' },
+    { number: '50+', label: 'Services' },
+    { number: '1K+', label: 'Users' },
+    { number: '10+', label: 'Cities' }
   ];
 
   return (
@@ -45,14 +45,14 @@ const About = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <div className="inline-flex items-center gap-2 mb-6">
-              <Palette className="w-12 h-12 text-[#6d2842] dark:text-[#d4a343]" />
+              <Wrench className="w-12 h-12 text-[#6d2842] dark:text-[#d4a343]" />
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6">
               <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">About My-Tools</span>
             </h1>
             <p className="text-xl text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">
-              We're on a mission to democratize art by creating a global platform that connects
-              talented artists with passionate collectors and art enthusiasts.
+              We're on a mission to make tools, rentals and professional services easier to find,
+              book and manage from one secure platform.
             </p>
           </motion.div>
         </div>
@@ -98,20 +98,14 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-lg text-[#5d5955] dark:text-[#c4bfb9] text-left">
                 <p>
-                  My-Tools was born from a simple belief: art should be accessible to everyone, everywhere.
-                  We saw talented artists struggling to reach their audience and art lovers searching for
-                  unique pieces without a central, trustworthy platform.
+                  My-Tools was born from a simple belief: useful equipment and trusted services should be accessible without friction.
+                  Many customers need tools for a short period, while many store owners have inventory and expertise waiting to be discovered.
                 </p>
                 <p>
-                  In 2024, we set out to change that. By combining cutting-edge technology with a deep
-                  appreciation for creativity, we built a platform that serves both artists and collectors.
-                  Our glassmorphism design and smooth user experience reflect our commitment to elegance
-                  and innovation.
+                  In 2024, we set out to organize that experience. The platform brings together product listings, rental bookings, orders, payments, reviews, favorites, demandes and messaging in a clear workflow.
                 </p>
                 <p>
-                  Today, My-Tools is more than just a marketplace—it's a global community where creativity
-                  meets opportunity, where art transcends borders, and where everyone can be part of the
-                  artistic journey.
+                  Today, My-Tools is more than a catalog. It is a practical marketplace where customers, sellers and service providers can collaborate with confidence.
                 </p>
               </div>
             </motion.div>
@@ -181,8 +175,7 @@ const About = () => {
               Our Mission
             </h2>
             <p className="text-xl mb-8 opacity-95">
-              To empower artists worldwide by providing them with the tools, platform, and community
-              they need to share their work, connect with audiences, and build sustainable creative careers.
+              To empower customers and store owners with a reliable platform for selling, renting, booking, ordering and requesting services around tools and professional work.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/signup">
@@ -191,7 +184,7 @@ const About = () => {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-white text-[#6d2842] hover:bg-[#fafaf9] hover:shadow-2xl font-semibold rounded-xl transition-all min-w-[200px]"
                 >
-                  Join as Artist
+                  Create a Store
                 </motion.button>
               </Link>
               <Link to="/Products">

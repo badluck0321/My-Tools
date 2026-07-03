@@ -23,8 +23,14 @@ public interface ProductMapper {
             dto.setPhotoUrls(
                     product.getPhotoUrls()
                             .stream()
-                            .map(id -> baseUrl + "/products/photos/" + id)
+                            .map(ref -> mapPhotoRef(ref, baseUrl, "products"))
                             .toList());
         }
     }
+    default String mapPhotoRef(String ref, String baseUrl, String endpoint) {
+        if (ref == null || ref.isBlank()) return ref;
+        if (ref.startsWith("http://") || ref.startsWith("https://") || ref.startsWith("data:")) return ref;
+        return baseUrl + "/" + endpoint + "/photos/" + ref;
+    }
+
 }
