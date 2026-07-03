@@ -7,20 +7,12 @@ import {
   CheckCircle, XCircle, Clock, ChevronRight,
   Package, BarChart2, Settings, Lock,
 } from 'lucide-react';
-import interceptor from '../../interceptors/auth.interceptor'; // adjust to your axios interceptor path
+import { storeService } from '../../services/storeService';
 
 /* ─── API helpers ─────────────────────────────────── */
-const fetchMyStore = async (userId) => {
-  const response = await interceptor.get(`/stores?ownerId=${userId}`);
-  // backend returns an array — find the one owned by this user
-  const stores = Array.isArray(response.data) ? response.data : [response.data];
-  return stores.find((s) => s.ownerId?.includes(userId)) ?? null;
-};
+const fetchMyStore = async () => storeService.getMyStore();
 
-const createStore = async (payload) => {
-  const response = await interceptor.post('/stores', payload);
-  return response.data;
-};
+const createStore = async (payload) => storeService.createStore(payload);
 
 /* ─── Sub-components ──────────────────────────────── */
 
@@ -309,17 +301,15 @@ const MyStore = () => {
 //   const { keycloak, initialized } = useKeycloak();
 //   const isAuthenticated = initialized && keycloak.authenticated;
 //   const userId = keycloak?.tokenParsed?.sub;
-const { initialized, authenticated, token, login } = useKeycloak();
+const { initialized, authenticated, user, login } = useKeycloak();
     const isAuthenticated = initialized && authenticated;
-    const userId = token
-  ? JSON.parse(atob(token.split('.')[1]))?.sub
-        : null;
+    const userId = user?.id;
     
   useEffect(() => {
     if (!isAuthenticated || !userId) return;
 
     setLoading(true);
-    fetchMyStore(userId)
+    fetchMyStore()
       .then((found) => setStore(found))
       .catch(console.error)
       .finally(() => {

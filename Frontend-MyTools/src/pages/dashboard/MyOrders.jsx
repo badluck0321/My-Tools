@@ -1,17 +1,24 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, ShoppingBag } from 'lucide-react';
+import { CreditCard, Download, ShoppingBag } from 'lucide-react';
 import { orderService } from '../../services/orderService';
+import { paymentService } from '../../services/paymentService';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [actionId, setActionId] = useState('');
+  const [error, setError] = useState('');
 
   const load = async () => {
     setLoading(true);
+    setError('');
     try {
       const res = await orderService.myOrders();
       setOrders(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      setError(err?.response?.data || 'Unable to load orders.');
     } finally {
       setLoading(false);
     }
@@ -20,12 +27,43 @@ const MyOrders = () => {
   useEffect(() => { load(); }, []);
 
   const downloadInvoice = async (orderId) => {
-    const url = await orderService.downloadInvoice(orderId);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `invoice-${orderId}.pdf`;
-    a.click();
-    URL.revokeObjectURL(url);
+    setActionId(orderId);
+    setError('');
+    try {
+      const url = await orderService.downloadInvoice(orderId);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `invoice-${orderId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err?.response?.data || 'Unable to download invoice.');
+    } finally {
+      setActionId('');
+    }
+  };
+
+  const payOrder = async (orderId) => {
+    setActionId(orderId);
+    setError('');
+    try {
+      const checkout = await paymentService.createCheckout(orderId);
+      const data = checkout.data || {};
+      if (data.provider === 'mock' && data.paymentId) {
+        await paymentService.confirm(data.paymentId);
+        await load();
+        return;
+      }
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
+      }
+      setError('Payment checkout did not return a usable URL.');
+    } catch (err) {
+      setError(err?.response?.data || 'Unable to start payment.');
+    } finally {
+      setActionId('');
+    }
   };
 
   return (
@@ -34,9 +72,11 @@ const MyOrders = () => {
         <div className="p-3 bg-gradient-to-br from-[#6d2842] to-[#a64d6d] rounded-2xl text-white"><ShoppingBag /></div>
         <div>
           <h2 className="text-3xl font-bold text-[#2d2a27] dark:text-white">My Orders</h2>
-          <p className="text-sm text-[#8a8580]">Order history, status and invoices</p>
+          <p className="text-sm text-[#8a8580]">Order history, payment status and invoices</p>
         </div>
       </div>
+
+      {error && <div className="mb-4 rounded-xl bg-red-50 text-red-700 p-3">{error}</div>}
 
       <div className="space-y-4">
         {loading ? <p>Loading orders...</p> : orders.length === 0 ? (
@@ -46,24 +86,34 @@ const MyOrders = () => {
             <div className="flex justify-between gap-4 flex-wrap">
               <div>
                 <h3 className="font-bold text-[#2d2a27] dark:text-white">{order.invoiceNumber || order.id}</h3>
-                <p className="text-sm text-[#8a8580]">{new Date(order.createdAt).toLocaleString()}</p>
+                <p className="text-sm text-[#8a8580]">{order.createdAt ? new Date(order.createdAt).toLocaleString() : 'No date'}</p>
               </div>
-              <div className="text-right">
-                <span className="px-3 py-1 rounded-full bg-white dark:bg-[#1a1816] text-xs font-bold">{order.status}</span>
-                <p className="mt-2 font-bold">{Number(order.totalAmount || 0).toFixed(2)} MAD</p>
+              <div className="text-right space-y-2">
+                <div className="flex gap-2 justify-end flex-wrap">
+                  <span className="px-3 py-1 rounded-full bg-white dark:bg-[#1a1816] text-xs font-bold">{order.status}</span>
+                  <span className="px-3 py-1 rounded-full bg-white dark:bg-[#1a1816] text-xs font-bold">{order.paymentStatus || 'UNPAID'}</span>
+                </div>
+                <p className="font-bold">{Number(order.totalAmount || 0).toFixed(2)} MAD</p>
               </div>
             </div>
             <div className="mt-4 space-y-2">
               {(order.items || []).map((item) => (
-                <div key={item.productId} className="flex justify-between text-sm">
+                <div key={`${order.id}-${item.productId}`} className="flex justify-between text-sm">
                   <span>{item.productName} × {item.quantity}</span>
                   <span>{Number(item.lineTotal || 0).toFixed(2)} MAD</span>
                 </div>
               ))}
             </div>
-            <button onClick={() => downloadInvoice(order.id)} className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6d2842] text-white text-sm font-semibold">
-              <Download size={15} /> Invoice PDF
-            </button>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {order.paymentStatus !== 'PAID' && (
+                <button disabled={actionId === order.id} onClick={() => payOrder(order.id)} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#508978] text-white text-sm font-semibold disabled:opacity-60">
+                  <CreditCard size={15} /> {actionId === order.id ? 'Processing...' : 'Pay'}
+                </button>
+              )}
+              <button disabled={actionId === order.id} onClick={() => downloadInvoice(order.id)} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6d2842] text-white text-sm font-semibold disabled:opacity-60">
+                <Download size={15} /> Invoice PDF
+              </button>
+            </div>
           </div>
         ))}
       </div>

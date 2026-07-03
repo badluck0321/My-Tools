@@ -1,4 +1,5 @@
 import Keycloak from 'keycloak-js';
+import { env } from './config/env';
 
 class KeycloakService {
   constructor() {
@@ -72,9 +73,9 @@ const keycloakService = new KeycloakService();
 
 // Configuration
 const keycloakConfig = {
-  url: 'http://localhost:8080/',
-  realm: 'myrealm',
-  clientId: 'frontend-mytools',
+  url: env.keycloakUrl,
+  realm: env.keycloakRealm,
+  clientId: env.keycloakClientId,
 };
 
 // Export initialization function ✅ NOW USING keycloakService INSTANCE
