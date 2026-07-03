@@ -2,11 +2,11 @@ package com.example.BackEnd_MyTools.bootstrap;
 
 import com.example.BackEnd_MyTools.Entitys.Mastery;
 import com.example.BackEnd_MyTools.Repositories.MasteryRepo;
-import com.example.BackEnd_MyTools.Services.PhotoService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,16 +18,15 @@ public class MasterySeeder {
 
     private final MasteryRepo masteryRepository;
     private final ObjectMapper objectMapper;
-    private final PhotoService photoService;
+    @Value("${mytools.seed.cloudinary-base-url:https://res.cloudinary.com/dkmhbowlx/image/upload}")
+    private String cloudinaryBaseUrl;
 
     public MasterySeeder(
             MasteryRepo masteryRepository,
-            ObjectMapper objectMapper,
-            PhotoService photoService) {
+            ObjectMapper objectMapper) {
 
         this.masteryRepository = masteryRepository;
         this.objectMapper = objectMapper;
-        this.photoService = photoService;
     }
 
     public void seed() {
@@ -73,25 +72,18 @@ public class MasterySeeder {
         m.city = (String) data.get("city");
         m.experienceYears = (Integer) data.get("experienceYears");
         m.description = (String) data.get("description");
-        // ✅ CLOUDINARY IMAGE HANDLING
+        // Cloudinary image handling: seed URLs directly, no generated images and no network download.
         List<String> imagesUrlsList = (List<String>) data.get("seedImageUrl");
         if (imagesUrlsList != null && !imagesUrlsList.isEmpty()) {
-            m.photoUrls = new ArrayList<>();
-            for (String imageUrl : imagesUrlsList) {
-                try {
-                    m.photoUrls.add(saveCloudinaryImage(imageUrl));
-                } catch (Exception e) {
-                    System.err.println("[Seeder] Image upload failed for: " + m.title);
-                    e.printStackTrace();
-                }
-            }
-
+            m.photoUrls = new ArrayList<>(imagesUrlsList.stream().map(this::cloudinaryImage).toList());
         }
 
         return m;
     }
 
-    private String saveCloudinaryImage(String imageUrl) throws Exception {
-        return photoService.saveFromUrl(imageUrl);
+    private String cloudinaryImage(String imageUrlOrPath) {
+        if (imageUrlOrPath == null || imageUrlOrPath.isBlank()) return null;
+        if (imageUrlOrPath.startsWith("http://") || imageUrlOrPath.startsWith("https://")) return imageUrlOrPath;
+        return cloudinaryBaseUrl.replaceAll("/+$", "") + "/" + imageUrlOrPath.replaceAll("^/+", "");
     }
 }
