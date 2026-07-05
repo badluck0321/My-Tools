@@ -1,0 +1,289 @@
+/* ── Variables matching your app palette ─────────── */
+:root {
+    --burg: #6d2842;
+    --burg-dark: #5a2338;
+    --burg-light: #a64d6d;
+    --gold: #b8862f;
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e8e7e5;
+    --text: #2d2a27;
+    --text-muted: #5d5955;
+    --radius: 16px;
+}
+body {
+    background: linear-gradient(135deg,
+            #fafaf9 0%,
+            #f5f0f2 40%,
+            #ece7e5 100%);
+    font-family: Inter, Arial, sans-serif;
+}
+
+/* Center Keycloak content */
+#kc-content {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+
+.mytools-card {
+    width: 420px;
+    max-width: 100%;
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(109, 40, 66, .12);
+}
+
+/* ── Inputs ──────────────────────────────────────── */
+
+.mytools-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fafaf9;
+    color: var(--text);
+    font-size: 14px;
+    transition: .2s;
+    box-sizing: border-box;
+}
+
+.mytools-input:focus {
+    outline: none;
+    border-color: var(--burg);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(109, 40, 66, .15);
+}
+
+
+a:hover {
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+}
+
+/* ── Checkbox (Remember me) ──────────────────────── */
+#rememberMe {
+    width: 16px !important;
+    height: 16px !important;
+    accent-color: var(--burg) !important;
+    cursor: pointer;
+}
+
+/* ── Error / alert messages ──────────────────────── */
+
+/* ── Register link at bottom ─────────────────────── */
+
+
+
+/* ── Custom primary button class for consistency ─── */
+.mytools-btn-primary {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--burg), var(--burg-light));
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.mytools-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(109, 40, 66, .25);
+}
+/* ── Form layout ─────────────────────────────────── */
+.mytools-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* ── Form field layout ───────────────────────────── */
+.mytools-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mytools-label {
+    font-weight: 600;
+    color: var(--text);
+}
+/* ── Password field with toggle eye button ──────── */
+.mytools-password-wrap {
+    position: relative;
+}
+
+.mytools-eye-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+}
+
+.mytools-eye-btn:hover {
+    color: var(--burg);
+}
+
+.mytools-input-password {
+    padding-right: 48px;
+}
+/* ── Register link at bottom ─────────────────────── */
+.mytools-register {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 14px;
+}
+
+.mytools-register-link {
+    color: var(--burg);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 6px;
+}
+
+.mytools-register-link:hover {
+    color: var(--burg-light);
+}
+/* ── Alert messages ─────────────────────────────── */
+.mytools-alert {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.mytools-alert-error {
+    background: #fdecec;
+    color: #9f1d1d;
+}
+
+.mytools-alert-success {
+    background: #edf9ef;
+    color: #176a2d;
+}
+
+.mytools-alert-warning {
+    background: #fff8e5;
+    color: #946200;
+}
+
+.mytools-alert-info {
+    background: #eef7ff;
+    color: #0b5cab;
+}
+
+
+/* ── Social / Identity providers ─────────────────── */
+.mytools-brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mytools-logo {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.mytools-title {
+    margin: 0;
+    color: var(--burg);
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.mytools-subtitle {
+    margin-top: 8px;
+    color: #777;
+}
+
+/* ── Divider with text ───────────────────────────── */
+
+.mytools-divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: #888;
+    font-size: 13px;
+}
+
+.mytools-divider::before,
+.mytools-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+}
+
+.mytools-divider span {
+    margin: 0 12px;
+}
+/* ── Label row with "Remember me" and "Forgot password" ─ */
+.mytools-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mytools-forgot-link {
+    font-size: 13px;
+    color: var(--burg);
+}
+
+.mytools-forgot-link:hover {
+    text-decoration: underline;
+}
+/* ── Remember me checkbox ───────────────────────── */
+.mytools-remember {
+    display: flex;
+    align-items: center;
+}
+
+.mytools-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.mytools-checkbox-text {
+    font-size: 14px;
+}
+
+/* ── Responsive adjustments ─────────────────────── */
+@media (max-width:500px) {
+
+    .mytools-card {
+        width: 100%;
+        padding: 24px;
+        margin: 16px;
+    }
+
+    .mytools-title {
+        font-size: 26px;
+    }
+
+}
