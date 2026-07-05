@@ -41,7 +41,9 @@ services:
       - "8080:8080"
     environment:
       KC_DB: dev-file           # simple file DB, fine for dev
-    command: start-dev          # dev mode — no HTTPS, faster startup
+    #command: start-dev       # dev mode — no HTTPS, faster startup
+    command: start-dev --spi-theme-static-max-age=-1   # ← disables CSS cache in dev
+
 
   # ── Backend ── hot reload via volume mount ─────────
   # Does NOT rebuild on every change — Spring DevTools watches for changes

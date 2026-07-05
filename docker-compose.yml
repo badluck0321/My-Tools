@@ -70,6 +70,7 @@ services:
     restart: unless-stopped
     volumes:
       - keycloak-data:/opt/keycloak/data
+      - ./Frontend-MyTools/themes:/opt/keycloak/themes
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
