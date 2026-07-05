@@ -1,15 +1,14 @@
-package com.example.BackEnd_MyTools.Entitys;
+package com.example.BackEnd_MyTools.DTO;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-@Document(collection = "VendorVerification")
 @Data
-public class VendorVerification {
+
+public class DtoGetVendorVerification {
     @Id
     private String id;
     private String userId;
@@ -20,7 +19,6 @@ public class VendorVerification {
     private String note;
     private VerificationStatus status;
     private String reviewedBy;
-    private String reviewComment;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

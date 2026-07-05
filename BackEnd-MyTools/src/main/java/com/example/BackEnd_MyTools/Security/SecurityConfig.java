@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
-                                "/webjars/**", "/actuator/**", "/product/photos/**", "/masterys/photos/**", "/ws/**")
+                                "/webjars/**", "/actuator/**", "/product/photos/**", "/masterys/photos/**",
+                                "/vendor-verifications/photos/**", "/ws/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/masterys/**").permitAll()
@@ -35,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ai/search/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/bookings/availability", "/bookings/product/**").permitAll()
+
                         .requestMatchers("/chat").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())));
