@@ -30,7 +30,7 @@ class SecurityUtilsTest {
     @Test
     void detectsRolesFromResourceAccess() {
         Jwt jwt = Jwt.withTokenValue("token").header("alg", "none").subject("owner").claim("sub", "owner")
-                .claim("resource_access", Map.of("my-api", Map.of("roles", List.of("StoreOwner"))))
+                .claim("resource_access", Map.of("my-api", Map.of("roles", List.of("mt-StoreOwner"))))
                 .issuedAt(Instant.now()).expiresAt(Instant.now().plusSeconds(3600)).build();
         assertThat(SecurityUtils.isStoreOwner(jwt)).isTrue();
     }

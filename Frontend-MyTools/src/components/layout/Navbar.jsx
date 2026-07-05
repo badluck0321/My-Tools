@@ -181,20 +181,6 @@ const Navbar = () => {
                         <span className="font-medium">Orders</span>
                       </Link>
                       <Link
-                        to="/dashboard/MyStore"
-                        className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}>
-                        <ShoppingBag className="w-5 h-5" />
-                        <span className="font-medium">My Store</span>
-                      </Link>
-                      <Link
-                        to="/dashboard/vendor-verification"
-                        className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
-                        onClick={() => setIsProfileOpen(false)}>
-                        <Settings className="w-5 h-5" />
-                        <span className="font-medium">Verification</span>
-                      </Link>
-                      <Link
                         to="/dashboard/settings"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
@@ -293,12 +279,18 @@ const Navbar = () => {
               ) : (
                 <div className="space-y-3">
                   <button
-                    onClick={() => { setIsMenuOpen(false); handleLogin(); }}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      handleLogin();
+                    }}
                     className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
                     Login
                   </button>
                   <button
-                    onClick={() => { setIsMenuOpen(false); handleLogin(); }}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      handleLogin();
+                    }}
                     className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
                     Sign Up
                   </button>

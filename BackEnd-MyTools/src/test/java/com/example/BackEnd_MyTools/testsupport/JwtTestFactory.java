@@ -17,7 +17,7 @@ public final class JwtTestFactory {
 
     public static Jwt admin(String sub) {
         return Jwt.withTokenValue("token-" + sub).header("alg", "none").subject(sub).claim("sub", sub)
-                .claim("preferred_username", "admin").claim("realm_access", Map.of("roles", List.of("tools-admin")))
+                .claim("preferred_username", "admin").claim("realm_access", Map.of("roles", List.of("mt-Admin")))
                 .issuedAt(Instant.now()).expiresAt(Instant.now().plusSeconds(3600)).build();
     }
 }
