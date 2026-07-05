@@ -3,7 +3,11 @@ import { initKeycloak, getToken, login, logout } from "../keycloak";
 import { profileService } from "../services/profileService";
 
 const parseJwt = (token) => {
-  try { return JSON.parse(atob(token.split('.')[1])); } catch { return {}; }
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch {
+    return {};
+  }
 };
 
 const extractRoles = (claims = {}) => {
@@ -21,7 +25,12 @@ const toUser = (token, profile = {}) => {
   const roles = extractRoles(claims);
   return {
     id: claims.sub,
-    username: profile.username || claims.preferred_username || claims.name || claims.email || "User",
+    username:
+      profile.username ||
+      claims.preferred_username ||
+      claims.name ||
+      claims.email ||
+      "User",
     email: profile.email || claims.email || "",
     first_name: profile.firstName || claims.given_name || "",
     last_name: profile.lastName || claims.family_name || "",
@@ -30,7 +39,13 @@ const toUser = (token, profile = {}) => {
     city: profile.city || "",
     address: profile.address || "",
     roles,
-    role: roles.includes("tools-admin") ? "admin" : roles.includes("StoreOwner") ? "StoreOwner" : roles.includes("tools-basic") ? "tools-basic" : "user",
+    role: roles.includes("mt-Admin")
+      ? "admin"
+      : roles.includes("mt-StoreOwner")
+      ? "StoreOwner"
+      : roles.includes("tools-basic")
+      ? "tools-basic"
+      : "user",
   };
 };
 
@@ -81,12 +96,17 @@ export const KeycloakProvider = ({ children }) => {
 
   const updateProfile = async (payload) => {
     try {
-      const res = await profileService.updateProfile(formDataToProfilePayload(payload));
+      const res = await profileService.updateProfile(
+        formDataToProfilePayload(payload)
+      );
       const currentToken = getToken();
       setUser(toUser(currentToken, res.data || {}));
       return { success: true, data: res.data };
     } catch (err) {
-      return { success: false, error: err?.response?.data || "Failed to update profile" };
+      return {
+        success: false,
+        error: err?.response?.data || "Failed to update profile",
+      };
     }
   };
 
@@ -128,19 +148,42 @@ export const KeycloakProvider = ({ children }) => {
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-          <p className="mt-4 text-gray-700 font-medium">Loading authentication...</p>
+          <p className="mt-4 text-gray-700 font-medium">
+            Loading authentication...
+          </p>
         </div>
       </div>
     );
   }
 
   const roles = user?.roles || [];
-  const hasRole = (...accepted) => accepted.some((role) => roles.includes(role) || user?.role === role);
-  const isAdmin = hasRole("tools-admin", "admin", "ADMIN");
-  const isStoreOwner = hasRole("StoreOwner", "store-owner", "tools-store-owner");
+  const hasRole = (...accepted) =>
+    accepted.some((role) => roles.includes(role) || user?.role === role);
+  const isAdmin = hasRole("mt-Admin", "admin", "ADMIN");
+  const isStoreOwner = hasRole(
+    "mt-StoreOwner",
+    "store-owner",
+    "tools-store-owner"
+  );
+  const isCraftMan = hasRole("mt-CraftMan", "craft-man", "tools-craft-man");
 
   return (
-    <KeycloakContext.Provider value={{ initialized, authenticated, token, user, roles, hasRole, isAdmin, isStoreOwner, login, logout, refreshUserProfile, updateProfile }}>
+    <KeycloakContext.Provider
+      value={{
+        initialized,
+        authenticated,
+        token,
+        user,
+        roles,
+        hasRole,
+        isAdmin,
+        isStoreOwner,
+        isCraftMan,
+        login,
+        logout,
+        refreshUserProfile,
+        updateProfile,
+      }}>
       {children}
     </KeycloakContext.Provider>
   );

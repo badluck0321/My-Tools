@@ -23,7 +23,11 @@ import ReviewSection from "../../components/common/ReviewSection"; // adjust pat
 import BookingCalendar from "../../components/booking/BookingCalendar";
 import { favoriteService } from "../../services/favoriteService";
 import { useLookups } from "../../hooks/useLookups";
-import { LOOKUP_TYPES, lookupLabel, listingLabel } from "../../utils/lookupUtils";
+import {
+  LOOKUP_TYPES,
+  lookupLabel,
+  listingLabel,
+} from "../../utils/lookupUtils";
 
 /* ─── PhotoImage: fetches one photo via service, renders it ── */
 const PhotoImage = ({ photoUrls, alt, className }) => {
@@ -227,13 +231,17 @@ const ProductInfos = () => {
 
   useEffect(() => {
     if (!authenticated || !id) return;
-    favoriteService.statusProduct(id)
+    favoriteService
+      .statusProduct(id)
       .then((res) => setIsLiked(Boolean(res.data?.favorited)))
       .catch(() => setIsLiked(false));
   }, [authenticated, id]);
 
   const handleToggleFavorite = async () => {
-    if (!authenticated) { login(); return; }
+    if (!authenticated) {
+      login();
+      return;
+    }
     if (favLoading) return;
     setFavLoading(true);
     try {
@@ -273,10 +281,30 @@ const ProductInfos = () => {
     );
 
   const listedForLabel = listingLabel(lookups, product.listedForId);
-  const categoryLabel = lookupLabel(lookups, LOOKUP_TYPES.CATEGORY, product.categoryId, "—");
-  const markLabel = lookupLabel(lookups, LOOKUP_TYPES.MARK, product.markId, "—");
-  const conditionLabel = lookupLabel(lookups, LOOKUP_TYPES.CONDITION, product.conditionId, "—");
-  const currencyLabel = lookupLabel(lookups, LOOKUP_TYPES.CURRENCY, product.currencyId || "MAD", "MAD");
+  const categoryLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.CATEGORY,
+    product.categoryId,
+    "—"
+  );
+  const markLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.MARK,
+    product.markId,
+    "—"
+  );
+  const conditionLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.CONDITION,
+    product.conditionId,
+    "—"
+  );
+  const currencyLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.CURRENCY,
+    product.currencyId || "MAD",
+    "MAD"
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
@@ -434,7 +462,14 @@ const ProductInfos = () => {
               <p className="text-sm text-red-500">{String(cartError)}</p>
             )}
 
-            <BookingCalendar resourceType="PRODUCT" resourceId={product.id} title="Product booking calendar" />
+            {/* Show booking calendar only for rental products */}
+            {Number(product.listedForId) === 1 && (
+              <BookingCalendar
+                resourceType="PRODUCT"
+                resourceId={product.id}
+                title="Product booking calendar"
+              />
+            )}
 
             {/* Action buttons */}
             <div className="flex gap-3 mt-auto">

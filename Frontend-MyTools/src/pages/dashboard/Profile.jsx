@@ -149,7 +149,7 @@ const Profile = () => {
   };
 
   const getRoleInfo = () => {
-    if (user?.role === "StoreOwner") {
+    if (user?.role === "mt-StoreOwner") {
       return {
         label: "Store Owner",
         icon: Wrench,

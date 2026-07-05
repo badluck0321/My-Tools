@@ -8,7 +8,8 @@ import java.util.Map;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 public final class SecurityUtils {
-    private SecurityUtils() {}
+    private SecurityUtils() {
+    }
 
     public static String currentUserId(Jwt jwt) {
         if (jwt == null) {
@@ -22,27 +23,36 @@ public final class SecurityUtils {
     }
 
     public static String currentUsername(Jwt jwt) {
-        if (jwt == null) return "anonymous";
+        if (jwt == null)
+            return "anonymous";
         String preferred = jwt.getClaimAsString("preferred_username");
-        if (preferred != null && !preferred.isBlank()) return preferred;
+        if (preferred != null && !preferred.isBlank())
+            return preferred;
         String name = jwt.getClaimAsString("name");
-        if (name != null && !name.isBlank()) return name;
+        if (name != null && !name.isBlank())
+            return name;
         String email = jwt.getClaimAsString("email");
-        if (email != null && !email.isBlank()) return email;
+        if (email != null && !email.isBlank())
+            return email;
         return currentUserId(jwt);
     }
 
     public static boolean isAdmin(Jwt jwt) {
-        return hasAnyRole(jwt, "tools-admin", "admin", "ADMIN");
+        return hasAnyRole(jwt, "mt-Admin");
     }
 
     public static boolean isStoreOwner(Jwt jwt) {
-        return hasAnyRole(jwt, "StoreOwner", "store-owner", "tools-store-owner");
+        return hasAnyRole(jwt, "mt-StoreOwner");
+    }
+
+    public static boolean IsCraftsman(Jwt jwt) {
+        return hasAnyRole(jwt, "mt-Craftsman");
     }
 
     @SuppressWarnings("unchecked")
     public static boolean hasAnyRole(Jwt jwt, String... acceptedRoles) {
-        if (jwt == null || acceptedRoles == null) return false;
+        if (jwt == null || acceptedRoles == null)
+            return false;
         List<String> roles = new ArrayList<>();
 
         Object realmAccess = jwt.getClaims().get("realm_access");
@@ -71,7 +81,8 @@ public final class SecurityUtils {
         }
 
         for (String accepted : acceptedRoles) {
-            if (roles.stream().anyMatch(r -> r.equalsIgnoreCase(accepted))) return true;
+            if (roles.stream().anyMatch(r -> r.equalsIgnoreCase(accepted)))
+                return true;
         }
         return false;
     }

@@ -296,14 +296,11 @@ const NotAuthenticated = ({ onLogin }) => (
 const MyStore = () => {
   const [store, setStore] = useState(null);
   const [loading, setLoading] = useState(false);
-    const [fetched, setFetched] = useState(false);
-    
-//   const { keycloak, initialized } = useKeycloak();
-//   const isAuthenticated = initialized && keycloak.authenticated;
-//   const userId = keycloak?.tokenParsed?.sub;
-const { initialized, authenticated, user, login } = useKeycloak();
-    const isAuthenticated = initialized && authenticated;
-    const userId = user?.id;
+  const [fetched, setFetched] = useState(false);
+  const { initialized, authenticated, user, login, isStoreOwner, isAdmin } = useKeycloak();
+  const isAuthenticated = initialized && authenticated;
+  const userId = user?.id;
+  const canManageStore = isAdmin || isStoreOwner;
     
   useEffect(() => {
     if (!isAuthenticated || !userId) return;
@@ -323,6 +320,15 @@ const { initialized, authenticated, user, login } = useKeycloak();
     return (
       <div className="min-h-screen flex items-center justify-center">
         <span className="w-6 h-6 border-2 border-[#6d2842]/30 border-t-[#6d2842] rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!canManageStore) {
+    return (
+      <div className="rounded-2xl border border-[#e8e7e5] bg-white p-6 text-center text-[#5d5955] dark:border-[#4a4642] dark:bg-[#2d2a27] dark:text-[#c4bfb9]">
+        <h2 className="text-xl font-semibold text-[#2d2a27] dark:text-white">Access restricted</h2>
+        <p className="mt-2">Only admins and store owners can manage stores.</p>
       </div>
     );
   }
