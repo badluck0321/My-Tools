@@ -24,7 +24,7 @@ public class Product {
     public String description;
     public int price;
     public List<String> tags;
-    public String ownerId;
+    public String ownerId; // keyclock sub
     public int conditionId;
     public int listedForId;
     public String currencyId;

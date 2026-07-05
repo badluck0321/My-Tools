@@ -1,10 +1,50 @@
 import { STORAGE_KEYS } from './constants';
 
-// Format price
-export const formatPrice = (price) => {
+export const formatPrice = (price, currency = 'MAD') => {
+  // Convert currency symbols to proper currency codes
+  const currencyMap = {
+    '€': 'EUR',
+    '$': 'USD',
+    '£': 'GBP',
+    '¥': 'JPY',
+    '₹': 'INR',
+    '₽': 'RUB',
+    '₩': 'KRW',
+    '₪': 'ILS',
+    '₫': 'VND',
+    '₦': 'NGN',
+    '₴': 'UAH',
+    '₱': 'PHP',
+    '₪': 'ILS',
+    '₫': 'VND',
+    '₩': 'KRW',
+    '₽': 'RUB',
+    '₹': 'INR',
+    '¥': 'JPY',
+    '£': 'GBP',
+    '$': 'USD',
+    '€': 'EUR',
+    '₪': 'ILS',
+    '₩': 'KRW',
+    '₽': 'RUB',
+    '₦': 'NGN',
+    '₱': 'PHP',
+    '₫': 'VND',
+    '₪': 'ILS',
+    '₩': 'KRW',
+    '₽': 'RUB',
+    '₹': 'INR',
+    '¥': 'JPY',
+    '£': 'GBP',
+    '$': 'USD',
+    '€': 'EUR',
+  };
+  
+  const normalizedCurrency = currencyMap[currency] || currency;
+  
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'MAD',
+    currency: normalizedCurrency,
   }).format(price);
 };
 
