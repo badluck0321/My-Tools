@@ -26,8 +26,8 @@ export const API_ENDPOINTS = {
 };
 
 export const USER_ROLES = {
-  STORE_OWNER: 'StoreOwner',
-  ADMIN: 'tools-admin',
+  STORE_OWNER: 'mt-StoreOwner',
+  ADMIN: 'mt-Admin',
   BASIC: 'tools-basic',
   GUEST: 'tools-guest',
 };

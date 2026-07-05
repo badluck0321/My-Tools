@@ -12,8 +12,8 @@ public class Mastery {
     @Id
     public String id;
 
-    public String masterId;
-    public String masterName;
+    public String masterId; // keyclock sub
+    public String masterName; // keyclock name
     public String masterPhone;
     public String title;
     public int masteryTypeId;

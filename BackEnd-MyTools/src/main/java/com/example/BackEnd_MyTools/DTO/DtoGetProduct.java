@@ -11,6 +11,7 @@ public class DtoGetProduct {
     private int markId;
     private int serieNum;
     private String description;
+    public String currencyId;
     private int price;
     private int listedForId;
     private int duration;
