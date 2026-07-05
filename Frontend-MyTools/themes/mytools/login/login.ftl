@@ -1,9 +1,24 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username','password') displayInfo=realm.password && realm.registrationAllowed && !registrationDisabled??; section>
+    
+    <#if section = "header">
+        ${msg("loginTitle",(realm.displayName!''))}
+
+    <#elseif section = "form">
+
     <div class="mytools-card">
 
         <!-- ── Brand ─────────────────────────────── -->
-
+        <div class="mytools-brand">
+            <div class="mytools-logo">🔧</div>
+            <h1 class="mytools-title">My-Tools</h1>
+            <p class="mytools-subtitle">
+                <#if realm.password && social.providers??>
+                    Sign in to your account
+                <#else>
+                    Welcome back, craftsman
+                </#if>
+            </p>
         </div>
 
         <!-- ── Flash messages ─────────────────────── -->
