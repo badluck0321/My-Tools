@@ -349,17 +349,19 @@ const MyProducts = () => {
   const [showForm, setShowForm] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [page, setPage] = useState(1);
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [editingProductForm, setEditingProductForm] = useState({ name: "", price: "", isavailable: true });
+  const [savingProductId, setSavingProductId] = useState(null);
 
   const loadProducts = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
       if (isAdmin) {
-        // Admin can see all products - use the general products endpoint
         const res = await interceptor.get("/products");
         setProducts(res.data || []);
       } else {
-        // Store owners can only see their own products
         setProducts(await productService.getMyProducts());
       }
     } catch (err) {
@@ -375,6 +377,9 @@ const MyProducts = () => {
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
+  useEffect(() => {
+    setPage(1);
+  }, [products.length]);
   const saved = () => {
     setShowForm(false);
     setEditTarget(null);
@@ -386,6 +391,40 @@ const MyProducts = () => {
     setDeleteTarget(null);
     loadProducts();
   };
+
+  const startInlineEdit = (product) => {
+    setEditingProductId(product.id);
+    setEditingProductForm({
+      name: product.name || "",
+      price: product.price ?? "",
+      isavailable: product.isavailable ?? true,
+    });
+  };
+
+  const saveInlineEdit = async (product) => {
+    try {
+      setSavingProductId(product.id);
+      const payload = {
+        ...product,
+        name: editingProductForm.name.trim(),
+        price: Number(editingProductForm.price || 0),
+        isavailable: Boolean(editingProductForm.isavailable),
+      };
+      const fd = new FormData();
+      fd.append("product", JSON.stringify(payload));
+      await productService.updateProduct(product.id, fd);
+      setEditingProductId(null);
+      await loadProducts();
+    } catch (err) {
+      setError(err?.response?.data || "Unable to update product.");
+    } finally {
+      setSavingProductId(null);
+    }
+  };
+
+  const pageSize = 6;
+  const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
+  const visibleProducts = products.slice((page - 1) * pageSize, page * pageSize);
   const canManageProducts = isAdmin || isStoreOwner;
 
   if (!canManageProducts) {
@@ -444,7 +483,7 @@ const MyProducts = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {products.map((p) => (
+          {visibleProducts.map((p) => (
             <div
               key={p.id}
               className="p-4 rounded-2xl bg-[#f5f5f3] dark:bg-[#2d2a27] border border-[#e8e7e5] dark:border-[#4a4642]">
@@ -467,22 +506,68 @@ const MyProducts = () => {
                 </div>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => {
-                      setEditTarget(p);
-                      setShowForm(true);
-                    }}
-                    className="px-3 py-2 rounded-xl bg-white dark:bg-[#1a1816] text-sm inline-flex items-center gap-1">
-                    <Pencil size={14} /> Edit
+                    onClick={() => startInlineEdit(p)}
+                    className="p-2.5 rounded-xl bg-white dark:bg-[#1a1816] text-sm inline-flex items-center gap-1">
+                    <Pencil size={14} />
                   </button>
                   <button
                     onClick={() => setDeleteTarget(p)}
-                    className="px-3 py-2 rounded-xl bg-red-600 text-white text-sm inline-flex items-center gap-1">
-                    <Trash2 size={14} /> Delete
+                    className="p-2.5 rounded-xl bg-red-600 text-white text-sm inline-flex items-center gap-1">
+                    <Trash2 size={14} />
                   </button>
                 </div>
               </div>
+              {editingProductId === p.id && (
+                <div className="mt-3 rounded-2xl border border-[#e8e7e5] dark:border-[#4a4642] bg-white/80 p-3 dark:bg-[#1a1816]/70">
+                  <div className="grid gap-3 md:grid-cols-3">
+                    <input
+                      value={editingProductForm.name}
+                      onChange={(e) => setEditingProductForm((prev) => ({ ...prev, name: e.target.value }))}
+                      className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
+                      placeholder="Product name"
+                    />
+                    <input
+                      type="number"
+                      value={editingProductForm.price}
+                      onChange={(e) => setEditingProductForm((prev) => ({ ...prev, price: e.target.value }))}
+                      className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
+                      placeholder="Price"
+                    />
+                    <label className="flex items-center gap-2 text-sm text-[#5d5955] dark:text-[#c4bfb9]">
+                      <input
+                        type="checkbox"
+                        checked={editingProductForm.isavailable}
+                        onChange={(e) => setEditingProductForm((prev) => ({ ...prev, isavailable: e.target.checked }))}
+                      />
+                      Available
+                    </label>
+                  </div>
+                  <div className="mt-3 flex justify-end gap-2">
+                    <button
+                      onClick={() => setEditingProductId(null)}
+                      className="rounded-xl border px-3 py-2 text-sm">
+                      Cancel
+                    </button>
+                    <button
+                      disabled={savingProductId === p.id}
+                      onClick={() => saveInlineEdit(p)}
+                      className="rounded-xl bg-[#6d2842] px-3 py-2 text-sm font-semibold text-white disabled:opacity-60">
+                      {savingProductId === p.id ? "Saving..." : "Save"}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
+        </div>
+      )}
+      {products.length > pageSize && (
+        <div className="mt-5 flex items-center justify-between rounded-2xl border border-[#e8e7e5] bg-white px-4 py-3 dark:border-[#4a4642] dark:bg-[#2d2a27]">
+          <p className="text-sm text-[#8a8580]">Page {page} of {totalPages}</p>
+          <div className="flex gap-2">
+            <button onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page === 1} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Prev</button>
+            <button onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page === totalPages} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Next</button>
+          </div>
         </div>
       )}
       <AnimatePresence>

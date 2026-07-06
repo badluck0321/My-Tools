@@ -295,25 +295,93 @@ const NotAuthenticated = ({ onLogin }) => (
 /* ─── Main Page ───────────────────────────────────── */
 const MyStore = () => {
   const [store, setStore] = useState(null);
+  const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
+  const [updatingStoreId, setUpdatingStoreId] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [editStoreId, setEditStoreId] = useState(null);
+  const [editStoreForm, setEditStoreForm] = useState({ name: '', email: '' });
+  const [savingStoreId, setSavingStoreId] = useState(null);
   const { initialized, authenticated, user, login, isStoreOwner, isAdmin } = useKeycloak();
   const isAuthenticated = initialized && authenticated;
   const userId = user?.id;
   const canManageStore = isAdmin || isStoreOwner;
-    
-  useEffect(() => {
+
+  const loadStoreData = async () => {
     if (!isAuthenticated || !userId) return;
 
     setLoading(true);
-    fetchMyStore()
-      .then((found) => setStore(found))
-      .catch(console.error)
-      .finally(() => {
-        setLoading(false);
-        setFetched(true);
+    try {
+      if (isAdmin) {
+        const allStores = await storeService.getStores();
+        setStores(Array.isArray(allStores) ? allStores : []);
+        setStore(null);
+      } else {
+        const found = await fetchMyStore();
+        setStore(found);
+        setStores([]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setFetched(true);
+    }
+  };
+
+  const handleStoreToggle = async (storeId, field, value) => {
+    try {
+      setUpdatingStoreId(storeId);
+      const updated = await storeService.updateStore(storeId, { [field]: value });
+      setStores((prev) => prev.map((item) => (item.id === storeId ? updated : item)));
+      if (store?.id === storeId) {
+        setStore(updated);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setUpdatingStoreId(null);
+      setPendingAction(null);
+    }
+  };
+
+  const startInlineEdit = (item) => {
+    setEditStoreId(item.id);
+    setEditStoreForm({ name: item.name || '', email: item.email || '' });
+  };
+
+  const saveInlineEdit = async (item) => {
+    try {
+      setSavingStoreId(item.id);
+      const updated = await storeService.updateStore(item.id, {
+        name: editStoreForm.name.trim(),
+        email: editStoreForm.email.trim(),
       });
-  }, [isAuthenticated, userId]);
+      setStores((prev) => prev.map((entry) => (entry.id === item.id ? updated : entry)));
+      if (store?.id === item.id) {
+        setStore(updated);
+      }
+      setEditStoreId(null);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSavingStoreId(null);
+    }
+  };
+
+  const pageSize = 5;
+  const totalPages = Math.max(1, Math.ceil(stores.length / pageSize));
+  const visibleStores = stores.slice((page - 1) * pageSize, page * pageSize);
+
+  useEffect(() => {
+    loadStoreData();
+  }, [isAuthenticated, userId, isAdmin]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [stores.length]);
 
   // Loading states
   if (!initialized) {
@@ -345,11 +413,13 @@ const MyStore = () => {
         >
           <h1 className="text-5xl md:text-6xl font-display font-bold mb-4">
             <span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">
-              My Store
+              {isAdmin ? 'Stores' : 'My Store'}
             </span>
           </h1>
           <p className="text-[#5d5955] dark:text-[#c4bfb9] max-w-xl mx-auto">
-            Manage your storefront, products, and settings all in one place.
+            {isAdmin
+              ? 'Review and manage all stores across the platform from one place.'
+              : 'Manage your storefront, products, and settings all in one place.'}
           </p>
         </motion.div>
 
@@ -368,15 +438,100 @@ const MyStore = () => {
             </motion.div>
           )}
 
+          {/* Admin overview of all stores */}
+          {isAuthenticated && fetched && isAdmin && (
+            <motion.div key="admin-stores" exit={{ opacity: 0 }} className="space-y-4">
+              {stores.length === 0 ? (
+                <div className="rounded-2xl border border-[#e8e7e5] bg-white p-6 text-center text-[#5d5955] dark:border-[#4a4642] dark:bg-[#2d2a27] dark:text-[#c4bfb9]">
+                  No stores found.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {visibleStores.map((item) => (
+                    <div key={item.id} className="rounded-2xl border border-[#e8e7e5] bg-white p-5 shadow-sm dark:border-[#4a4642] dark:bg-[#2d2a27]">
+                      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div>
+                          <h3 className="text-xl font-semibold text-[#1a1816] dark:text-[#f0ece8]">{item.name}</h3>
+                          <p className="text-sm text-[#8a8580] dark:text-[#7a756f]">{item.email}</p>
+                          <p className="mt-2 text-sm text-[#8a8580] dark:text-[#7a756f]">
+                            Owner: {item.ownerId?.join(', ') || '—'}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => startInlineEdit(item)}
+                            className="rounded-xl border border-[#d4cfc9] px-3 py-2 text-sm font-semibold text-[#2d2a27] dark:border-[#4a4642] dark:text-[#f0ece8]"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPendingAction({ id: item.id, type: 'active', value: !item.isActive })}
+                            disabled={updatingStoreId === item.id}
+                            className={`rounded-xl px-3 py-2 text-sm font-semibold ${item.isActive ? 'bg-amber-600 text-white' : 'bg-emerald-600 text-white'}`}
+                          >
+                            {updatingStoreId === item.id ? 'Updating…' : item.isActive ? 'Deactivate' : 'Activate'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPendingAction({ id: item.id, type: 'verified', value: !item.isVerified })}
+                            disabled={updatingStoreId === item.id}
+                            className={`rounded-xl px-3 py-2 text-sm font-semibold ${item.isVerified ? 'bg-slate-600 text-white' : 'bg-blue-600 text-white'}`}
+                          >
+                            {updatingStoreId === item.id ? 'Updating…' : item.isVerified ? 'Unverify' : 'Verify'}
+                          </button>
+                        </div>
+                      </div>
+                      {editStoreId === item.id && (
+                        <div className="mt-4 rounded-2xl border border-[#e8e7e5] bg-[#f8f7f5] p-3 dark:border-[#4a4642] dark:bg-[#1f1c1a]">
+                          <div className="grid gap-3 md:grid-cols-2">
+                            <input
+                              value={editStoreForm.name}
+                              onChange={(e) => setEditStoreForm((prev) => ({ ...prev, name: e.target.value }))}
+                              className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
+                              placeholder="Store name"
+                            />
+                            <input
+                              value={editStoreForm.email}
+                              onChange={(e) => setEditStoreForm((prev) => ({ ...prev, email: e.target.value }))}
+                              className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
+                              placeholder="Store email"
+                            />
+                          </div>
+                          <div className="mt-3 flex justify-end gap-2">
+                            <button onClick={() => setEditStoreId(null)} className="rounded-xl border px-3 py-2 text-sm">Cancel</button>
+                            <button disabled={savingStoreId === item.id} onClick={() => saveInlineEdit(item)} className="rounded-xl bg-[#6d2842] px-3 py-2 text-sm font-semibold text-white disabled:opacity-60">
+                              {savingStoreId === item.id ? 'Saving…' : 'Save'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  {stores.length > pageSize && (
+                    <div className="flex items-center justify-between rounded-2xl border border-[#e8e7e5] bg-white px-4 py-3 dark:border-[#4a4642] dark:bg-[#2d2a27]">
+                      <p className="text-sm text-[#8a8580]">Page {page} of {totalPages}</p>
+                      <div className="flex gap-2">
+                        <button onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page === 1} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Prev</button>
+                        <button onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page === totalPages} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Next</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )}
+
           {/* Has a store → show dashboard */}
-          {isAuthenticated && fetched && store && (
+          {isAuthenticated && fetched && !isAdmin && store && (
             <motion.div key="dashboard" exit={{ opacity: 0 }}>
               <StoreDashboard store={store} />
             </motion.div>
           )}
 
           {/* No store yet → show create form */}
-          {isAuthenticated && fetched && !store && (
+          {isAuthenticated && fetched && !isAdmin && !store && (
             <motion.div key="create" exit={{ opacity: 0 }}>
               <CreateStoreForm
                 userId={userId}

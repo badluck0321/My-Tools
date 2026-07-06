@@ -59,6 +59,17 @@ class BookingServiceTest {
                 .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("already booked");
     }
 
+    @Test
+    void getAllBookingsReturnsAllBookings() {
+        Booking first = Booking.builder().id("B001").build();
+        Booking second = Booking.builder().id("B002").build();
+        when(bookingRepo.findAll()).thenReturn(List.of(first, second));
+
+        List<Booking> result = bookingService.getAllBookings();
+
+        assertThat(result).extracting(Booking::getId).containsExactly("B001", "B002");
+    }
+
     private Product product(String id, String name, String owner, int price) {
         Product p = new Product();
         p.setId(id);

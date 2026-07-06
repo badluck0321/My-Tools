@@ -13,6 +13,7 @@ export const bookingService = {
   unavailableDates: (resourceType, resourceId) =>
     interceptor.get('/bookings/unavailable-dates', { params: { resourceType, resourceId } }),
   myBookings: () => interceptor.get('/bookings/my'),
+  adminBookings: () => interceptor.get('/bookings/admin'),
   resourceBookings: (resourceType, resourceId) => interceptor.get(`/bookings/resource/${resourceType}/${resourceId}`),
   productBookings: (productId) => interceptor.get(`/bookings/product/${productId}`),
   masteryBookings: (masteryId) => interceptor.get(`/bookings/mastery/${masteryId}`),

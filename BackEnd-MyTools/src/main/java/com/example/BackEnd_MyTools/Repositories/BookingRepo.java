@@ -11,6 +11,7 @@ import com.example.BackEnd_MyTools.Entitys.Booking;
 
 @Repository
 public interface BookingRepo extends MongoRepository<Booking, String> {
+    List<Booking> findAllByOrderByCreatedAtDesc();
     List<Booking> findByUserIdOrderByCreatedAtDesc(String userId);
     List<Booking> findByProductIdOrderByStartDateAsc(String productId);
     List<Booking> findByResourceTypeAndResourceIdOrderByStartDateAsc(Booking.ResourceType resourceType, String resourceId);

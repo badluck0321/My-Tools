@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, CheckCircle, XCircle } from "lucide-react";
 import { bookingService } from "../../services/bookingService";
-// import { useKeycloak } from '../../providers/KeycloakProvider';
+import { useKeycloak } from "../../providers/KeycloakProvider";
 
 const emptyForm = {
   resourceType: "PRODUCT",
@@ -12,7 +12,7 @@ const emptyForm = {
 };
 
 const Bookings = () => {
-  // const { isAdmin, isStoreOwner, isCraftMan } = useKeycloak();
+  const { isAdmin } = useKeycloak();
   const [bookings, setBookings] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,9 @@ const Bookings = () => {
   const load = async () => {
     setLoading(true);
     try {
-      const res = await bookingService.myBookings();
+      const res = isAdmin
+        ? await bookingService.adminBookings()
+        : await bookingService.myBookings();
       setBookings(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       setError(err?.response?.data || "Unable to load bookings.");
@@ -34,7 +36,7 @@ const Bookings = () => {
 
   useEffect(() => {
     load();
-  }, []);
+  }, [isAdmin]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -81,7 +83,9 @@ const Bookings = () => {
             Bookings
           </h2>
           <p className="text-sm text-[#8a8580]">
-            Create product or mastery reservations and track status
+            {isAdmin
+              ? "Monitor all bookings across the platform and update their status"
+              : "Create product or mastery reservations and track status"}
           </p>
         </div>
       </div>

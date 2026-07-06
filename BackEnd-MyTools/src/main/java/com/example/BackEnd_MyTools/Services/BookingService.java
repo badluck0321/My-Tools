@@ -34,6 +34,12 @@ public class BookingService {
                 .toList();
     }
 
+    public List<Booking> getAllBookings() {
+        return bookingRepo.findAllByOrderByCreatedAtDesc().stream()
+                .map(this::normalizeBooking)
+                .toList();
+    }
+
     public List<Booking> getProductBookings(String productId) {
         return bookingRepo.findByProductIdOrderByStartDateAsc(productId).stream()
                 .map(this::normalizeBooking)

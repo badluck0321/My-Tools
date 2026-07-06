@@ -34,6 +34,14 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getMyBookings(SecurityUtils.currentUserId(jwt)));
     }
 
+    @GetMapping("/admin")
+    public ResponseEntity<List<Booking>> adminBookings(@AuthenticationPrincipal Jwt jwt) {
+        if (!SecurityUtils.isAdmin(jwt)) {
+            throw new SecurityException("Admin role required");
+        }
+        return ResponseEntity.ok(bookingService.getAllBookings());
+    }
+
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Booking>> productBookings(@PathVariable String productId) {
         return ResponseEntity.ok(bookingService.getProductBookings(productId));
