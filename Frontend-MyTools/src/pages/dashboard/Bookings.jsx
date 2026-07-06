@@ -12,7 +12,7 @@ const emptyForm = {
 };
 
 const Bookings = () => {
-  const { isAdmin } = useKeycloak();
+  const { user, isAdmin, isStoreOwner, isCraftMan } = useKeycloak();
   const [bookings, setBookings] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [loading, setLoading] = useState(true);
@@ -25,6 +25,8 @@ const Bookings = () => {
     try {
       const res = isAdmin
         ? await bookingService.adminBookings()
+        : isStoreOwner || isCraftMan
+        ? await bookingService.ownerBookings()
         : await bookingService.myBookings();
       setBookings(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
@@ -36,7 +38,7 @@ const Bookings = () => {
 
   useEffect(() => {
     load();
-  }, [isAdmin]);
+  }, [isAdmin, isStoreOwner, isCraftMan, user?.id]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -84,8 +86,10 @@ const Bookings = () => {
           </h2>
           <p className="text-sm text-[#8a8580]">
             {isAdmin
-              ? "Monitor all bookings across the platform and update their status"
-              : "Create product or mastery reservations and track status"}
+              ? "Monitor all bookings across the platform with full owner and customer details"
+              : isStoreOwner || isCraftMan
+              ? "See bookings for your owned listings and manage reservation status"
+              : "View your bookings and manage your reservations"}
           </p>
         </div>
       </div>
@@ -176,6 +180,16 @@ const Bookings = () => {
                   <p className="text-sm text-[#8a8580]">
                     {b.startDate} → {b.endDate} · Qty {b.quantity}
                   </p>
+                  <p className="text-sm text-[#8a8580] mt-1">
+                    Booked by: {b.userName || b.userId || "Unknown"}
+                  </p>
+                  {(isAdmin ||
+                    (user &&
+                      (b.ownerId === user.id || b.userId === user.id))) && (
+                    <p className="text-sm text-[#8a8580]">
+                      Owner: {b.ownerName || b.ownerId || "Unknown"}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right">
                   <span className="px-3 py-1 rounded-full bg-white dark:bg-[#1a1816] text-xs font-bold">
@@ -187,16 +201,22 @@ const Bookings = () => {
                 </div>
               </div>
               <div className="mt-3 flex gap-2">
-                <button
-                  onClick={() => updateStatus(b.id, "CONFIRMED")}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-green-600 text-white text-xs">
-                  <CheckCircle size={14} /> Confirm
-                </button>
-                <button
-                  onClick={() => updateStatus(b.id, "CANCELLED")}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-red-600 text-white text-xs">
-                  <XCircle size={14} /> Cancel
-                </button>
+                {(isAdmin || (user && b.ownerId === user.id)) && (
+                  <button
+                    onClick={() => updateStatus(b.id, "CONFIRMED")}
+                    className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-green-600 text-white text-xs">
+                    <CheckCircle size={14} /> Confirm
+                  </button>
+                )}
+                {(isAdmin ||
+                  (user && b.ownerId === user.id) ||
+                  (user && b.userId === user.id)) && (
+                  <button
+                    onClick={() => updateStatus(b.id, "CANCELLED")}
+                    className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-red-600 text-white text-xs">
+                    <XCircle size={14} /> Cancel
+                  </button>
+                )}
               </div>
             </div>
           ))}

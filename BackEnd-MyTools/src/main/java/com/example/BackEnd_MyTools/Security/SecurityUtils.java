@@ -45,8 +45,13 @@ public final class SecurityUtils {
         return hasAnyRole(jwt, "mt-StoreOwner");
     }
 
+    public static boolean isCraftsman(Jwt jwt) {
+        return hasAnyRole(jwt, "mt-CraftMan", "mt-Craftsman");
+    }
+
+    @Deprecated
     public static boolean IsCraftsman(Jwt jwt) {
-        return hasAnyRole(jwt, "mt-Craftsman");
+        return isCraftsman(jwt);
     }
 
     @SuppressWarnings("unchecked")

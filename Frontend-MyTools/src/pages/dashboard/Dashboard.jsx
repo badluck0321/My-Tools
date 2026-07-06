@@ -139,7 +139,7 @@ const Dashboard = () => {
     if (tab.adminOnly) return isAdmin;
     if (tab.id === "MyMasteries") return isAdmin || isCraftMan;
     if (tab.sellerOnly) return isAdmin || isStoreOwner;
-    if (tab.craftOnly) return isAdmin || isStoreOwner || isCraftMan;
+    if (tab.craftOnly) return isAdmin || isCraftsMan;
     return true;
   });
 

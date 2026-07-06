@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, CheckCircle, Pencil, Plus, Trash2, X } from "lucide-react";
+import interceptor from "../../interceptors/auth.interceptor";
 import { masteryService } from "../../services/MasteryService";
 import { useLookups } from "../../hooks/useLookups";
 import {
@@ -284,6 +285,7 @@ const MyMasteries = () => {
   const [showForm, setShowForm] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const canCreateNew = !isCraftMan || items.length === 0;
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -319,7 +321,7 @@ const MyMasteries = () => {
     setDeleteTarget(null);
     load();
   };
-  const canManageMasteries = isAdmin || isCraftMan || isStoreOwner;
+  const canManageMasteries = isAdmin || isCraftMan;
 
   if (!canManageMasteries) {
     return (
@@ -327,9 +329,7 @@ const MyMasteries = () => {
         <h2 className="text-xl font-semibold text-[#2d2a27] dark:text-white">
           Access restricted
         </h2>
-        <p className="mt-2">
-          Only admins, store owners, and craftsmen can manage masteries.
-        </p>
+        <p className="mt-2">Only admins and craftsmen can manage masteries.</p>
       </div>
     );
   }
@@ -348,14 +348,21 @@ const MyMasteries = () => {
             Create, edit, view and delete your service listings.
           </p>
         </div>
-        <button
-          onClick={() => {
-            setEditTarget(null);
-            setShowForm(true);
-          }}
-          className="ml-auto flex items-center gap-2 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white font-semibold px-4 py-2 rounded-xl text-sm">
-          <Plus size={15} /> Add Mastery
-        </button>
+        {canCreateNew ? (
+          <button
+            onClick={() => {
+              setEditTarget(null);
+              setShowForm(true);
+            }}
+            className="ml-auto flex items-center gap-2 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white font-semibold px-4 py-2 rounded-xl text-sm">
+            <Plus size={15} /> Add Mastery
+          </button>
+        ) : (
+          <div className="ml-auto rounded-2xl bg-[#f5f5f3] dark:bg-[#3a3633] text-sm text-[#5d5955] dark:text-[#c4bfb9] px-4 py-3">
+            As a craftsman, you can only manage one mastery listing. Edit your
+            existing mastery below.
+          </div>
+        )}
       </div>
 
       {loading ? (
@@ -393,6 +400,11 @@ const MyMasteries = () => {
                     )}{" "}
                     · {Number(item.price || 0).toFixed(2)} MAD
                   </p>
+                  {isAdmin && (
+                    <p className="text-sm text-[#8a8580] mt-1">
+                      Master: {item.masterName || item.masterId || "Unknown"}
+                    </p>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <button

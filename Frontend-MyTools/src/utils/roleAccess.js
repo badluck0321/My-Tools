@@ -3,7 +3,7 @@ import { USER_ROLES } from '../utils/constants';
 const ROLE_ALIASES = {
   admin: [USER_ROLES.ADMIN, 'mt-admin', 'admin', 'ADMIN'],
   'store-owner': [USER_ROLES.STORE_OWNER, 'mt-storeowner', 'storeowner', 'store-owner', 'store_owner', 'tools-store-owner', 'tools-storeowner'],
-  'craft-man': ['mt-CraftMan', 'mt-Craftsman', 'craftman', 'craft-man', 'craftsman', 'tools-craft-man', 'tools-craftman', 'tools-craftsman'],
+  'craft-man': [ 'mt-Craftman', 'mt-CraftMan','craftman', 'craft-man', 'craftsman', 'tools-craft-man', 'tools-craftman', 'tools-craftsman'],
   guest: [USER_ROLES.GUEST, 'guest', 'tools-guest', 'anonymous'],
 };
 

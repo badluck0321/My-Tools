@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -38,5 +39,16 @@ class MasteryServiceTest {
         Mastery saved = masteryService.updateMastery("M001", u, JwtTestFactory.user("U001"));
         assertThat(saved.getTitle()).isEqualTo("Updated service");
         assertThat(saved.getPhotoUrls()).containsExactly("existing-photo");
+    }
+
+    @Test
+    void craftmanCannotCreateMoreThanOneMastery() {
+        Mastery mastery = new Mastery();
+        mastery.setTitle("New craft service");
+        when(masteryRepo.countByMasterId("U001")).thenReturn(1);
+
+        assertThatThrownBy(() -> masteryService.createMastery(mastery, JwtTestFactory.user("U001")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Craftsman can only have one mastery.");
     }
 }

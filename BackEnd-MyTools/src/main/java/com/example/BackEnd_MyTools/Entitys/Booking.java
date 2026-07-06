@@ -20,7 +20,8 @@ public class Booking {
     @Id
     private String id;
 
-    // Generic resource support. Product-specific fields below are retained for compatibility.
+    // Generic resource support. Product-specific fields below are retained for
+    // compatibility.
     private ResourceType resourceType;
     private String resourceId;
     private String resourceName;
@@ -29,7 +30,9 @@ public class Booking {
     private String productName;
     private String masteryId;
     private String ownerId;
+    private String ownerName;
     private String userId;
+    private String userName;
     private String orderId;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -41,6 +44,11 @@ public class Booking {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public enum BookingStatus { PENDING, CONFIRMED, CANCELLED, COMPLETED }
-    public enum ResourceType { PRODUCT, MASTERY }
+    public enum BookingStatus {
+        PENDING, CONFIRMED, CANCELLED, COMPLETED
+    }
+
+    public enum ResourceType {
+        PRODUCT, MASTERY
+    }
 }

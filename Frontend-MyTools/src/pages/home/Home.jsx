@@ -562,7 +562,7 @@ const Home = () => {
                     <HelpCircle size={15} /> Browse Questions
                   </motion.button>
                 </Link>
-                <Link to="/forum/ask">
+                <Link to="/forum/">
                   <motion.button
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}

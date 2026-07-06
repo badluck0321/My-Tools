@@ -10,4 +10,6 @@ import com.example.BackEnd_MyTools.Entitys.Mastery;
 @Repository
 public interface MasteryRepo extends MongoRepository<Mastery, String> {
     List<Mastery> findByMasterIdOrderByIdDesc(String masterId);
+
+    int countByMasterId(String masterId);
 }

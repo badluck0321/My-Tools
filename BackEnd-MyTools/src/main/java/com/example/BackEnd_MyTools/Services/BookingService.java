@@ -16,6 +16,7 @@ import com.example.BackEnd_MyTools.Entitys.Product;
 import com.example.BackEnd_MyTools.Repositories.BookingRepo;
 import com.example.BackEnd_MyTools.Repositories.MasteryRepo;
 import com.example.BackEnd_MyTools.Repositories.ProductRepo;
+import com.example.BackEnd_MyTools.Repositories.UserProfileRepo;
 import com.example.BackEnd_MyTools.Security.SecurityUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class BookingService {
     private final BookingRepo bookingRepo;
     private final ProductRepo productRepo;
     private final MasteryRepo masteryRepo;
+    private final UserProfileRepo userProfileRepo;
     private final NotificationService notificationService;
 
     public List<Booking> getMyBookings(String userId) {
@@ -36,6 +38,12 @@ public class BookingService {
 
     public List<Booking> getAllBookings() {
         return bookingRepo.findAllByOrderByCreatedAtDesc().stream()
+                .map(this::normalizeBooking)
+                .toList();
+    }
+
+    public List<Booking> getOwnerBookings(String ownerId) {
+        return bookingRepo.findByOwnerIdOrderByCreatedAtDesc(ownerId).stream()
                 .map(this::normalizeBooking)
                 .toList();
     }
@@ -61,7 +69,8 @@ public class BookingService {
 
     public List<LocalDate> getUnavailableDates(Booking.ResourceType resourceType, String resourceId) {
         return getResourceBookings(resourceType, resourceId).stream()
-                .filter(b -> b.getStatus() == Booking.BookingStatus.PENDING || b.getStatus() == Booking.BookingStatus.CONFIRMED)
+                .filter(b -> b.getStatus() == Booking.BookingStatus.PENDING
+                        || b.getStatus() == Booking.BookingStatus.CONFIRMED)
                 .flatMap(b -> b.getStartDate().datesUntil(b.getEndDate().plusDays(1)))
                 .distinct()
                 .sorted()
@@ -72,11 +81,13 @@ public class BookingService {
         return hasConflict(Booking.ResourceType.PRODUCT, productId, startDate, endDate);
     }
 
-    public boolean hasConflict(Booking.ResourceType resourceType, String resourceId, LocalDate startDate, LocalDate endDate) {
+    public boolean hasConflict(Booking.ResourceType resourceType, String resourceId, LocalDate startDate,
+            LocalDate endDate) {
         validateDates(startDate, endDate);
         if (resourceType == Booking.ResourceType.PRODUCT) {
             return !bookingRepo.findConflictingBookings(resourceId, startDate, endDate).isEmpty()
-                    || !bookingRepo.findConflictingResourceBookings(resourceType, resourceId, startDate, endDate).isEmpty();
+                    || !bookingRepo.findConflictingResourceBookings(resourceType, resourceId, startDate, endDate)
+                            .isEmpty();
         }
         return !bookingRepo.findConflictingResourceBookings(resourceType, resourceId, startDate, endDate).isEmpty();
     }
@@ -91,26 +102,31 @@ public class BookingService {
         }
 
         Booking booking = type == Booking.ResourceType.PRODUCT
-                ? buildBooking(loadProduct(resourceId), userId, null, request.getStartDate(), request.getEndDate(), Math.max(1, request.getQuantity()), Booking.BookingStatus.PENDING)
-                : buildBooking(loadMastery(resourceId), userId, null, request.getStartDate(), request.getEndDate(), Math.max(1, request.getQuantity()), Booking.BookingStatus.PENDING);
+                ? buildBooking(loadProduct(resourceId), userId, null, request.getStartDate(), request.getEndDate(),
+                        Math.max(1, request.getQuantity()), Booking.BookingStatus.PENDING)
+                : buildBooking(loadMastery(resourceId), userId, null, request.getStartDate(), request.getEndDate(),
+                        Math.max(1, request.getQuantity()), Booking.BookingStatus.PENDING);
 
         Booking saved = bookingRepo.save(booking);
         notifyOwner(saved, userId);
         return saved;
     }
 
-    public Booking createFromOrderItem(Product product, String userId, String orderId, Cart.CartItem item, Booking.BookingStatus status) {
+    public Booking createFromOrderItem(Product product, String userId, String orderId, Cart.CartItem item,
+            Booking.BookingStatus status) {
         validateDates(item.getStartDate(), item.getEndDate());
         if (hasConflict(Booking.ResourceType.PRODUCT, product.getId(), item.getStartDate(), item.getEndDate())) {
-            throw new IllegalArgumentException("Product " + product.getName() + " is already booked for the selected dates");
+            throw new IllegalArgumentException(
+                    "Product " + product.getName() + " is already booked for the selected dates");
         }
-        return bookingRepo.save(buildBooking(product, userId, orderId, item.getStartDate(), item.getEndDate(), item.getQuantity(), status));
+        return bookingRepo.save(buildBooking(product, userId, orderId, item.getStartDate(), item.getEndDate(),
+                item.getQuantity(), status));
     }
 
     public Booking updateStatus(String bookingId, Booking.BookingStatus status, Jwt jwt) {
         String userId = SecurityUtils.currentUserId(jwt);
         Booking booking = bookingRepo.findById(bookingId)
-            .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
         boolean owner = userId.equals(booking.getOwnerId());
         boolean customer = userId.equals(booking.getUserId());
         if (!SecurityUtils.isAdmin(jwt) && !owner && !(customer && status == Booking.BookingStatus.CANCELLED)) {
@@ -129,63 +145,111 @@ public class BookingService {
         return masteryRepo.findById(masteryId).orElseThrow(() -> new IllegalArgumentException("Mastery not found"));
     }
 
-    private Booking buildBooking(Product product, String userId, String orderId, LocalDate startDate, LocalDate endDate, int quantity, Booking.BookingStatus status) {
+    private Booking buildBooking(Product product, String userId, String orderId, LocalDate startDate, LocalDate endDate,
+            int quantity, Booking.BookingStatus status) {
         long days = Math.max(1, ChronoUnit.DAYS.between(startDate, endDate));
         return Booking.builder()
-            .resourceType(Booking.ResourceType.PRODUCT)
-            .resourceId(product.getId())
-            .resourceName(product.getName())
-            .productId(product.getId())
-            .productName(product.getName())
-            .ownerId(product.getOwnerId())
-            .userId(userId)
-            .orderId(orderId)
-            .startDate(startDate)
-            .endDate(endDate)
-            .quantity(Math.max(1, quantity))
-            .dailyPrice(product.getPrice())
-            .durationDays(days)
-            .totalPrice(days * Math.max(1, quantity) * product.getPrice())
-            .status(status)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
+                .resourceType(Booking.ResourceType.PRODUCT)
+                .resourceId(product.getId())
+                .resourceName(product.getName())
+                .productId(product.getId())
+                .productName(product.getName())
+                .ownerId(product.getOwnerId())
+                .ownerName(resolveDisplayName(product.getOwnerId()))
+                .userId(userId)
+                .userName(resolveDisplayName(userId))
+                .orderId(orderId)
+                .startDate(startDate)
+                .endDate(endDate)
+                .quantity(Math.max(1, quantity))
+                .dailyPrice(product.getPrice())
+                .durationDays(days)
+                .totalPrice(days * Math.max(1, quantity) * product.getPrice())
+                .status(status)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
     }
 
-    private Booking buildBooking(Mastery mastery, String userId, String orderId, LocalDate startDate, LocalDate endDate, int quantity, Booking.BookingStatus status) {
+    private Booking buildBooking(Mastery mastery, String userId, String orderId, LocalDate startDate, LocalDate endDate,
+            int quantity, Booking.BookingStatus status) {
         long days = Math.max(1, ChronoUnit.DAYS.between(startDate, endDate));
         return Booking.builder()
-            .resourceType(Booking.ResourceType.MASTERY)
-            .resourceId(mastery.getId())
-            .resourceName(mastery.getTitle())
-            .masteryId(mastery.getId())
-            .productName(mastery.getTitle())
-            .ownerId(mastery.getMasterId())
-            .userId(userId)
-            .orderId(orderId)
-            .startDate(startDate)
-            .endDate(endDate)
-            .quantity(Math.max(1, quantity))
-            .dailyPrice(mastery.getPrice())
-            .durationDays(days)
-            .totalPrice(days * Math.max(1, quantity) * mastery.getPrice())
-            .status(status)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
+                .resourceType(Booking.ResourceType.MASTERY)
+                .resourceId(mastery.getId())
+                .resourceName(mastery.getTitle())
+                .masteryId(mastery.getId())
+                .productName(mastery.getTitle())
+                .ownerId(mastery.getMasterId())
+                .ownerName(resolveDisplayName(mastery.getMasterId()))
+                .userId(userId)
+                .userName(resolveDisplayName(userId))
+                .orderId(orderId)
+                .startDate(startDate)
+                .endDate(endDate)
+                .quantity(Math.max(1, quantity))
+                .dailyPrice(mastery.getPrice())
+                .durationDays(days)
+                .totalPrice(days * Math.max(1, quantity) * mastery.getPrice())
+                .status(status)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
     }
 
     private Booking normalizeBooking(Booking booking) {
         if (booking.getResourceType() == null) {
-            booking.setResourceType(booking.getMasteryId() != null ? Booking.ResourceType.MASTERY : Booking.ResourceType.PRODUCT);
+            booking.setResourceType(
+                    booking.getMasteryId() != null ? Booking.ResourceType.MASTERY : Booking.ResourceType.PRODUCT);
         }
         if (booking.getResourceId() == null || booking.getResourceId().isBlank()) {
-            booking.setResourceId(booking.getResourceType() == Booking.ResourceType.MASTERY ? booking.getMasteryId() : booking.getProductId());
+            booking.setResourceId(booking.getResourceType() == Booking.ResourceType.MASTERY ? booking.getMasteryId()
+                    : booking.getProductId());
         }
         if (booking.getResourceName() == null || booking.getResourceName().isBlank()) {
             booking.setResourceName(booking.getProductName());
         }
+        if (booking.getUserName() == null || booking.getUserName().isBlank()) {
+            booking.setUserName(resolveDisplayName(booking.getUserId()));
+        }
+        if (booking.getOwnerName() == null || booking.getOwnerName().isBlank()) {
+            booking.setOwnerName(resolveDisplayName(booking.getOwnerId()));
+        }
         return booking;
+    }
+
+    private String resolveDisplayName(String userId) {
+        if (userId == null || userId.isBlank()) {
+            return null;
+        }
+        return userProfileRepo.findByUserId(userId)
+                .map(profile -> {
+                    String fullName = buildFullName(profile.getFirstName(), profile.getLastName());
+                    if (fullName != null) {
+                        return fullName;
+                    }
+                    if (profile.getUsername() != null && !profile.getUsername().isBlank()) {
+                        return profile.getUsername();
+                    }
+                    if (profile.getEmail() != null && !profile.getEmail().isBlank()) {
+                        return profile.getEmail();
+                    }
+                    return null;
+                })
+                .orElse(null);
+    }
+
+    private String buildFullName(String firstName, String lastName) {
+        if (firstName != null && !firstName.isBlank() && lastName != null && !lastName.isBlank()) {
+            return firstName.trim() + " " + lastName.trim();
+        }
+        if (firstName != null && !firstName.isBlank()) {
+            return firstName.trim();
+        }
+        if (lastName != null && !lastName.isBlank()) {
+            return lastName.trim();
+        }
+        return null;
     }
 
     private Booking.ResourceType resolveType(CreateBookingRequest request) {

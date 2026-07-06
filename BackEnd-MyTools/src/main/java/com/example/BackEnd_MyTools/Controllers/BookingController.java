@@ -42,6 +42,12 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
+    @GetMapping("/owner")
+    public ResponseEntity<List<Booking>> ownerBookings(@AuthenticationPrincipal Jwt jwt) {
+        String ownerId = SecurityUtils.currentUserId(jwt);
+        return ResponseEntity.ok(bookingService.getOwnerBookings(ownerId));
+    }
+
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Booking>> productBookings(@PathVariable String productId) {
         return ResponseEntity.ok(bookingService.getProductBookings(productId));
@@ -68,7 +74,8 @@ public class BookingController {
         Booking.ResourceType type = resourceType == null ? Booking.ResourceType.PRODUCT : resourceType;
         String id = resourceId != null ? resourceId : productId;
         boolean conflict = bookingService.hasConflict(type, id, startDate, endDate);
-        return ResponseEntity.ok(Map.of("available", !conflict, "conflict", conflict, "resourceType", type.name(), "resourceId", id));
+        return ResponseEntity.ok(
+                Map.of("available", !conflict, "conflict", conflict, "resourceType", type.name(), "resourceId", id));
     }
 
     @GetMapping("/unavailable-dates")
@@ -80,12 +87,14 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody CreateBookingRequest request, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<Booking> createBooking(@RequestBody CreateBookingRequest request,
+            @AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok(bookingService.createDirectBooking(jwt, request));
     }
 
     @PatchMapping("/{id}/status/{status}")
-    public ResponseEntity<Booking> updateStatus(@PathVariable String id, @PathVariable Booking.BookingStatus status, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<Booking> updateStatus(@PathVariable String id, @PathVariable Booking.BookingStatus status,
+            @AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok(bookingService.updateStatus(id, status, jwt));
     }
 }
