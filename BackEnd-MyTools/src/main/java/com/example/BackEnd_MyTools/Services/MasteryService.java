@@ -55,7 +55,7 @@ public class MasteryService {
 
     public Mastery createMastery(Mastery mastery, Jwt jwt) {
         String currentUserId = SecurityUtils.currentUserId(jwt);
-        if (SecurityUtils.isCraftsman(jwt) && masteryRepo.countByMasterId(currentUserId) > 0) {
+        if (SecurityUtils.IsCraftsman(jwt) && masteryRepo.countByMasterId(currentUserId) > 0) {
             throw new IllegalArgumentException("Craftsman can only have one mastery.");
         }
         mastery.setMasterId(currentUserId);

@@ -419,7 +419,7 @@ const ProductInfos = () => {
             </div>
 
             {/* Cart options */}
-            <div className="glass dark:glass-dark rounded-2xl p-5 space-y-4">
+            {/* <div className="glass dark:glass-dark rounded-2xl p-5 space-y-4">
               <div className="flex items-center gap-3">
                 <label className="text-sm font-semibold text-[#5d5955] dark:text-[#c4bfb9]">
                   Quantity
@@ -456,7 +456,7 @@ const ProductInfos = () => {
                   </label>
                 </div>
               )}
-            </div>
+            </div> */}
 
             {cartError && (
               <p className="text-sm text-red-500">{String(cartError)}</p>

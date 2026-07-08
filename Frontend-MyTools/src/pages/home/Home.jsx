@@ -247,7 +247,7 @@ const Home = () => {
     interceptor
       .get("/products?sort=newest&size=6")
       .then((r) =>
-        setNewProducts(Array.isArray(r.data) ? r.data.slice(0, 6) : [])
+        setNewProducts(Array.isArray(r.data) ? r.data.slice(5, 12) : [])
       )
       .catch(() => {});
 
@@ -263,7 +263,7 @@ const Home = () => {
     interceptor
       .get("/masterys/specials?sort=newest&size=6")
       .then((r) =>
-        setNewMasteries(Array.isArray(r.data) ? r.data.slice(0, 6) : [])
+        setNewMasteries(Array.isArray(r.data) ? r.data.slice(12, 18) : [])
       )
       .catch(() => {});
 
@@ -331,7 +331,7 @@ const Home = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/Masteries">
+                <Link to="/Masterys">
                   <motion.button
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}

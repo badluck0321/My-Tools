@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/stores/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/Lookups/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/demandes/**").permitAll()
+                        .requestMatchers("/role-requests/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recommendations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ai/search/**").permitAll()

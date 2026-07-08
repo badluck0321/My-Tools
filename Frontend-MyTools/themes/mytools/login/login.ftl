@@ -3,7 +3,6 @@
     
     <#if section = "header">
         ${msg("loginTitle",(realm.displayName!''))}
-
     <#elseif section = "form">
 
     <div class="mytools-card">

@@ -29,6 +29,7 @@ import Messages from "./Messages";
 import Analytics from "./Analytics";
 import Bookings from "./Bookings";
 import VendorVerification from "./VendorVerification";
+import BecomeSeller from "./BecomeSeller";
 import LookupAdmin from "./LookupAdmin";
 import AdminPanel from "./AdminPanel";
 import MyMasteries from "./MyMasteries";
@@ -127,6 +128,12 @@ const DASHBOARD_TABS = [
     icon: Settings,
     color: "from-[#4a4642] to-[#6d6762]",
   },
+  {
+    id: "become-seller",
+    name: "Become a Seller / Craftsman",
+    icon: BadgeCheck,
+    color: "from-[#6d2842] to-[#b8862f]",
+  },
 ];
 
 const Dashboard = () => {
@@ -139,7 +146,7 @@ const Dashboard = () => {
     if (tab.adminOnly) return isAdmin;
     if (tab.id === "MyMasteries") return isAdmin || isCraftMan;
     if (tab.sellerOnly) return isAdmin || isStoreOwner;
-    if (tab.craftOnly) return isAdmin || isCraftsMan;
+    if (tab.craftOnly) return isAdmin || isCraftMan;
     return true;
   });
 
@@ -241,6 +248,7 @@ const Dashboard = () => {
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="messages" element={<Messages />} />
                 <Route path="settings" element={<SettingsPage />} />
+                <Route path="become-seller" element={<BecomeSeller />} />
               </Routes>
             </motion.div>
           </div>
