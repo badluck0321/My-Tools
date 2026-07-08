@@ -22,11 +22,13 @@ public class RoleRequestService {
     private final NotificationService notificationService;
     private final KeycloakAdminService keycloakAdminService;
 
-    /** An authenticated user submits a request to become a Store Owner or Craftsman. */
+    /**
+     * An authenticated user submits a request to become a Store Owner or Craftsman.
+     */
     public RoleRequest submit(Jwt jwt, DtoCreateDemande request) {
         String userId = SecurityUtils.currentUserId(jwt);
 
-        if (SecurityUtils.isAdmin(jwt) || SecurityUtils.isStoreOwner(jwt) || SecurityUtils.IsCraftsman(jwt)) {
+        if (SecurityUtils.isAdmin(jwt) || SecurityUtils.isStoreOwner(jwt) || SecurityUtils.IsCraftMan(jwt)) {
             throw new IllegalStateException("You already have an authorized role.");
         }
 
@@ -69,7 +71,10 @@ public class RoleRequestService {
         return roleRequestRepo.findAll();
     }
 
-    /** Admin approves or rejects a request. On approval the Keycloak role is assigned. */
+    /**
+     * Admin approves or rejects a request. On approval the Keycloak role is
+     * assigned.
+     */
     public RoleRequest review(String id, RoleRequest.RoleRequestStatus status, String comment, Jwt jwt) {
         if (!SecurityUtils.isAdmin(jwt)) {
             throw new SecurityException("Admin role required");
@@ -101,6 +106,27 @@ public class RoleRequestService {
                     saved.getId());
         }
         return saved;
+    }
+
+    /**
+     * User deletes their own pending request.
+     */
+    public void delete(String id, Jwt jwt) {
+        String userId = SecurityUtils.currentUserId(jwt);
+        RoleRequest roleRequest = roleRequestRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Role request not found"));
+
+        // Only the request owner can delete, or an admin
+        if (!roleRequest.getUserId().equals(userId) && !SecurityUtils.isAdmin(jwt)) {
+            throw new SecurityException("You can only delete your own requests");
+        }
+
+        // Only allow deletion if the request is still pending
+        if (roleRequest.getStatus() != RoleRequest.RoleRequestStatus.PENDING) {
+            throw new IllegalStateException("Only pending requests can be deleted");
+        }
+
+        roleRequestRepo.deleteById(id);
     }
 
     public DtoGetDemande toDto(RoleRequest roleRequest) {

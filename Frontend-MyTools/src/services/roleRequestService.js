@@ -20,4 +20,7 @@ export const roleRequestService = {
   // Admin: approve or reject a request.
   review: (id, status, comment = '') =>
     interceptor.patch(`/role-requests/${id}/review`, null, { params: { status, comment } }),
+
+  // User deletes their own pending request.
+  delete: (id) => interceptor.delete(`/role-requests/${id}`),
 };

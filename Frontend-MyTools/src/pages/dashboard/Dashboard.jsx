@@ -30,6 +30,7 @@ import Analytics from "./Analytics";
 import Bookings from "./Bookings";
 import VendorVerification from "./VendorVerification";
 import BecomeSeller from "./BecomeSeller";
+import ManageRoleRequests from "./ManageRoleRequests";
 import LookupAdmin from "./LookupAdmin";
 import AdminPanel from "./AdminPanel";
 import MyMasteries from "./MyMasteries";
@@ -100,6 +101,13 @@ const DASHBOARD_TABS = [
     id: "admin",
     name: "Admin Panel",
     icon: Shield,
+    color: "from-[#4a4642] to-[#6d6762]",
+    adminOnly: true,
+  },
+  {
+    id: "manage-role-requests",
+    name: "Role Requests",
+    icon: BadgeCheck,
     color: "from-[#4a4642] to-[#6d6762]",
     adminOnly: true,
   },
@@ -244,6 +252,10 @@ const Dashboard = () => {
                   element={<VendorVerification />}
                 />
                 <Route path="admin" element={<AdminPanel />} />
+                <Route
+                  path="manage-role-requests"
+                  element={<ManageRoleRequests />}
+                />
                 <Route path="lookups" element={<LookupAdmin />} />
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="messages" element={<Messages />} />

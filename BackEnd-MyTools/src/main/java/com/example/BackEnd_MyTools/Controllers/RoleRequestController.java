@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,9 @@ import lombok.RequiredArgsConstructor;
 public class RoleRequestController {
     private final RoleRequestService roleRequestService;
 
-    /** Authenticated user submits a request to become a Store Owner or Craftsman. */
+    /**
+     * Authenticated user submits a request to become a Store Owner or Craftsman.
+     */
     @PostMapping
     public ResponseEntity<RoleRequest> submit(@RequestBody DtoCreateDemande request,
             @AuthenticationPrincipal Jwt jwt) {
@@ -76,5 +79,13 @@ public class RoleRequestController {
             @RequestParam(required = false) String comment,
             @AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok(roleRequestService.review(id, status, comment, jwt));
+    }
+
+    /** User deletes their own pending request. */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id,
+            @AuthenticationPrincipal Jwt jwt) {
+        roleRequestService.delete(id, jwt);
+        return ResponseEntity.noContent().build();
     }
 }
