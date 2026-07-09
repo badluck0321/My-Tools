@@ -26,7 +26,7 @@ public class RoleRequestService {
     public RoleRequest submit(Jwt jwt, DtoCreateDemande request) {
         String userId = SecurityUtils.currentUserId(jwt);
 
-        if (SecurityUtils.isAdmin(jwt) || SecurityUtils.isStoreOwner(jwt) || SecurityUtils.IsCraftsman(jwt)) {
+        if (SecurityUtils.isAdmin(jwt) || SecurityUtils.isStoreOwner(jwt) || SecurityUtils.IsCraftMan(jwt)) {
             throw new IllegalStateException("You already have an authorized role.");
         }
 

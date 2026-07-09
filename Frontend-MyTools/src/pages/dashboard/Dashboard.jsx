@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useMemo } from "react";
 import { Link, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -61,7 +62,7 @@ const DASHBOARD_TABS = [
     name: "My Masteries",
     icon: Sparkles,
     color: "from-[#508978] to-[#70a596]",
-    sellerOnly: true,
+    access: "craft",
   },
   {
     id: "favorites",
@@ -139,16 +140,22 @@ const DASHBOARD_TABS = [
 const Dashboard = () => {
   const { user, isAdmin, isStoreOwner, isCraftMan } = useKeycloak();
   const location = useLocation();
-  const currentPath = location.pathname.split("/").pop();
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const currentPath = pathSegments[pathSegments.length - 1] || "dashboard";
   const activeTab = currentPath === "dashboard" ? "profile" : currentPath;
 
-  const visibleTabs = DASHBOARD_TABS.filter((tab) => {
+  const canAccessTab = (tab) => {
     if (tab.adminOnly) return isAdmin;
-    if (tab.id === "MyMasteries") return isAdmin || isCraftMan;
+    if (tab.access === "craft") return isAdmin || isCraftMan;
     if (tab.sellerOnly) return isAdmin || isStoreOwner;
     if (tab.craftOnly) return isAdmin || isCraftMan;
     return true;
-  });
+  };
+
+  const visibleTabs = useMemo(
+    () => DASHBOARD_TABS.filter(canAccessTab),
+    [isAdmin, isStoreOwner, isCraftMan]
+  );
 
   return (
     <div className="min-h-screen bg-[#fafaf9] dark:bg-[#2d2a27] relative overflow-hidden py-12">

@@ -38,15 +38,15 @@ public final class SecurityUtils {
     }
 
     public static boolean isAdmin(Jwt jwt) {
-        return hasAnyRole(jwt, "mt-admin");
+        return hasAnyRole(jwt, "mt-Admin");
     }
 
     public static boolean isStoreOwner(Jwt jwt) {
-        return hasAnyRole(jwt, "mt-storeowner");
+        return hasAnyRole(jwt, "mt-StoreOwner");
     }
 
-    public static boolean IsCraftsman(Jwt jwt) {
-        return hasAnyRole(jwt, "mt-craftsman");
+    public static boolean IsCraftMan(Jwt jwt) {
+        return hasAnyRole(jwt, "mt-CraftMan");
     }
 
     @SuppressWarnings("unchecked")
