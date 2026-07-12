@@ -29,12 +29,18 @@ const Analytics = () => {
   }, []);
 
   const downloadCsv = async () => {
-    const url = await analyticsService.downloadOrdersCsv();
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'orders.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+    try {
+      const url = await analyticsService.downloadOrdersCsv();
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'orders.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch (err) {
+      setError(err?.response?.data || 'Unable to download analytics CSV.');
+    }
   };
 
   return (
@@ -56,10 +62,14 @@ const Analytics = () => {
         <div className="text-center py-12 bg-[#f5f5f3] dark:bg-[#2d2a27] rounded-2xl">No analytics data yet.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <StatCard icon={ShoppingBag} label="Orders" value={data.orders ?? 0} />
-          <StatCard icon={Wallet} label="Revenue" value={`${Number(data.revenue || 0).toFixed(2)} MAD`} />
-          <StatCard icon={Package} label="Products" value={data.products ?? 0} />
-          <StatCard icon={Star} label="Reviews" value={data.reviews ?? 0} />
+          {[
+            { icon: ShoppingBag, label: 'Orders', value: data.orders ?? 0 },
+            { icon: Wallet, label: 'Revenue', value: `${Number(data.revenue || 0).toFixed(2)} MAD` },
+            { icon: Package, label: 'Products', value: data.products ?? 0 },
+            { icon: Star, label: 'Reviews', value: data.reviews ?? 0 },
+          ].map((stat) => (
+            <StatCard key={stat.label} icon={stat.icon} label={stat.label} value={stat.value} />
+          ))}
         </div>
       )}
     </div>
