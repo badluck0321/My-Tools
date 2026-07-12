@@ -2,17 +2,20 @@ package com.example.BackEnd_MyTools.Logging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    private final LoggingService loggingService;
+    private final ObjectProvider<LoggingService> loggingServiceProvider;
+
+    public GlobalExceptionHandler(ObjectProvider<LoggingService> loggingServiceProvider) {
+        this.loggingServiceProvider = loggingServiceProvider;
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleBadRequest(IllegalArgumentException ex) {
@@ -26,14 +29,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        LoggingService loggingService = loggingServiceProvider.getIfAvailable();
         try {
             Object st = request.getAttribute("startTime");
             long duration = st instanceof Long ? System.currentTimeMillis() - (Long) st : 0;
             String uri = request.getRequestURI();
-            if (uri != null && (uri.contains("/v3/api-docs") || uri.contains("/swagger") || uri.contains("/actuator"))) {
-                loggingService.logErrorMinimal(request, response, ex, duration);
-            } else {
-                loggingService.logError(request, response, ex, duration);
+            if (loggingService != null) {
+                if (uri != null && (uri.contains("/v3/api-docs") || uri.contains("/swagger") || uri.contains("/actuator"))) {
+                    loggingService.logErrorMinimal(request, response, ex, duration);
+                } else {
+                    loggingService.logError(request, response, ex, duration);
+                }
             }
         } catch (Exception logEx) {
             System.err.println("Failed to log exception: " + logEx.getMessage());

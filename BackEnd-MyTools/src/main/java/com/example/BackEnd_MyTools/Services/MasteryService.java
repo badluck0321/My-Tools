@@ -58,6 +58,9 @@ public class MasteryService {
         if (SecurityUtils.IsCraftMan(jwt) && masteryRepo.countByMasterId(currentUserId) > 0) {
             throw new IllegalArgumentException("Craftsman can only have one mastery.");
         }
+        if (mastery == null) {
+            throw new IllegalArgumentException("Mastery payload is required");
+        }
         mastery.setMasterId(currentUserId);
         if (mastery.getMasterName() == null || mastery.getMasterName().isBlank())
             mastery.setMasterName(SecurityUtils.currentUsername(jwt));
@@ -77,8 +80,9 @@ public class MasteryService {
             mastery.setCity(updatedmastery.getCity());
             mastery.setExperienceYears(updatedmastery.getExperienceYears());
             mastery.setDescription(updatedmastery.getDescription());
-            if (updatedmastery.getPhotoUrls() != null && !updatedmastery.getPhotoUrls().isEmpty())
+            if (updatedmastery.getPhotoUrls() != null) {
                 mastery.setPhotoUrls(updatedmastery.getPhotoUrls());
+            }
             return masteryRepo.save(mastery);
         }).orElseThrow(() -> new IllegalArgumentException("Mastery not found"));
     }

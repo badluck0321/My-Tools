@@ -36,19 +36,20 @@ public class RoleRequestController {
     @PostMapping
     public ResponseEntity<RoleRequest> submit(@RequestBody DtoCreateDemande request,
             @AuthenticationPrincipal Jwt jwt) {
-        return ResponseEntity.ok(roleRequestService.submit(jwt, request));
+        return ResponseEntity.ok(roleRequestService.submitRoleRequest(jwt, request));
     }
 
     /** The current user's latest request. */
     @GetMapping("/mine")
     public ResponseEntity<DtoGetDemande> mine(@AuthenticationPrincipal Jwt jwt) {
-        return ResponseEntity.ok(roleRequestService.toDto(roleRequestService.mine(SecurityUtils.currentUserId(jwt))));
+        return ResponseEntity
+                .ok(roleRequestService.toDto(roleRequestService.myRoleRequests(SecurityUtils.currentUserId(jwt))));
     }
 
     /** The current user's full request history. */
     @GetMapping("/mine/history")
     public ResponseEntity<List<DtoGetDemande>> mineHistory(@AuthenticationPrincipal Jwt jwt) {
-        List<DtoGetDemande> dtos = roleRequestService.mineHistory(SecurityUtils.currentUserId(jwt)).stream()
+        List<DtoGetDemande> dtos = roleRequestService.myRoleRequestsHistory(SecurityUtils.currentUserId(jwt)).stream()
                 .map(roleRequestService::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
@@ -57,7 +58,7 @@ public class RoleRequestController {
     /** Admin: list pending requests. */
     @GetMapping("/pending")
     public ResponseEntity<List<DtoGetDemande>> pending(@AuthenticationPrincipal Jwt jwt) {
-        List<DtoGetDemande> dtos = roleRequestService.pending(jwt).stream()
+        List<DtoGetDemande> dtos = roleRequestService.pendingRoleRequest(jwt).stream()
                 .map(roleRequestService::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
@@ -66,7 +67,7 @@ public class RoleRequestController {
     /** Admin: list all requests. */
     @GetMapping
     public ResponseEntity<List<DtoGetDemande>> all(@AuthenticationPrincipal Jwt jwt) {
-        List<DtoGetDemande> dtos = roleRequestService.all(jwt).stream()
+        List<DtoGetDemande> dtos = roleRequestService.allRoleRequests(jwt).stream()
                 .map(roleRequestService::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
@@ -78,14 +79,14 @@ public class RoleRequestController {
             @RequestParam RoleRequest.RoleRequestStatus status,
             @RequestParam(required = false) String comment,
             @AuthenticationPrincipal Jwt jwt) {
-        return ResponseEntity.ok(roleRequestService.review(id, status, comment, jwt));
+        return ResponseEntity.ok(roleRequestService.reviewRoleRequest(id, status, comment, jwt));
     }
 
     /** User deletes their own pending request. */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id,
             @AuthenticationPrincipal Jwt jwt) {
-        roleRequestService.delete(id, jwt);
+        roleRequestService.deleteRoleRequest(id, jwt);
         return ResponseEntity.noContent().build();
     }
 }

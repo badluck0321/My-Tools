@@ -3,17 +3,20 @@ package com.example.BackEnd_MyTools.Logging;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
 @Order(1) // Run first - before Spring Security
-@RequiredArgsConstructor
 public class RequestLoggingFilter implements Filter {
 
-    private final LoggingService loggingService;
+    private final ObjectProvider<LoggingService> loggingServiceProvider;
+
+    public RequestLoggingFilter(ObjectProvider<LoggingService> loggingServiceProvider) {
+        this.loggingServiceProvider = loggingServiceProvider;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -24,9 +27,13 @@ public class RequestLoggingFilter implements Filter {
 
         long startTime = System.currentTimeMillis();
 
+        LoggingService loggingService = loggingServiceProvider.getIfAvailable();
+
         try {
             // 🎯 STEP 1: Log incoming request (ALWAYS)
-            loggingService.logCompleteRequest(httpRequest);
+            if (loggingService != null) {
+                loggingService.logCompleteRequest(httpRequest);
+            }
 
             // 🎯 STEP 2: Let the request continue through the application
             chain.doFilter(request, response);
@@ -34,12 +41,16 @@ public class RequestLoggingFilter implements Filter {
             long duration = System.currentTimeMillis() - startTime;
 
             // 🎯 STEP 3: Log successful response (ALWAYS)
-            loggingService.logCompleteResponse(httpRequest, httpResponse, duration);
+            if (loggingService != null) {
+                loggingService.logCompleteResponse(httpRequest, httpResponse, duration);
+            }
 
         } catch (Exception ex) {
             long duration = System.currentTimeMillis() - startTime;
             // 🎯 STEP 4: Log errors (ALWAYS)
-            loggingService.logError(httpRequest, httpResponse, ex, duration);
+            if (loggingService != null) {
+                loggingService.logError(httpRequest, httpResponse, ex, duration);
+            }
             throw ex;
         }
     }

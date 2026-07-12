@@ -20,4 +20,11 @@ public final class JwtTestFactory {
                 .claim("preferred_username", "admin").claim("realm_access", Map.of("roles", List.of("mt-Admin")))
                 .issuedAt(Instant.now()).expiresAt(Instant.now().plusSeconds(3600)).build();
     }
+
+    public static Jwt craftsman(String sub) {
+        return Jwt.withTokenValue("token-" + sub).header("alg", "none").subject(sub).claim("sub", sub)
+                .claim("preferred_username", sub + "_craftsman")
+                .claim("realm_access", Map.of("roles", List.of("mt-CraftMan")))
+                .issuedAt(Instant.now()).expiresAt(Instant.now().plusSeconds(3600)).build();
+    }
 }

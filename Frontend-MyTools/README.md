@@ -1,43 +1,63 @@
-# 🎨 My-Tools - Digital Art Gallery Platform
+# 🔧 My-Tools - Professional Tool & Service Marketplace
 
-A modern, elegant digital art gallery platform built with React 18, Vite, Tailwind CSS, and Framer Motion. My-Tools connects artists and art enthusiasts, providing a seamless platform to discover, collect, and celebrate digital art.
+A production-grade, full-stack marketplace platform where professionals discover, list, rent, and purchase tools and services — secured by enterprise authentication and built with modern web technologies.
 
 ## ✨ Features
 
-### 🎭 For Users
-- **Browse Gallery** - Explore curated artworks with advanced filters
-- **Search & Filter** - Find art by category, price range, and artist
-- **User Authentication** - Secure JWT-based login and registration
-- **Favorites** - Save and manage favorite artworks
-- **Dark Mode** - Toggle between light and dark themes
-- **Responsive Design** - Optimized for mobile, tablet, and desktop
+### 🛍️ Product Marketplace
+- Browse a rich catalog of professional tools and equipment
+- Each product supports **multiple photos** with animated gallery, thumbnail strip, and arrow navigation
+- Products are categorized by **category**, **brand/mark**, and **serie number**
+- Listing types: **Sale** (`listedForId: 0`), **Rent** (`listedForId: 1`), or **Both**
+- Duration tracking for rental listings (in months)
+- Real-time availability status with visual badges
 
-### 👨‍🎨 For Artists
-- **Artist Dashboard** - Manage artworks and profile
-- **Upload Artworks** - Share your creations with the world
-- **Artist Profiles** - Showcase your portfolio and bio
+### 🎓 Mastery & Services
+- Professionals list skills and services with title, type, pricing, description, and a cover photo
+- Service types allow domain-based discovery (plumbing, electrical, welding, etc.)
+- Filterable by title keyword and type ID
+- Single cover photo per mastery, served through dedicated binary endpoint
 
-### 🎨 Design Features
-- **Glassmorphism UI** - Modern glass-effect cards and components
-- **Pastel Gradients** - Soft, artistic color schemes
-- **Smooth Animations** - Powered by Framer Motion
-- **Custom Typography** - Inter and Poppins fonts
+### 🔍 Search & Discovery
+- Full-text name search with debounced input
+- Multi-dimensional filtering: category, brand, price range, availability
+- Sort options: newest, price ascending/descending, alphabetical
+- Client-side filter state management with one-click "Clear Filters"
+- Product count display updates in real time
+
+### 🔐 Security & Authentication
+- **Keycloak SSO** — Single Sign-On with OpenID Connect & OAuth2
+- **Role-Based Access Control** — four granular roles controlling read/write permissions
+- **JWT Bearer validation** — every protected endpoint extracts and validates `sub` claim
+- HTTP-only cookie strategy — zero token exposure in browser storage
+- CORS configuration for cross-origin frontend communication
+
+### 📖 API & Developer Tooling
+- **Swagger / OpenAPI 3** — interactive docs with multipart form upload support
+- **MapStruct** — compile-time DTO mappers with `@Named` qualifier to prevent field pollution
+- **Structured Logging** — every request logged with username, IP, HTTP method, path, status, and duration
+- **Specification Pattern** — composable MongoDB query filters with no boilerplate
+
+### 🤖 AI Features
+- **Groq LLaMA 3.3 70B** — low-latency inference via `https://api.groq.com/openai`
+- AI product recommendations based on user browsing history
+- Intelligent in-app assistant for Q&A, tool advice, and search help
 
 ## 🚀 Tech Stack
 
-- **React 18** - Modern React with hooks
-- **Vite** - Lightning-fast build tool
-- **Tailwind CSS** - Utility-first CSS framework
+- **React 19** - Modern React with hooks
+- **Vite 7** - Lightning-fast build tool
+- **Tailwind CSS 3** - Utility-first CSS framework
 - **Framer Motion** - Production-ready animations
-- **React Router v6** - Client-side routing
+- **React Router v7** - Client-side routing
 - **Axios** - HTTP client for API calls
 - **Lucide React** - Beautiful icon library
 
 ## 📦 Installation
 
 ### Prerequisites
-- Node.js 16+ and npm
-- Django backend running on `http://localhost:8000` (optional - mock data available)
+- Node.js 18+ and npm
+- Spring Boot backend running on `http://localhost:8888` (optional - mock data available)
 
 ### Setup
 
@@ -53,30 +73,26 @@ A modern, elegant digital art gallery platform built with React 18, Vite, Tailwi
 
 3. **Access the app**
    ```
-   Open http://localhost:5173
+   Open http://localhost:3000
    ```
 
-## 🔐 Test Login Credentials
+## 🔐 Authentication
 
-The app includes **mock authentication** for testing without a backend:
+The app uses **Keycloak SSO** for enterprise authentication with role-based access control:
 
-### Quick Login:
+### Available Roles:
+- **tools-guest** - Read-only access to listings
+- **tools-basic** - Guest + likes, wishlist
+- **StoreOwner** - Create and manage own listings
+- **tools-admin** - Full platform management
+
+### Test User Credentials:
 ```
-Email: demo@My-Tools.com
-Password: Demo123!
+Username: testuser
+Password: testpass
+Email:    test@example.com
+Roles:    StoreOwner, tools-basic
 ```
-
-### Available Test Accounts:
-- **Artist**: `artist@My-Tools.com` / `Artist123!`
-- **Buyer**: `buyer@My-Tools.com` / `Buyer123!`
-- **Demo**: `demo@My-Tools.com` / `Demo123!`
-
-📄 See [LOGIN_CREDENTIALS.md](./LOGIN_CREDENTIALS.md) for complete details.
-
-**Note**: Mock authentication works automatically when the backend is not available. You can also register new accounts through the signup form.
-
-3. **Open your browser**
-   Navigate to `http://localhost:5173`
 
 ## 🏗️ Project Structure
 
@@ -89,11 +105,18 @@ src/
 ├── context/          # React Context (Auth, Theme)
 ├── hooks/            # Custom React hooks
 ├── pages/            # Page components
-│   ├── auth/         # Login, Signup
-│   ├── dashboard/    # Dashboard pages
-│   ├── gallery/      # Gallery pages
+│   ├── products/     # Product listing and detail pages
+│   ├── masterys/     # Mastery/service listing and detail pages
+│   ├── cart/         # Shopping cart pages
+│   ├── forum/        # Q&A forum pages
+│   ├── dashboard/    # User dashboard pages
 │   └── home/         # Landing page
 ├── services/         # API services
+│   ├── productService.js
+│   ├── masteryService.js
+│   ├── cartService.js
+│   ├── forumService.js
+│   └── authService.js
 ├── utils/            # Helper functions
 ├── App.jsx           # Main app component
 └── main.jsx          # Entry point
@@ -111,35 +134,6 @@ npm run build
 # Preview production build
 npm run preview
 ```
-
-## 🔌 API Integration
-
-The frontend connects to a Django backend at `http://localhost:8000/api/`.
-
-### Key Endpoints
-- `/auth/login/` - User login
-- `/auth/register/` - User registration
-- `/artworks/` - Get all artworks
-- `/artists/` - Get all artists
-
-### Authentication
-JWT tokens are stored in localStorage and automatically included in API requests.
-
-## 🎨 Customization
-
-### Colors
-Edit `tailwind.config.js` to customize colors:
-```js
-colors: {
-  primary: { ... },
-  secondary: { ... },
-  accent: { ... }
-}
-```
-
-### Fonts
-- **Inter** - Body text
-- **Poppins** - Display headings
 
 ## 🌐 Deployment
 

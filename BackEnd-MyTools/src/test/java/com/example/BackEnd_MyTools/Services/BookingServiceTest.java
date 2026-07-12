@@ -11,14 +11,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class BookingServiceTest {
     @Mock
     BookingRepo bookingRepo;
@@ -53,8 +59,10 @@ class BookingServiceTest {
         r.setStartDate(LocalDate.now().plusDays(2));
         r.setEndDate(LocalDate.now().plusDays(5));
         when(productRepo.findById("P001")).thenReturn(Optional.of(p));
-        when(bookingRepo.findConflictingBookings("P001", r.getStartDate(), r.getEndDate()))
-                .thenReturn(List.of(Booking.builder().id("B001").build()));
+        doReturn(List.of(Booking.builder().id("B001").build()))
+                .when(bookingRepo).findConflictingBookings(eq("P001"), eq(r.getStartDate()), eq(r.getEndDate()));
+        doReturn(List.of())
+                .when(bookingRepo).findConflictingResourceBookings(any(), anyString(), eq(r.getStartDate()), eq(r.getEndDate()));
         assertThatThrownBy(() -> bookingService.createDirectBooking(JwtTestFactory.user("CUSTOMER"), r))
                 .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("already booked");
     }

@@ -47,7 +47,7 @@ class MasteryServiceTest {
         mastery.setTitle("New craft service");
         when(masteryRepo.countByMasterId("U001")).thenReturn(1);
 
-        assertThatThrownBy(() -> masteryService.createMastery(mastery, JwtTestFactory.user("U001")))
+        assertThatThrownBy(() -> masteryService.createMastery(mastery, JwtTestFactory.craftsman("U001")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Craftsman can only have one mastery.");
     }

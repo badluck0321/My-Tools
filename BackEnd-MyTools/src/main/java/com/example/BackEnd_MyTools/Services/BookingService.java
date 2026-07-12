@@ -3,6 +3,7 @@ package com.example.BackEnd_MyTools.Services;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -37,8 +38,9 @@ public class BookingService {
     }
 
     public List<Booking> getAllBookings() {
-        return bookingRepo.findAllByOrderByCreatedAtDesc().stream()
+        return bookingRepo.findAll().stream()
                 .map(this::normalizeBooking)
+                .sorted(Comparator.comparing(Booking::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())).reversed())
                 .toList();
     }
 
@@ -221,6 +223,9 @@ public class BookingService {
     private String resolveDisplayName(String userId) {
         if (userId == null || userId.isBlank()) {
             return null;
+        }
+        if (userProfileRepo == null) {
+            return userId;
         }
         return userProfileRepo.findByUserId(userId)
                 .map(profile -> {

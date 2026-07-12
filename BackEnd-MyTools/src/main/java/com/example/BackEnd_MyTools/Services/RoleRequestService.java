@@ -25,7 +25,7 @@ public class RoleRequestService {
     /**
      * An authenticated user submits a request to become a Store Owner or Craftsman.
      */
-    public RoleRequest submit(Jwt jwt, DtoCreateDemande request) {
+    public RoleRequest submitRoleRequest(Jwt jwt, DtoCreateDemande request) {
         String userId = SecurityUtils.currentUserId(jwt);
 
         if (SecurityUtils.isAdmin(jwt) || SecurityUtils.isStoreOwner(jwt) || SecurityUtils.IsCraftMan(jwt)) {
@@ -49,22 +49,22 @@ public class RoleRequestService {
         return roleRequestRepo.save(roleRequest);
     }
 
-    public RoleRequest mine(String userId) {
+    public RoleRequest myRoleRequests(String userId) {
         return roleRequestRepo.findTopByUserIdOrderByCreatedAtDesc(userId).orElse(null);
     }
 
-    public List<RoleRequest> mineHistory(String userId) {
+    public List<RoleRequest> myRoleRequestsHistory(String userId) {
         return roleRequestRepo.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
-    public List<RoleRequest> pending(Jwt jwt) {
+    public List<RoleRequest> pendingRoleRequest(Jwt jwt) {
         if (!SecurityUtils.isAdmin(jwt)) {
             throw new SecurityException("Admin role required");
         }
         return roleRequestRepo.findByStatusOrderByCreatedAtDesc(RoleRequest.RoleRequestStatus.PENDING);
     }
 
-    public List<RoleRequest> all(Jwt jwt) {
+    public List<RoleRequest> allRoleRequests(Jwt jwt) {
         if (!SecurityUtils.isAdmin(jwt)) {
             throw new SecurityException("Admin role required");
         }
@@ -75,7 +75,7 @@ public class RoleRequestService {
      * Admin approves or rejects a request. On approval the Keycloak role is
      * assigned.
      */
-    public RoleRequest review(String id, RoleRequest.RoleRequestStatus status, String comment, Jwt jwt) {
+    public RoleRequest reviewRoleRequest(String id, RoleRequest.RoleRequestStatus status, String comment, Jwt jwt) {
         if (!SecurityUtils.isAdmin(jwt)) {
             throw new SecurityException("Admin role required");
         }
@@ -111,7 +111,7 @@ public class RoleRequestService {
     /**
      * User deletes their own pending request.
      */
-    public void delete(String id, Jwt jwt) {
+    public void deleteRoleRequest(String id, Jwt jwt) {
         String userId = SecurityUtils.currentUserId(jwt);
         RoleRequest roleRequest = roleRequestRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Role request not found"));

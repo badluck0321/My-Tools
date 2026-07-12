@@ -1,3 +1,21 @@
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronUp, Clock, X } from "lucide-react";
+import { forumService } from "../../services/forumService";
+import { useKeycloak } from "../../providers/KeycloakProvider";
+
+const timeAgo = (date) => {
+  if (!date) return "—";
+  const s = Math.floor((Date.now() - new Date(date)) / 1000);
+  if (s < 60) return `${s}s ago`;
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+  });
+};
+
 /* ─── Question Detail Modal ───────────────────────── */
 const QuestionDetailModal = ({ questionId, onClose, onUpdateQuestion }) => {
   const [question, setQuestion] = useState(null);
