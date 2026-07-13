@@ -20,6 +20,7 @@ public class Mastery {
     public String masteryStatuId;
     public String pricingType;
     public int price;
+    public String currencyId;
     public String city;
     public int experienceYears;
     public String description;

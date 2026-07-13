@@ -22,6 +22,7 @@ const emptyForm = {
   masterPhone: "",
   city: "",
   experienceYears: 0,
+  currencyId: "MAD",
 };
 
 const inputCls =
@@ -61,6 +62,10 @@ const MasteryFormModal = ({ initial, lookups, onClose, onSaved }) => {
   );
   const pricingOptions = useMemo(
     () => lookupOptions(lookups, LOOKUP_TYPES.PRICING_TYPE),
+    [lookups]
+  );
+  const currencyOptions = useMemo(
+    () => lookupOptions(lookups, LOOKUP_TYPES.CURRENCY),
     [lookups]
   );
   const set = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
@@ -204,6 +209,22 @@ const MasteryFormModal = ({ initial, lookups, onClose, onSaved }) => {
                 onChange={(e) => set("price", e.target.value)}
                 className={inputCls}
               />
+            </div>
+            <div>
+              <label className={labelCls}>Currency</label>
+              <select
+                value={form.currencyId}
+                onChange={(e) => set("currencyId", e.target.value)}
+                className={inputCls}>
+                {currencyOptions.length === 0 && (
+                  <option value="MAD">MAD</option>
+                )}
+                {currencyOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className={labelCls}>Experience years</label>

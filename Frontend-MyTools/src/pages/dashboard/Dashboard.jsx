@@ -76,6 +76,7 @@ const DASHBOARD_TABS = [
     name: "Orders",
     icon: ShoppingBag,
     color: "from-[#6d2842] to-[#b8862f]",
+    adminOnly: false,
   },
   {
     id: "bookings",
@@ -153,6 +154,7 @@ const Dashboard = () => {
   const activeTab = currentPath === "dashboard" ? "profile" : currentPath;
 
   const canAccessTab = (tab) => {
+    if (tab.id === "orders" && isAdmin) return false;
     if (tab.adminOnly) return isAdmin;
     if (tab.access === "craft") return isAdmin || isCraftMan;
     if (tab.sellerOnly) return isAdmin || isStoreOwner;
