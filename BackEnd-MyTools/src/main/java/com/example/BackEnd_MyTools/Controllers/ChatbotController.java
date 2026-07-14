@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/chat")
 public class ChatbotController {
 
-        public ChatbotController() {
+    private final AIChatbotService aiChatbotService;
+
+    public ChatbotController(AIChatbotService aiChatbotService) {
+        this.aiChatbotService = aiChatbotService;
     }
-    // private final AIChatbotService aiChatbotService;
 
-    // public ChatbotController(AIChatbotService aiChatbotService) {
-    //     this.aiChatbotService = aiChatbotService;
-    // }
-
-    // @PostMapping
-    // public ChatMessageResponse chat(@RequestBody ChatMessageRequest request) {
-    //     String response = aiChatbotService.chat(request.message());
-    //     return new ChatMessageResponse(response);
-    // }
+    @PostMapping
+    public ChatMessageResponse chat(@RequestBody ChatMessageRequest request) {
+        String response = aiChatbotService.chat(request.message());
+        return new ChatMessageResponse(response);
+    }
 }
