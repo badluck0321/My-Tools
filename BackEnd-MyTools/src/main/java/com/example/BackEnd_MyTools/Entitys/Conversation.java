@@ -15,8 +15,9 @@ public class Conversation {
     @Id
     private String id;
     private List<String> participantIds = new ArrayList<>();
-    private String productId;
     private String lastMessage;
+    private String resourceType;
+    private String resourceId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

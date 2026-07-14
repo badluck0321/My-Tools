@@ -472,6 +472,11 @@ const ProductInfos = () => {
             )}
 
             {/* Action buttons */}
+            <ContactButton
+              resourceType="PRODUCT" // or "MASTERY" or "DEMANDE"
+              resourceId={product.id}
+              initialMessage={`Bonjour, je suis intéressé(e) par votre produit ${product.name}.`}
+            />
             <div className="flex gap-3 mt-auto">
               <button
                 onClick={handleAddToCart}

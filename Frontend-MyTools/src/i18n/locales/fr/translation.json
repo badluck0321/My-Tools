@@ -1,341 +1,341 @@
 {
-    "home": {
-        "hero": {
-            "badge": "La marketplace faite pour les vrais artisans",
-            "titleLine1": "Tout ce dont vous avez besoin",
-            "titleLine2": "pour votre prochain projet",
-            "description": "Achetez, vendez ou louez des outils. Engagez des artisans qualifiés. Obtenez des réponses de la communauté. My-Tools est la plateforme unique pour les professionnels du BTP.",
-            "actions": {
-                "findCraftsmen": "Trouver des artisans",
-                "browseTools": "Parcourir les outils",
-                "askCommunity": "Demander à la communauté"
-            }
+  "home": {
+    "hero": {
+      "badge": "La marketplace faite pour les vrais artisans",
+      "titleLine1": "Tout ce dont vous avez besoin",
+      "titleLine2": "pour votre prochain projet",
+      "description": "Achetez, vendez ou louez des outils. Engagez des artisans qualifiés. Obtenez des réponses de la communauté. My-Tools est la plateforme unique pour les professionnels du BTP.",
+      "actions": {
+        "findCraftsmen": "Trouver des artisans",
+        "browseTools": "Parcourir les outils",
+        "askCommunity": "Demander à la communauté"
+      }
+    },
+    "stats": {
+      "artisans": {
+        "value": "10K+",
+        "label": "Artisans & créateurs"
+      },
+      "tools": {
+        "value": "50K+",
+        "label": "Outils & produits"
+      },
+      "masteries": {
+        "value": "5K+",
+        "label": "Annonces de maîtrises"
+      },
+      "questions": {
+        "value": "2K+",
+        "label": "Questions répondues"
+      }
+    },
+    "products": {
+      "new": {
+        "eyebrow": "À peine ajoutés",
+        "title": "Nouveaux outils et équipements",
+        "subtitle": "Nouvelles annonces issues de la communauté d’artisans.",
+        "cta": "Voir tous les produits"
+      },
+      "top": {
+        "eyebrow": "Choix de la communauté",
+        "title": "Outils les plus recommandés",
+        "subtitle": "Les mieux notés par les professionnels qui les ont utilisés.",
+        "cta": "Tout voir"
+      }
+    },
+    "masteries": {
+      "new": {
+        "eyebrow": "Nouveau sur la plateforme",
+        "title": "Nouvelles annonces de maîtrise",
+        "subtitle": "Des artisans qualifiés viennent de rejoindre la plateforme — découvrez leur expertise.",
+        "cta": "Voir toutes les maîtrises"
+      },
+      "top": {
+        "eyebrow": "Expertise éprouvée",
+        "title": "Artisans les mieux notés",
+        "subtitle": "Ces professionnels ont bâti leur réputation grâce à leurs résultats.",
+        "cta": "Tout voir"
+      }
+    },
+    "community": {
+      "eyebrow": "Questions-réponses du métier",
+      "titleLine1": "La communauté sait.",
+      "titleLine2": "Posez simplement votre question.",
+      "description": "Quel foret pour carreler en céramique ? Comment réparer une jointure en cuivre qui fuit ? Quel produit d’étanchéité sous 20 € ? Publiez votre question avec photos et obtenez des réponses de vrais professionnels.",
+      "benefits": {
+        "photos": "Ajoutez des photos pour décrire le problème",
+        "accepted": "Marquez la meilleure réponse comme acceptée",
+        "votes": "Votez pour les réponses utiles",
+        "notifications": "Recevez une notification lorsqu’une réponse arrive"
+      },
+      "actions": {
+        "browseQuestions": "Parcourir les questions",
+        "askQuestion": "Poser une question"
+      },
+      "recentQuestions": "Questions récentes",
+      "seeAll": "Voir tout",
+      "placeholder": {
+        "one": {
+          "title": "Quel foret utiliser pour traverser une tuile en céramique sans la fissurer ?"
         },
-        "stats": {
-            "artisans": {
-                "value": "10K+",
-                "label": "Artisans & créateurs"
-            },
-            "tools": {
-                "value": "50K+",
-                "label": "Outils & produits"
-            },
-            "masteries": {
-                "value": "5K+",
-                "label": "Annonces de maîtrises"
-            },
-            "questions": {
-                "value": "2K+",
-                "label": "Questions répondues"
-            }
+        "two": {
+          "title": "Meilleur moyen de réparer un joint de tuyau en cuivre qui fuit sans soudure ?"
         },
-        "products": {
-            "new": {
-                "eyebrow": "À peine ajoutés",
-                "title": "Nouveaux outils et équipements",
-                "subtitle": "Nouvelles annonces issues de la communauté d’artisans.",
-                "cta": "Voir tous les produits"
-            },
-            "top": {
-                "eyebrow": "Choix de la communauté",
-                "title": "Outils les plus recommandés",
-                "subtitle": "Les mieux notés par les professionnels qui les ont utilisés.",
-                "cta": "Tout voir"
-            }
+        "three": {
+          "title": "Quelle disque de meuleuse pour couper du ferraillage ?"
         },
-        "masteries": {
-            "new": {
-                "eyebrow": "Nouveau sur la plateforme",
-                "title": "Nouvelles annonces de maîtrise",
-                "subtitle": "Des artisans qualifiés viennent de rejoindre la plateforme — découvrez leur expertise.",
-                "cta": "Voir toutes les maîtrises"
-            },
-            "top": {
-                "eyebrow": "Expertise éprouvée",
-                "title": "Artisans les mieux notés",
-                "subtitle": "Ces professionnels ont bâti leur réputation grâce à leurs résultats.",
-                "cta": "Tout voir"
-            }
-        },
-        "community": {
-            "eyebrow": "Questions-réponses du métier",
-            "titleLine1": "La communauté sait.",
-            "titleLine2": "Posez simplement votre question.",
-            "description": "Quel foret pour carreler en céramique ? Comment réparer une jointure en cuivre qui fuit ? Quel produit d’étanchéité sous 20 € ? Publiez votre question avec photos et obtenez des réponses de vrais professionnels.",
-            "benefits": {
-                "photos": "Ajoutez des photos pour décrire le problème",
-                "accepted": "Marquez la meilleure réponse comme acceptée",
-                "votes": "Votez pour les réponses utiles",
-                "notifications": "Recevez une notification lorsqu’une réponse arrive"
-            },
-            "actions": {
-                "browseQuestions": "Parcourir les questions",
-                "askQuestion": "Poser une question"
-            },
-            "recentQuestions": "Questions récentes",
-            "seeAll": "Voir tout",
-            "placeholder": {
-                "one": {
-                    "title": "Quel foret utiliser pour traverser une tuile en céramique sans la fissurer ?"
-                },
-                "two": {
-                    "title": "Meilleur moyen de réparer un joint de tuyau en cuivre qui fuit sans soudure ?"
-                },
-                "three": {
-                    "title": "Quelle disque de meuleuse pour couper du ferraillage ?"
-                },
-                "four": {
-                    "title": "Comment imperméabiliser un sol en béton avant de poser des carreaux ?"
-                }
-            }
-        },
-        "why": {
-            "eyebrow": "Pourquoi My-Tools",
-            "title": "Conçu pour les métiers. Pas pour tout le monde.",
-            "cards": {
-                "secure": {
-                    "title": "Transactions sécurisées",
-                    "desc": "Chaque vente et location est protégée. Les paiements sont bloqués jusqu’à confirmation de livraison."
-                },
-                "verified": {
-                    "title": "Artisans vérifiés",
-                    "desc": "Les badges StoreOwner sont obtenus, pas achetés. Des avis réels provenant de vrais chantiers."
-                },
-                "updates": {
-                    "title": "Mises à jour en temps réel",
-                    "desc": "Changements de panier, nouvelles réponses, mises à jour de commande — recevez des notifications dès qu’elles arrivent."
-                }
-            }
-        },
-        "cta": {
-            "title": "Prêt à vous mettre au travail ?",
-            "description": "Rejoignez des milliers de professionnels qui achètent, vendent et s’entraident sur My-Tools.",
-            "actions": {
-                "getStarted": "Commencer gratuitement",
-                "browseForum": "Parcourir le forum"
-            }
-        },
-        "empty": {
-            "noProducts": "Aucun produit pour le moment.",
-            "noTopProducts": "Aucun produit très bien noté pour le moment.",
-            "noMasteries": "Aucune maîtrise pour le moment.",
-            "noTopMasteries": "Aucune maîtrise très bien notée pour le moment.",
-            "browseAll": "Tout parcourir"
-        },
-        "meta": {
-            "answers": "réponses",
-            "views": "vues"
+        "four": {
+          "title": "Comment imperméabiliser un sol en béton avant de poser des carreaux ?"
         }
+      }
     },
-    "common": {
-        "loading": "Chargement...",
-        "saving": "Enregistrement...",
-        "creating": "Création...",
-        "updating": "Mise à jour...",
-        "cancel": "Annuler",
-        "save": "Enregistrer",
-        "edit": "Modifier",
-        "delete": "Supprimer",
-        "back": "Retour",
-        "goBack": "Revenir",
-        "next": "Suivant",
-        "prev": "Préc.",
-        "all": "Tout",
-        "clearFilters": "Effacer les filtres"
+    "why": {
+      "eyebrow": "Pourquoi My-Tools",
+      "title": "Conçu pour les métiers. Pas pour tout le monde.",
+      "cards": {
+        "secure": {
+          "title": "Transactions sécurisées",
+          "desc": "Chaque vente et location est protégée. Les paiements sont bloqués jusqu’à confirmation de livraison."
+        },
+        "verified": {
+          "title": "Artisans vérifiés",
+          "desc": "Les badges StoreOwner sont obtenus, pas achetés. Des avis réels provenant de vrais chantiers."
+        },
+        "updates": {
+          "title": "Mises à jour en temps réel",
+          "desc": "Changements de panier, nouvelles réponses, mises à jour de commande — recevez des notifications dès qu’elles arrivent."
+        }
+      }
     },
-    "nav": {
-        "home": "Accueil",
-        "products": "Produits",
-        "masterys": "Métiers",
-        "stores": "Boutiques",
-        "demandes": "Demandes",
-        "dashboard": "Tableau de bord",
-        "favorites": "Favoris",
-        "orders": "Commandes",
-        "settings": "Paramètres",
-        "logout": "Déconnexion",
-        "login": "Connexion",
-        "signIn": "Se connecter",
-        "signUp": "S'inscrire",
-        "lightMode": "Mode clair",
-        "darkMode": "Mode sombre",
-        "cart": "Panier",
-        "toggleTheme": "Changer le thème"
+    "cta": {
+      "title": "Prêt à vous mettre au travail ?",
+      "description": "Rejoignez des milliers de professionnels qui achètent, vendent et s’entraident sur My-Tools.",
+      "actions": {
+        "getStarted": "Commencer gratuitement",
+        "browseForum": "Parcourir le forum"
+      }
     },
-    "search": {
-        "placeholder": "Rechercher des produits ou des métiers...",
-        "ariaLabel": "Recherche globale",
-        "searching": "Recherche...",
-        "noResults": "Aucun produit ou métier correspondant.",
-        "products": "Produits",
-        "masteries": "Métiers",
-        "productListing": "Annonce produit",
-        "serviceListing": "Annonce de service"
+    "empty": {
+      "noProducts": "Aucun produit pour le moment.",
+      "noTopProducts": "Aucun produit très bien noté pour le moment.",
+      "noMasteries": "Aucune maîtrise pour le moment.",
+      "noTopMasteries": "Aucune maîtrise très bien notée pour le moment.",
+      "browseAll": "Tout parcourir"
     },
-    "booking": {
-        "title": "Calendrier de réservation",
-        "startDate": "Date de début",
-        "endDate": "Date de fin",
-        "quantity": "Quantité",
-        "checkingAvailability": "Vérification de la disponibilité...",
-        "datesAvailable": "Dates disponibles",
-        "datesUnavailable": "Dates indisponibles",
-        "selectDatesToCheck": "Sélectionnez des dates pour vérifier la disponibilité.",
-        "pleaseSelectDates": "Veuillez sélectionner les dates de début et de fin.",
-        "unavailableDates": "Dates indisponibles",
-        "more": "de plus",
-        "book": "Réserver",
-        "bookingCreated": "Demande de réservation créée avec succès.",
-        "unableToCreate": "Impossible de créer la réservation."
-    },
-    "stores": {
-        "loading": "Chargement des boutiques...",
-        "title": "Boutiques",
-        "subtitle": "Parcourez les boutiques d'outils vérifiées et actives",
-        "empty": "Aucune boutique disponible pour le moment.",
-        "unableToLoad": "Impossible de charger les boutiques.",
-        "verified": "Vérifiée",
-        "unnamed": "Boutique sans nom",
-        "noEmail": "Aucun email",
-        "noAddress": "Aucune adresse",
-        "active": "Active",
-        "inactive": "Inactive",
-        "deliveryAvailable": "Livraison disponible",
-        "noDeliveryInfo": "Aucune info de livraison"
-    },
-    "cart": {
-        "loading": "Chargement du panier...",
-        "title": "Panier",
-        "empty": "Votre panier est vide.",
-        "browseProducts": "Parcourir les produits",
-        "summary": "Résumé",
-        "total": "Total",
-        "shippingPlaceholder": "Adresse de livraison / notes",
-        "checkout": "Commander",
-        "creatingOrder": "Création de la commande...",
-        "failedLoad": "Échec du chargement du panier",
-        "failedCheckout": "Échec du paiement",
-        "items": "article",
-        "itemsPlural": "articles"
-    },
-    "demandes": {
-        "title": "Demandes",
-        "subtitle": "Publiez et parcourez les demandes clients",
-        "requestTitle": "Titre de la demande",
-        "type": "Type",
-        "budget": "Budget",
-        "description": "Description",
-        "update": "Mettre à jour",
-        "create": "Créer",
-        "loading": "Chargement des demandes...",
-        "empty": "Aucune demande pour le moment.",
-        "typeLabel": "Type",
-        "edit": "Modifier",
-        "delete": "Supprimer",
-        "unableToLoad": "Impossible de charger les demandes.",
-        "unableToSave": "Impossible d'enregistrer la demande."
-    },
-    "settings": {
-        "title": "Paramètres",
-        "description": "Compte, notifications et préférences de l'application.",
-        "profile": "Profil",
-        "profileDescription": "Informations de base utilisées sur la marketplace.",
-        "username": "Nom d'utilisateur",
-        "email": "Email",
-        "password": "Mot de passe",
-        "passwordDescription": "Le mot de passe est géré par le fournisseur d'authentification.",
-        "passwordHelp": "Utilisez Keycloak pour changer votre mot de passe en toute sécurité.",
-        "notifications": "Préférences de notification",
-        "notificationsDescription": "Choisissez les notifications que vous souhaitez recevoir.",
-        "theme": "Thème",
-        "themeDescription": "Basculer entre les modes clair et sombre.",
-        "language": "Langue",
-        "languageDescription": "Préparé pour une future localisation.",
-        "useMode": "Utiliser le mode {{mode}}"
-    },
-    "about": {
-        "title": "À propos de My-Tools",
-        "intro": "Notre mission est de rendre les outils, locations et services professionnels plus simples à trouver, réserver et gérer depuis une seule plateforme sécurisée.",
-        "story": "Notre histoire",
-        "values": "Nos valeurs",
-        "valuesIntro": "Les principes qui guident tout ce que nous faisons",
-        "mission": "Notre mission",
-        "createStore": "Créer une boutique",
-        "exploreProducts": "Explorer les produits",
-        "trustFirst": "La confiance d'abord",
-        "trustFirstDesc": "Nous aidons acheteurs et vendeurs à se connecter grâce à des annonces claires, des boutiques vérifiées et des parcours fiables.",
-        "localAccess": "Accès local",
-        "localAccessDesc": "Rendre les outils, locations et services plus faciles à trouver dans les villes et communautés marocaines.",
-        "communityFirst": "La communauté d'abord",
-        "communityFirstDesc": "Construire un écosystème utile où clients, propriétaires de boutiques et prestataires travaillent ensemble.",
-        "innovation": "Innovation",
-        "innovationDesc": "Utiliser la technologie pour simplifier la gestion du matériel, des réservations, commandes et demandes."
-    },
-    "footer": {
-        "description": "My-Tools met en relation les clients avec des boutiques, outils, locations et services professionnels de confiance.",
-        "explore": "Explorer",
-        "company": "Entreprise",
-        "legal": "Légal",
-        "newsletterTitle": "Abonnez-vous à notre newsletter",
-        "newsletterDescription": "Recevez les derniers outils, services, mises à jour et offres exclusives.",
-        "newsletterPlaceholder": "Entrez votre email",
-        "subscribe": "S'abonner",
-        "copyright": "© {{year}} My-Tools. Tous droits réservés."
-    },
-    "contact": {
-        "title": "Contactez-nous",
-        "intro": "Une question, une suggestion ou besoin d'aide ? Nous sommes là pour vous aider.",
-        "getInTouch": "Entrer en contact",
-        "email": "Email",
-        "phone": "Téléphone",
-        "address": "Adresse",
-        "hours": "Horaires",
-        "replyTime": "Nous répondons sous 24 h",
-        "phoneHours": "Lun – Ven, 9 h – 18 h",
-        "headquarters": "Siège",
-        "gmt": "GMT+1",
-        "messageSent": "Message envoyé !",
-        "messageSentDesc": "Nous vous répondrons sous 24 heures.",
-        "sendAnother": "Envoyer un autre message",
-        "sendMessage": "Envoyer un message",
-        "fullName": "Nom complet",
-        "subject": "Sujet",
-        "message": "Message",
-        "send": "Envoyer le message",
-        "namePlaceholder": "Ahmed Benali",
-        "emailPlaceholder": "ahmed@example.com",
-        "subjectPlaceholder": "Comment pouvons-nous aider ?",
-        "messagePlaceholder": "Décrivez votre question ou votre problème..."
-    },
-    "careers": {
-        "title": "Rejoignez notre équipe",
-        "intro": "Nous construisons la marketplace pour les professionnels du métier. Venez nous aider.",
-        "why": "Pourquoi My-Tools ?",
-        "openPositions": "Postes ouverts",
-        "apply": "Postuler",
-        "noFit": "Aucun poste ne vous correspond ?",
-        "spontaneous": "Envoyez une candidature spontanée.",
-        "healthCoverage": "Couverture santé",
-        "healthCoverageDesc": "Soins médicaux, dentaires et visuels pour vous et votre famille.",
-        "fastGrowth": "Croissance rapide",
-        "fastGrowthDesc": "Startup en phase initiale - votre travail compte dès le premier jour.",
-        "greatTeam": "Excellente équipe",
-        "greatTeamDesc": "Une petite équipe expérimentée et vraiment bienveillante.",
-        "remoteFriendly": "Travail à distance",
-        "remoteFriendlyDesc": "La plupart des postes peuvent être faits à distance dans GMT±2."
-    },
-    "filter": {
-        "masteryType": "Type de métier",
-        "category": "Catégorie",
-        "searchProducts": "Rechercher des produits...",
-        "searchMasteries": "Rechercher des métiers...",
-        "filters": "Filtres",
-        "priceRange": "Fourchette de prix",
-        "sortBy": "Trier par",
-        "availability": "Disponibilité",
-        "all": "Tout",
-        "available": "Disponible",
-        "unavailable": "Indisponible",
-        "clear": "Effacer les filtres"
+    "meta": {
+      "answers": "réponses",
+      "views": "vues"
     }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "saving": "Enregistrement...",
+    "creating": "Création...",
+    "updating": "Mise à jour...",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "back": "Retour",
+    "goBack": "Revenir",
+    "next": "Suivant",
+    "prev": "Préc.",
+    "all": "Tout",
+    "clearFilters": "Effacer les filtres"
+  },
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "masterys": "Métiers",
+    "stores": "Boutiques",
+    "demandes": "Demandes",
+    "dashboard": "Tableau de bord",
+    "favorites": "Favoris",
+    "orders": "Commandes",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "signIn": "Registrer",
+    "signUp": "S'inscrire",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "cart": "Panier",
+    "toggleTheme": "Changer le thème"
+  },
+  "search": {
+    "placeholder": "Rechercher des produits ou des métiers...",
+    "ariaLabel": "Recherche globale",
+    "searching": "Recherche...",
+    "noResults": "Aucun produit ou métier correspondant.",
+    "products": "Produits",
+    "masteries": "Métiers",
+    "productListing": "Annonce produit",
+    "serviceListing": "Annonce de service"
+  },
+  "booking": {
+    "title": "Calendrier de réservation",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "quantity": "Quantité",
+    "checkingAvailability": "Vérification de la disponibilité...",
+    "datesAvailable": "Dates disponibles",
+    "datesUnavailable": "Dates indisponibles",
+    "selectDatesToCheck": "Sélectionnez des dates pour vérifier la disponibilité.",
+    "pleaseSelectDates": "Veuillez sélectionner les dates de début et de fin.",
+    "unavailableDates": "Dates indisponibles",
+    "more": "de plus",
+    "book": "Réserver",
+    "bookingCreated": "Demande de réservation créée avec succès.",
+    "unableToCreate": "Impossible de créer la réservation."
+  },
+  "stores": {
+    "loading": "Chargement des boutiques...",
+    "title": "Boutiques",
+    "subtitle": "Parcourez les boutiques d'outils vérifiées et actives",
+    "empty": "Aucune boutique disponible pour le moment.",
+    "unableToLoad": "Impossible de charger les boutiques.",
+    "verified": "Vérifiée",
+    "unnamed": "Boutique sans nom",
+    "noEmail": "Aucun email",
+    "noAddress": "Aucune adresse",
+    "active": "Active",
+    "inactive": "Inactive",
+    "deliveryAvailable": "Livraison disponible",
+    "noDeliveryInfo": "Aucune info de livraison"
+  },
+  "cart": {
+    "loading": "Chargement du panier...",
+    "title": "Panier",
+    "empty": "Votre panier est vide.",
+    "browseProducts": "Parcourir les produits",
+    "summary": "Résumé",
+    "total": "Total",
+    "shippingPlaceholder": "Adresse de livraison / notes",
+    "checkout": "Commander",
+    "creatingOrder": "Création de la commande...",
+    "failedLoad": "Échec du chargement du panier",
+    "failedCheckout": "Échec du paiement",
+    "items": "article",
+    "itemsPlural": "articles"
+  },
+  "demandes": {
+    "title": "Demandes",
+    "subtitle": "Publiez et parcourez les demandes clients",
+    "requestTitle": "Titre de la demande",
+    "type": "Type",
+    "budget": "Budget",
+    "description": "Description",
+    "update": "Mettre à jour",
+    "create": "Créer",
+    "loading": "Chargement des demandes...",
+    "empty": "Aucune demande pour le moment.",
+    "typeLabel": "Type",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "unableToLoad": "Impossible de charger les demandes.",
+    "unableToSave": "Impossible d'enregistrer la demande."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "description": "Compte, notifications et préférences de l'application.",
+    "profile": "Profil",
+    "profileDescription": "Informations de base utilisées sur la marketplace.",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "password": "Mot de passe",
+    "passwordDescription": "Le mot de passe est géré par le fournisseur d'authentification.",
+    "passwordHelp": "Utilisez Keycloak pour changer votre mot de passe en toute sécurité.",
+    "notifications": "Préférences de notification",
+    "notificationsDescription": "Choisissez les notifications que vous souhaitez recevoir.",
+    "theme": "Thème",
+    "themeDescription": "Basculer entre les modes clair et sombre.",
+    "language": "Langue",
+    "languageDescription": "Préparé pour une future localisation.",
+    "useMode": "Utiliser le mode {{mode}}"
+  },
+  "about": {
+    "title": "À propos de My-Tools",
+    "intro": "Notre mission est de rendre les outils, locations et services professionnels plus simples à trouver, réserver et gérer depuis une seule plateforme sécurisée.",
+    "story": "Notre histoire",
+    "values": "Nos valeurs",
+    "valuesIntro": "Les principes qui guident tout ce que nous faisons",
+    "mission": "Notre mission",
+    "createStore": "Créer une boutique",
+    "exploreProducts": "Explorer les produits",
+    "trustFirst": "La confiance d'abord",
+    "trustFirstDesc": "Nous aidons acheteurs et vendeurs à se connecter grâce à des annonces claires, des boutiques vérifiées et des parcours fiables.",
+    "localAccess": "Accès local",
+    "localAccessDesc": "Rendre les outils, locations et services plus faciles à trouver dans les villes et communautés marocaines.",
+    "communityFirst": "La communauté d'abord",
+    "communityFirstDesc": "Construire un écosystème utile où clients, propriétaires de boutiques et prestataires travaillent ensemble.",
+    "innovation": "Innovation",
+    "innovationDesc": "Utiliser la technologie pour simplifier la gestion du matériel, des réservations, commandes et demandes."
+  },
+  "footer": {
+    "description": "My-Tools met en relation les clients avec des boutiques, outils, locations et services professionnels de confiance.",
+    "explore": "Explorer",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "newsletterTitle": "Abonnez-vous à notre newsletter",
+    "newsletterDescription": "Recevez les derniers outils, services, mises à jour et offres exclusives.",
+    "newsletterPlaceholder": "Entrez votre email",
+    "subscribe": "S'abonner",
+    "copyright": "© {{year}} My-Tools. Tous droits réservés."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "intro": "Une question, une suggestion ou besoin d'aide ? Nous sommes là pour vous aider.",
+    "getInTouch": "Entrer en contact",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "replyTime": "Nous répondons sous 24 h",
+    "phoneHours": "Lun – Ven, 9 h – 18 h",
+    "headquarters": "Siège",
+    "gmt": "GMT+1",
+    "messageSent": "Message envoyé !",
+    "messageSentDesc": "Nous vous répondrons sous 24 heures.",
+    "sendAnother": "Envoyer un autre message",
+    "sendMessage": "Envoyer un message",
+    "fullName": "Nom complet",
+    "subject": "Sujet",
+    "message": "Message",
+    "send": "Envoyer le message",
+    "namePlaceholder": "Ahmed Benali",
+    "emailPlaceholder": "ahmed@example.com",
+    "subjectPlaceholder": "Comment pouvons-nous aider ?",
+    "messagePlaceholder": "Décrivez votre question ou votre problème..."
+  },
+  "careers": {
+    "title": "Rejoignez notre équipe",
+    "intro": "Nous construisons la marketplace pour les professionnels du métier. Venez nous aider.",
+    "why": "Pourquoi My-Tools ?",
+    "openPositions": "Postes ouverts",
+    "apply": "Postuler",
+    "noFit": "Aucun poste ne vous correspond ?",
+    "spontaneous": "Envoyez une candidature spontanée.",
+    "healthCoverage": "Couverture santé",
+    "healthCoverageDesc": "Soins médicaux, dentaires et visuels pour vous et votre famille.",
+    "fastGrowth": "Croissance rapide",
+    "fastGrowthDesc": "Startup en phase initiale - votre travail compte dès le premier jour.",
+    "greatTeam": "Excellente équipe",
+    "greatTeamDesc": "Une petite équipe expérimentée et vraiment bienveillante.",
+    "remoteFriendly": "Travail à distance",
+    "remoteFriendlyDesc": "La plupart des postes peuvent être faits à distance dans GMT±2."
+  },
+  "filter": {
+    "masteryType": "Type de métier",
+    "category": "Catégorie",
+    "searchProducts": "Rechercher des produits...",
+    "searchMasteries": "Rechercher des métiers...",
+    "filters": "Filtres",
+    "priceRange": "Fourchette de prix",
+    "sortBy": "Trier par",
+    "availability": "Disponibilité",
+    "all": "Tout",
+    "available": "Disponible",
+    "unavailable": "Indisponible",
+    "clear": "Effacer les filtres"
+  }
 }

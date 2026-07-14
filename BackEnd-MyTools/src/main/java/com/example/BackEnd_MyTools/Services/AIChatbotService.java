@@ -41,10 +41,6 @@ public class AIChatbotService {
                 List.<Message>of(
                         new SystemMessage(SYSTEM_PROMPT),
                         new UserMessage(userMessage)));
-        // var prompt = new Prompt(
-        // new SystemMessage(SYSTEM_PROMPT),
-        // new UserMessage(userMessage));
-
         return chatClient.call(prompt).getResult().getOutput().getContent();
     }
 }
