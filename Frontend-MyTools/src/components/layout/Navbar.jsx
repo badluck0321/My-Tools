@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Search,
   Menu,
@@ -19,12 +20,14 @@ import {
 import { useTheme } from "../../hooks/useTheme";
 import { useKeycloak } from "../../providers/KeycloakProvider";
 import GlobalSearch from "../search/GlobalSearch";
+import LanguageSwitcher from "../common/LanguageSwitcher";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   // const { authenticated, user, logout, login } = useKeycloak();
   const { authenticated, user, logout, login } = useKeycloak();
+  const { t } = useTranslation();
 
   const { isDarkMode, toggleTheme } = useTheme();
   // const navigate = useNavigate();
@@ -37,11 +40,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/Products" },
-    { name: "Masterys", path: "/Masterys" },
-    { name: "Stores", path: "/stores" },
-    { name: "Demandes", path: "/demandes" },
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.products"), path: "/Products" },
+    { name: t("nav.masterys"), path: "/Masterys" },
+    { name: t("nav.stores"), path: "/stores" },
+    { name: t("nav.demandes"), path: "/demandes" },
   ];
 
   return (
@@ -69,16 +72,24 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="hidden lg:block flex-1 max-w-sm mx-4">
-            <GlobalSearch />
-          </div>
+<div className="hidden lg:block flex-1 max-w-sm mx-6">
+    <GlobalSearch />
+</div>
+
+          <div className="hidden md:flex items-center gap-4 ml-6"></div>
+            
+
           {/* Right Side Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center">
+                      <div className="hidden lg:block flex-1 max-w-sm mx-4">
+            <LanguageSwitcher />
+          </div>
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors"
-              aria-label="Toggle theme">
+              aria-label={t("nav.toggleTheme")}>
               {isDarkMode ? (
                 <Sun className="w-5 h-5 text-[#d4a343]" />
               ) : (
@@ -90,7 +101,7 @@ const Navbar = () => {
               <Link
                 to="/cart"
                 className="p-2 rounded-xl hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors"
-                title="Cart">
+                title={t("nav.cart")}>
                 <ShoppingBag className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" />
               </Link>
             )}
@@ -162,7 +173,7 @@ const Navbar = () => {
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <User className="w-5 h-5" />
-                        <span className="font-medium">Dashboard</span>
+                        <span className="font-medium">{t("nav.dashboard")}</span>
                       </Link>
 
                       <Link
@@ -170,7 +181,7 @@ const Navbar = () => {
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <Heart className="w-5 h-5" />
-                        <span className="font-medium">Favorites</span>
+                        <span className="font-medium">{t("nav.favorites")}</span>
                       </Link>
 
                       <Link
@@ -178,14 +189,14 @@ const Navbar = () => {
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <ShoppingBag className="w-5 h-5" />
-                        <span className="font-medium">Orders</span>
+                        <span className="font-medium">{t("nav.orders")}</span>
                       </Link>
                       <Link
                         to="/dashboard/settings"
                         className="flex items-center gap-3 px-5 py-3 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-colors text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343]"
                         onClick={() => setIsProfileOpen(false)}>
                         <Settings className="w-5 h-5" />
-                        <span className="font-medium">Settings</span>
+                        <span className="font-medium">{t("nav.settings")}</span>
                       </Link>
                     </div>
 
@@ -194,7 +205,7 @@ const Navbar = () => {
                         onClick={handleLogout}
                         className="flex items-center gap-3 px-5 py-3 w-full text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
                         <LogOut className="w-5 h-5" />
-                        <span>Logout</span>
+                        <span>{t("nav.logout")}</span>
                       </button>
                     </div>
                   </motion.div>
@@ -207,7 +218,7 @@ const Navbar = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-5 py-2.5 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
-                  Login/SignIn
+                  {t("nav.login")} / {t("nav.signIn")}
                 </button>
               </div>
             )}
@@ -249,12 +260,12 @@ const Navbar = () => {
                 {isDarkMode ? (
                   <>
                     <Sun className="w-5 h-5 text-[#d4a343]" />
-                    <span>Light Mode</span>
+                    <span>{t("nav.lightMode")}</span>
                   </>
                 ) : (
                   <>
                     <Moon className="w-5 h-5 text-[#6d2842]" />
-                    <span>Dark Mode</span>
+                    <span>{t("nav.darkMode")}</span>
                   </>
                 )}
               </button>
@@ -265,7 +276,7 @@ const Navbar = () => {
                     to="/dashboard"
                     className="block py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] transition-colors"
                     onClick={() => setIsMenuOpen(false)}>
-                    Dashboard
+                    {t("nav.dashboard")}
                   </Link>
                   <button
                     onClick={() => {
@@ -273,7 +284,7 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                     }}
                     className="block w-full text-left py-3 text-red-600 dark:text-red-400">
-                    Logout
+                    {t("nav.logout")}
                   </button>
                 </>
               ) : (
@@ -284,7 +295,7 @@ const Navbar = () => {
                       handleLogin();
                     }}
                     className="w-full px-5 py-3 text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#d4a343] font-medium rounded-lg hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816] transition-all">
-                    Login
+                    {t("nav.login")}
                   </button>
                   <button
                     onClick={() => {
@@ -292,7 +303,7 @@ const Navbar = () => {
                       handleLogin();
                     }}
                     className="w-full px-5 py-3 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] hover:from-[#5a2338] hover:via-[#6d2842] hover:to-[#8b3654] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
-                    Sign Up
+                    {t("nav.signUp")}
                   </button>
                 </div>
               )}

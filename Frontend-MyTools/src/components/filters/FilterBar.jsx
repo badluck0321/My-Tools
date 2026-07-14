@@ -1,5 +1,6 @@
 import { Filter, X } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Input } from '../common';
 import { PRICE_RANGES, SORT_OPTIONS } from '../../utils/constants';
 
@@ -19,7 +20,8 @@ const FilterBar = ({
   onAvailabilityChange,
 }) => {
   const [showFilters, setShowFilters] = useState(false);
-  const lookupLabel = mode === 'masteries' ? 'Mastery type' : 'Category';
+  const { t } = useTranslation();
+  const lookupLabel = mode === 'masteries' ? t('filter.masteryType') : t('filter.category');
 
   const reset = () => {
     onSearchChange('');
@@ -35,13 +37,13 @@ const FilterBar = ({
         <div className="flex-1">
           <Input
             type="text"
-            placeholder={`Search ${mode === 'masteries' ? 'masteries' : 'products'}...`}
+            placeholder={mode === 'masteries' ? t('filter.searchMasteries') : t('filter.searchProducts')}
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
         <Button variant="outline" icon={Filter} onClick={() => setShowFilters((v) => !v)} className="lg:hidden">
-          Filters
+          {t('filter.filters')}
         </Button>
       </div>
 
@@ -51,7 +53,7 @@ const FilterBar = ({
             <div>
               <label className="block text-sm font-medium mb-3">{lookupLabel}</label>
               <select value={selectedLookup} onChange={(e) => onLookupChange(e.target.value)} className="w-full px-4 py-2 rounded-xl bg-white dark:bg-gray-800">
-                <option value="all">All</option>
+                <option value="all">{t('filter.all')}</option>
                 {lookupOptions.map((option) => (
                   <option key={`${option.value}-${option.label}`} value={option.value}>{option.label}</option>
                 ))}
@@ -59,14 +61,14 @@ const FilterBar = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-3">Price Range</label>
+              <label className="block text-sm font-medium mb-3">{t('filter.priceRange')}</label>
               <select value={selectedPriceRange} onChange={(e) => onPriceRangeChange(e.target.value)} className="w-full px-4 py-2 rounded-xl bg-white dark:bg-gray-800">
                 {PRICE_RANGES.map((range) => <option key={range.id} value={range.id}>{range.label}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-3">Sort By</label>
+              <label className="block text-sm font-medium mb-3">{t('filter.sortBy')}</label>
               <select value={selectedSort} onChange={(e) => onSortChange(e.target.value)} className="w-full px-4 py-2 rounded-xl bg-white dark:bg-gray-800">
                 {SORT_OPTIONS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}
               </select>
@@ -74,18 +76,18 @@ const FilterBar = ({
 
             {showAvailability && (
               <div>
-                <label className="block text-sm font-medium mb-3">Availability</label>
+                <label className="block text-sm font-medium mb-3">{t('filter.availability')}</label>
                 <select value={availability} onChange={(e) => onAvailabilityChange(e.target.value)} className="w-full px-4 py-2 rounded-xl bg-white dark:bg-gray-800">
-                  <option value="all">All</option>
-                  <option value="available">Available</option>
-                  <option value="unavailable">Unavailable</option>
+                  <option value="all">{t('filter.all')}</option>
+                  <option value="available">{t('filter.available')}</option>
+                  <option value="unavailable">{t('filter.unavailable')}</option>
                 </select>
               </div>
             )}
           </div>
           {(searchTerm || selectedLookup !== 'all' || selectedPriceRange !== 'all' || selectedSort !== 'newest' || availability !== 'all') && (
             <div className="mt-4 flex justify-end">
-              <Button variant="ghost" size="sm" icon={X} onClick={reset}>Clear Filters</Button>
+              <Button variant="ghost" size="sm" icon={X} onClick={reset}>{t('filter.clear')}</Button>
             </div>
           )}
         </div>

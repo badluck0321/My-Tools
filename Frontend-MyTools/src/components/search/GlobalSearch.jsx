@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { productService } from '../../services/productService';
 import { masteryService } from '../../services/MasteryService';
 
@@ -13,6 +14,7 @@ const highlight = (text = '', query = '') => {
 
 const GlobalSearch = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const ref = useRef(null);
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState([]);
@@ -64,27 +66,27 @@ const GlobalSearch = () => {
           value={query}
           onFocus={() => normalized.length >= 2 && setOpen(true)}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search products or masteries..."
+          placeholder={t("search.placeholder")}
           className="w-full rounded-xl border border-[#e8e7e5] dark:border-[#4a4642] bg-[#f5f5f3] dark:bg-[#1a1816] py-2.5 pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-[#6d2842]/30"
-          aria-label="Global search"
+          aria-label={t("search.ariaLabel")}
         />
       </div>
       {open && normalized.length >= 2 && (
         <div className="absolute right-0 mt-2 w-full min-w-[320px] rounded-2xl border border-[#e8e7e5] dark:border-[#4a4642] bg-white dark:bg-[#2d2a27] shadow-2xl overflow-hidden z-50">
-          {loading ? <div className="p-4 text-sm text-[#8a8580]">Searching...</div> : !hasResults ? <div className="p-4 text-sm text-[#8a8580]">No matching products or masteries.</div> : (
+          {loading ? <div className="p-4 text-sm text-[#8a8580]">{t("search.searching")}</div> : !hasResults ? <div className="p-4 text-sm text-[#8a8580]">{t("search.noResults")}</div> : (
             <div className="max-h-96 overflow-auto py-2">
-              {products.length > 0 && <p className="px-4 py-2 text-xs uppercase tracking-wide text-[#8a8580]">Products</p>}
+              {products.length > 0 && <p className="px-4 py-2 text-xs uppercase tracking-wide text-[#8a8580]">{t("search.products")}</p>}
               {products.map((item) => (
                 <button key={`p-${item.id}`} onClick={() => go(`/products/${item.id}`)} className="block w-full text-left px-4 py-2 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816]">
                   <p className="font-semibold text-sm">{highlight(item.name, normalized)}</p>
-                  <p className="text-xs text-[#8a8580] truncate">{item.description || 'Product listing'}</p>
+                  <p className="text-xs text-[#8a8580] truncate">{item.description || t("search.productListing")}</p>
                 </button>
               ))}
-              {masteries.length > 0 && <p className="px-4 py-2 text-xs uppercase tracking-wide text-[#8a8580]">Masteries</p>}
+              {masteries.length > 0 && <p className="px-4 py-2 text-xs uppercase tracking-wide text-[#8a8580]">{t("search.masteries")}</p>}
               {masteries.map((item) => (
                 <button key={`m-${item.id}`} onClick={() => go(`/Masterys/${item.id}`)} className="block w-full text-left px-4 py-2 hover:bg-[#f5f5f3] dark:hover:bg-[#1a1816]">
                   <p className="font-semibold text-sm">{highlight(item.title, normalized)}</p>
-                  <p className="text-xs text-[#8a8580] truncate">{item.description || 'Service listing'}</p>
+                  <p className="text-xs text-[#8a8580] truncate">{item.description || t("search.serviceListing")}</p>
                 </button>
               ))}
             </div>
