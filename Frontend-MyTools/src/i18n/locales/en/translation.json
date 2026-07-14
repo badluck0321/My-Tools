@@ -1,0 +1,341 @@
+{
+    "home": {
+        "hero": {
+            "badge": "The marketplace built for real craftsmen",
+            "titleLine1": "Everything you need",
+            "titleLine2": "for your next project",
+            "description": "Buy, sell, or loan tools. Hire skilled craftsmen. Get answers from the community. My-Tools is the single platform for professionals in the trades.",
+            "actions": {
+                "findCraftsmen": "Find Craftsmen",
+                "browseTools": "Browse Tools",
+                "askCommunity": "Ask the Community"
+            }
+        },
+        "stats": {
+            "artisans": {
+                "value": "10K+",
+                "label": "Artisans & craftsmen"
+            },
+            "tools": {
+                "value": "50K+",
+                "label": "Tools & products"
+            },
+            "masteries": {
+                "value": "5K+",
+                "label": "Mastery listings"
+            },
+            "questions": {
+                "value": "2K+",
+                "label": "Q&A answered"
+            }
+        },
+        "products": {
+            "new": {
+                "eyebrow": "Just listed",
+                "title": "New Tools & Equipment",
+                "subtitle": "Fresh listings from craftsmen in the community.",
+                "cta": "View all products"
+            },
+            "top": {
+                "eyebrow": "Community picks",
+                "title": "Most Recommended Tools",
+                "subtitle": "Highest-rated by professionals who've used them.",
+                "cta": "View all"
+            }
+        },
+        "masteries": {
+            "new": {
+                "eyebrow": "New on the platform",
+                "title": "Fresh Mastery Listings",
+                "subtitle": "Skilled craftsmen just joined — find their expertise.",
+                "cta": "View all masteries"
+            },
+            "top": {
+                "eyebrow": "Proven expertise",
+                "title": "Highest-Rated Craftsmen",
+                "subtitle": "These professionals earned their reputation through results.",
+                "cta": "View all"
+            }
+        },
+        "community": {
+            "eyebrow": "Handyman Q&A",
+            "titleLine1": "The community knows.",
+            "titleLine2": "Just ask.",
+            "description": "Which drill bit for ceramic tile? How do you fix a leaking copper joint? What's the best waterproof sealant under €20? Post your question with photos and get answers from real professionals.",
+            "benefits": {
+                "photos": "Attach photos to describe the problem",
+                "accepted": "Mark the best answer as accepted",
+                "votes": "Vote on helpful answers",
+                "notifications": "Get notified when someone replies"
+            },
+            "actions": {
+                "browseQuestions": "Browse Questions",
+                "askQuestion": "Ask a Question"
+            },
+            "recentQuestions": "Recent Questions",
+            "seeAll": "See all",
+            "placeholder": {
+                "one": {
+                    "title": "What drill bit do I use to go through ceramic tile without cracking it?"
+                },
+                "two": {
+                    "title": "Best way to fix a leaking copper pipe joint without soldering?"
+                },
+                "three": {
+                    "title": "Which angle grinder disc for cutting through rebar?"
+                },
+                "four": {
+                    "title": "How do I waterproof a concrete floor before tiling?"
+                }
+            }
+        },
+        "why": {
+            "eyebrow": "Why My-Tools",
+            "title": "Built for the trades. Not for everyone.",
+            "cards": {
+                "secure": {
+                    "title": "Secure Transactions",
+                    "desc": "Every sale and rental is protected. Payments held until delivery confirmed."
+                },
+                "verified": {
+                    "title": "Verified Craftsmen",
+                    "desc": "StoreOwner badges are earned, not bought. Real reviews from real jobs."
+                },
+                "updates": {
+                    "title": "Event-Driven Updates",
+                    "desc": "Cart changes, new answers, order updates — get notified as they happen."
+                }
+            }
+        },
+        "cta": {
+            "title": "Ready to get to work?",
+            "description": "Join thousands of professionals buying, selling, and helping each other on My-Tools.",
+            "actions": {
+                "getStarted": "Get Started Free",
+                "browseForum": "Browse the Forum"
+            }
+        },
+        "empty": {
+            "noProducts": "No products yet.",
+            "noTopProducts": "No top-rated products yet.",
+            "noMasteries": "No masteries yet.",
+            "noTopMasteries": "No top masteries yet.",
+            "browseAll": "Browse all"
+        },
+        "meta": {
+            "answers": "answers",
+            "views": "views"
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "creating": "Creating...",
+        "updating": "Updating...",
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete",
+        "back": "Back",
+        "goBack": "Go back",
+        "next": "Next",
+        "prev": "Prev",
+        "all": "All",
+        "clearFilters": "Clear Filters"
+    },
+    "nav": {
+        "home": "Home",
+        "products": "Products",
+        "masterys": "Masterys",
+        "stores": "Stores",
+        "demandes": "Demandes",
+        "dashboard": "Dashboard",
+        "favorites": "Favorites",
+        "orders": "Orders",
+        "settings": "Settings",
+        "logout": "Logout",
+        "login": "Login",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "lightMode": "Light Mode",
+        "darkMode": "Dark Mode",
+        "cart": "Cart",
+        "toggleTheme": "Toggle theme"
+    },
+    "search": {
+        "placeholder": "Search products or masteries...",
+        "ariaLabel": "Global search",
+        "searching": "Searching...",
+        "noResults": "No matching products or masteries.",
+        "products": "Products",
+        "masteries": "Masteries",
+        "productListing": "Product listing",
+        "serviceListing": "Service listing"
+    },
+    "booking": {
+        "title": "Booking calendar",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "quantity": "Quantity",
+        "checkingAvailability": "Checking availability...",
+        "datesAvailable": "Dates available",
+        "datesUnavailable": "Dates unavailable",
+        "selectDatesToCheck": "Select dates to check availability.",
+        "pleaseSelectDates": "Please select start and end dates.",
+        "unavailableDates": "Unavailable dates",
+        "more": "more",
+        "book": "Book",
+        "bookingCreated": "Booking request created successfully.",
+        "unableToCreate": "Unable to create booking."
+    },
+    "stores": {
+        "loading": "Loading stores...",
+        "title": "Stores",
+        "subtitle": "Browse verified and active tool stores",
+        "empty": "No stores available yet.",
+        "unableToLoad": "Unable to load stores.",
+        "verified": "Verified",
+        "unnamed": "Unnamed store",
+        "noEmail": "No email",
+        "noAddress": "No address",
+        "active": "Active",
+        "inactive": "Inactive",
+        "deliveryAvailable": "Delivery available",
+        "noDeliveryInfo": "No delivery info"
+    },
+    "cart": {
+        "loading": "Loading cart...",
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty.",
+        "browseProducts": "Browse products",
+        "summary": "Summary",
+        "total": "Total",
+        "shippingPlaceholder": "Shipping address / notes",
+        "checkout": "Checkout",
+        "creatingOrder": "Creating order...",
+        "failedLoad": "Failed to load cart",
+        "failedCheckout": "Checkout failed",
+        "items": "item",
+        "itemsPlural": "items"
+    },
+    "demandes": {
+        "title": "Requests",
+        "subtitle": "Post and browse customer requests",
+        "requestTitle": "Request title",
+        "type": "Type",
+        "budget": "Budget",
+        "description": "Description",
+        "update": "Update",
+        "create": "Create",
+        "loading": "Loading demandes...",
+        "empty": "No demandes yet.",
+        "typeLabel": "Type",
+        "edit": "Edit",
+        "delete": "Delete",
+        "unableToLoad": "Unable to load demandes.",
+        "unableToSave": "Unable to save demande."
+    },
+    "settings": {
+        "title": "Settings",
+        "description": "Account, notifications and application preferences.",
+        "profile": "Profile",
+        "profileDescription": "Basic profile information used across the marketplace.",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "passwordDescription": "Password is managed by the authentication provider.",
+        "passwordHelp": "Use Keycloak account management to change your password securely.",
+        "notifications": "Notification preferences",
+        "notificationsDescription": "Choose which notifications you want to receive.",
+        "theme": "Theme",
+        "themeDescription": "Switch between light and dark display modes.",
+        "language": "Language",
+        "languageDescription": "Prepared for future localization.",
+        "useMode": "Use {{mode}} mode"
+    },
+    "about": {
+        "title": "About My-Tools",
+        "intro": "We're on a mission to make tools, rentals and professional services easier to find, book and manage from one secure platform.",
+        "story": "Our Story",
+        "values": "Our Values",
+        "valuesIntro": "The principles that guide everything we do",
+        "mission": "Our Mission",
+        "createStore": "Create a Store",
+        "exploreProducts": "Explore Products",
+        "trustFirst": "Trust First",
+        "trustFirstDesc": "We help customers and sellers connect through clear listings, verified stores and reliable workflows.",
+        "localAccess": "Local Access",
+        "localAccessDesc": "Making tools, rentals and services easier to find in Moroccan cities and communities.",
+        "communityFirst": "Community First",
+        "communityFirstDesc": "Building a useful ecosystem where customers, store owners and service providers can work together.",
+        "innovation": "Innovation",
+        "innovationDesc": "Using technology to make equipment, bookings, orders and service requests easier to manage."
+    },
+    "footer": {
+        "description": "My-Tools connects customers with trusted stores, tools, rentals and professional services. Browse equipment, book rentals, and manage your orders from one secure platform.",
+        "explore": "Explore",
+        "company": "Company",
+        "legal": "Legal",
+        "newsletterTitle": "Subscribe to Our Newsletter",
+        "newsletterDescription": "Get the latest tools, services, platform updates, and exclusive offers delivered to your inbox.",
+        "newsletterPlaceholder": "Enter your email",
+        "subscribe": "Subscribe",
+        "copyright": "© {{year}} My-Tools. All rights reserved."
+    },
+    "contact": {
+        "title": "Contact Us",
+        "intro": "Have a question, a suggestion, or need support? We're here to help.",
+        "getInTouch": "Get in touch",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "hours": "Hours",
+        "replyTime": "We reply within 24 h",
+        "phoneHours": "Mon – Fri, 9 am – 6 pm",
+        "headquarters": "Headquarters",
+        "gmt": "GMT+1",
+        "messageSent": "Message sent!",
+        "messageSentDesc": "We'll get back to you within 24 hours.",
+        "sendAnother": "Send another message",
+        "sendMessage": "Send a message",
+        "fullName": "Full Name",
+        "subject": "Subject",
+        "message": "Message",
+        "send": "Send Message",
+        "namePlaceholder": "Ahmed Benali",
+        "emailPlaceholder": "ahmed@example.com",
+        "subjectPlaceholder": "How can we help?",
+        "messagePlaceholder": "Describe your question or issue..."
+    },
+    "careers": {
+        "title": "Join Our Team",
+        "intro": "We're building the marketplace for professionals in the trades. Come help us do it.",
+        "why": "Why My-Tools?",
+        "openPositions": "Open Positions",
+        "apply": "Apply",
+        "noFit": "Don't see a fit?",
+        "spontaneous": "Send us a spontaneous application.",
+        "healthCoverage": "Health Coverage",
+        "healthCoverageDesc": "Full medical, dental and vision for you and your family.",
+        "fastGrowth": "Fast Growth",
+        "fastGrowthDesc": "Early-stage startup - your work ships and matters on day one.",
+        "greatTeam": "Great Team",
+        "greatTeamDesc": "A small, experienced, and genuinely kind team.",
+        "remoteFriendly": "Remote-Friendly",
+        "remoteFriendlyDesc": "Most roles can be done fully remote within GMT±2."
+    },
+    "filter": {
+        "masteryType": "Mastery type",
+        "category": "Category",
+        "searchProducts": "Search products...",
+        "searchMasteries": "Search masteries...",
+        "filters": "Filters",
+        "priceRange": "Price Range",
+        "sortBy": "Sort By",
+        "availability": "Availability",
+        "all": "All",
+        "available": "Available",
+        "unavailable": "Unavailable",
+        "clear": "Clear Filters"
+    }
+}

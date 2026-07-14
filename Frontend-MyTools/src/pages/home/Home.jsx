@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { formatPrice } from "../../utils/helpers";
 
 import {
@@ -120,7 +121,7 @@ const MasteryCard = ({ mastery }) => {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      onClick={() => navigate(`/masterys/${mastery.id}`)}
+      onClick={() => navigate(`/Masterys/${mastery.id}`)}
       className="bg-white dark:bg-[#2d2a27] rounded-2xl overflow-hidden border border-[#e8e7e5] dark:border-[#4a4642] cursor-pointer group shadow-sm hover:shadow-lg transition-all">
       <div className="aspect-[4/3] bg-[#f0eeeb] dark:bg-[#3a3633] overflow-hidden flex items-center justify-center">
         {mastery.photoUrls ? (
@@ -150,7 +151,7 @@ const MasteryCard = ({ mastery }) => {
 };
 
 /* ─── Q&A Card ───────────────────────────────────── */
-const QACard = ({ question }) => {
+const QACard = ({ question, locale }) => {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -170,7 +171,7 @@ const QACard = ({ question }) => {
               <CheckCircle size={10} className="inline mr-0.5" />
             )}
             {question.answerCount ?? 0}
-            <div className="text-[10px] font-normal">ans</div>
+            <div className="text-[10px] font-normal">{question.answerLabel}</div>
           </div>
           <div className="text-xs text-[#8a8580] dark:text-[#7a756f]">
             <ThumbsUp size={12} className="inline mr-0.5" />
@@ -199,14 +200,14 @@ const QACard = ({ question }) => {
             </div>
           )}
           <div className="mt-2 flex items-center gap-2 text-[10px] text-[#b0aba5]">
-            <Eye size={10} /> {question.viewCount ?? 0} views
+            <Eye size={10} /> {question.viewCount ?? 0} {question.viewsLabel}
             <span>·</span>
             <Clock size={10} />
             {question.createdAt
-              ? new Date(question.createdAt).toLocaleDateString("fr-FR", {
+              ? new Intl.DateTimeFormat(locale, {
                   day: "numeric",
                   month: "short",
-                })
+                }).format(new Date(question.createdAt))
               : "—"}
           </div>
         </div>
@@ -222,19 +223,20 @@ const ScrollRow = ({ children }) => (
   </div>
 );
 
-/* ─── STAT BANNER ────────────────────────────────── */
-const stats = [
-  { value: "10K+", label: "Artisans & craftsmen", icon: Users },
-  { value: "50K+", label: "Tools & products", icon: Package },
-  { value: "5K+", label: "Mastery listings", icon: Award },
-  { value: "2K+", label: "Q&A answered", icon: MessageSquare },
-];
-
 /* ═══════════════════════════════════════════════════
    HOME
 ══════════════════════════════════════════════════ */
 const Home = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage || i18n.language || "en";
+
+  const stats = [
+    { value: t("home.stats.artisans.value"), label: t("home.stats.artisans.label"), icon: Users },
+    { value: t("home.stats.tools.value"), label: t("home.stats.tools.label"), icon: Package },
+    { value: t("home.stats.masteries.value"), label: t("home.stats.masteries.label"), icon: Award },
+    { value: t("home.stats.questions.value"), label: t("home.stats.questions.label"), icon: MessageSquare },
+  ];
 
   const [newProducts, setNewProducts] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
@@ -311,23 +313,21 @@ const Home = () => {
                   className="text-[#6d2842] dark:text-[#d4a343]"
                 />
                 <span className="text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9]">
-                  The marketplace built for real craftsmen
+                  {t("home.hero.badge")}
                 </span>
               </motion.span>
 
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-bold mb-6 leading-[1.05]">
                 <span className="block text-[#2d2a27] dark:text-[#fafaf9]">
-                  Everything you need
+                  {t("home.hero.titleLine1")}
                 </span>
                 <span className="block bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent mt-2">
-                  for your next project
+                  {t("home.hero.titleLine2")}
                 </span>
               </h1>
 
               <p className="text-lg md:text-xl text-[#5d5955] dark:text-[#c4bfb9] mb-10 max-w-2xl mx-auto leading-relaxed">
-                Buy, sell, or loan tools. Hire skilled craftsmen. Get answers
-                from the community. My-Tools is the single platform for
-                professionals in the trades.
+                {t("home.hero.description")}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -336,7 +336,7 @@ const Home = () => {
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                     className="flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white font-semibold rounded-xl shadow-lg shadow-[#6d2842]/25 hover:opacity-90 transition-all min-w-[200px]">
-                    <Sparkles size={17} /> Find Craftsmen
+                    <Sparkles size={17} /> {t("home.hero.actions.findCraftsmen")}
                   </motion.button>
                 </Link>
                 <Link to="/Products">
@@ -344,7 +344,7 @@ const Home = () => {
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                     className="flex items-center justify-center gap-2 px-7 py-3.5 bg-white dark:bg-[#2d2a27] border-2 border-[#6d2842] dark:border-[#d4a343] text-[#6d2842] dark:text-[#d4a343] font-semibold rounded-xl hover:bg-[#6d2842] dark:hover:bg-[#d4a343] hover:text-white dark:hover:text-[#2d2a27] transition-all min-w-[200px]">
-                    <Wrench size={17} /> Browse Tools
+                    <Wrench size={17} /> {t("home.hero.actions.browseTools")}
                   </motion.button>
                 </Link>
                 <Link to="/forum">
@@ -352,7 +352,7 @@ const Home = () => {
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                     className="flex items-center justify-center gap-2 px-7 py-3.5 bg-white dark:bg-[#2d2a27] border-2 border-[#508978] text-[#508978] font-semibold rounded-xl hover:bg-[#508978] hover:text-white transition-all min-w-[200px]">
-                    <HelpCircle size={17} /> Ask the Community
+                    <HelpCircle size={17} /> {t("home.hero.actions.askCommunity")}
                   </motion.button>
                 </Link>
               </div>
@@ -387,10 +387,10 @@ const Home = () => {
       <section className="py-16 bg-[#fafaf9] dark:bg-[#1a1816]">
         <div className="container-custom">
           <SectionHeader
-            eyebrow="Just listed"
-            title="New Tools & Equipment"
-            subtitle="Fresh listings from craftsmen in the community."
-            cta="View all products"
+            eyebrow={t("home.products.new.eyebrow")}
+            title={t("home.products.new.title")}
+            subtitle={t("home.products.new.subtitle")}
+            cta={t("home.products.new.cta")}
             ctaHref="/Products"
           />
           {newProducts.length > 0 ? (
@@ -405,8 +405,8 @@ const Home = () => {
             </ScrollRow>
           ) : (
             <EmptySlate
-              label="No products yet."
-              cta="Browse all"
+              label={t("home.empty.noProducts")}
+              cta={t("home.empty.browseAll")}
               href="/Products"
             />
           )}
@@ -417,10 +417,10 @@ const Home = () => {
       <section className="py-16 bg-white dark:bg-[#2d2a27]">
         <div className="container-custom">
           <SectionHeader
-            eyebrow="Community picks"
-            title="Most Recommended Tools"
-            subtitle="Highest-rated by professionals who've used them."
-            cta="View all"
+            eyebrow={t("home.products.top.eyebrow")}
+            title={t("home.products.top.title")}
+            subtitle={t("home.products.top.subtitle")}
+            cta={t("home.products.top.cta")}
             ctaHref="/Products?sort=top"
           />
           {topProducts.length > 0 ? (
@@ -435,8 +435,8 @@ const Home = () => {
             </ScrollRow>
           ) : (
             <EmptySlate
-              label="No top-rated products yet."
-              cta="Browse all"
+              label={t("home.empty.noTopProducts")}
+              cta={t("home.empty.browseAll")}
               href="/Products"
             />
           )}
@@ -447,10 +447,10 @@ const Home = () => {
       <section className="py-16 bg-[#fafaf9] dark:bg-[#1a1816]">
         <div className="container-custom">
           <SectionHeader
-            eyebrow="New on the platform"
-            title="Fresh Mastery Listings"
-            subtitle="Skilled craftsmen just joined — find their expertise."
-            cta="View all masteries"
+            eyebrow={t("home.masteries.new.eyebrow")}
+            title={t("home.masteries.new.title")}
+            subtitle={t("home.masteries.new.subtitle")}
+            cta={t("home.masteries.new.cta")}
             ctaHref="/Masterys"
           />
           {newMasteries.length > 0 ? (
@@ -465,8 +465,8 @@ const Home = () => {
             </ScrollRow>
           ) : (
             <EmptySlate
-              label="No masteries yet."
-              cta="Browse all"
+              label={t("home.empty.noMasteries")}
+              cta={t("home.empty.browseAll")}
               href="/Masterys"
             />
           )}
@@ -477,11 +477,11 @@ const Home = () => {
       <section className="py-16 bg-white dark:bg-[#2d2a27]">
         <div className="container-custom">
           <SectionHeader
-            eyebrow="Proven expertise"
-            title="Highest-Rated Craftsmen"
-            subtitle="These professionals earned their reputation through results."
-            cta="View all"
-            ctaHref="/Masteries?sort=top"
+            eyebrow={t("home.masteries.top.eyebrow")}
+            title={t("home.masteries.top.title")}
+            subtitle={t("home.masteries.top.subtitle")}
+            cta={t("home.masteries.top.cta")}
+            ctaHref="/Masterys?sort=top"
           />
           {topMasteries.length > 0 ? (
             <ScrollRow>
@@ -495,8 +495,8 @@ const Home = () => {
             </ScrollRow>
           ) : (
             <EmptySlate
-              label="No top masteries yet."
-              cta="Browse all"
+              label={t("home.empty.noTopMasteries")}
+              cta={t("home.empty.browseAll")}
               href="/Masterys"
             />
           )}
@@ -511,18 +511,15 @@ const Home = () => {
             <div className="lg:col-span-2 space-y-6">
               <div>
                 <span className="text-xs font-bold tracking-[0.18em] uppercase text-[#6d2842] dark:text-[#e8a0b4]">
-                  Handyman Q&A
+                  {t("home.community.eyebrow")}
                 </span>
                 <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold text-[#2d2a27] dark:text-[#fafaf9]">
-                  The community knows.
+                  {t("home.community.titleLine1")}
                   <br />
-                  Just ask.
+                  {t("home.community.titleLine2")}
                 </h2>
                 <p className="mt-3 text-[#5d5955] dark:text-[#c4bfb9]">
-                  Which drill bit for ceramic tile? How do you fix a leaking
-                  copper joint? What's the best waterproof sealant under €20?
-                  Post your question with photos and get answers from real
-                  professionals.
+                  {t("home.community.description")}
                 </p>
               </div>
 
@@ -530,14 +527,14 @@ const Home = () => {
                 {[
                   {
                     icon: MessageSquare,
-                    text: "Attach photos to describe the problem",
+                    text: t("home.community.benefits.photos"),
                   },
                   {
                     icon: CheckCircle,
-                    text: "Mark the best answer as accepted",
+                    text: t("home.community.benefits.accepted"),
                   },
-                  { icon: ThumbsUp, text: "Vote on helpful answers" },
-                  { icon: Zap, text: "Get notified when someone replies" },
+                  { icon: ThumbsUp, text: t("home.community.benefits.votes") },
+                  { icon: Zap, text: t("home.community.benefits.notifications") },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-[#6d2842]/10 dark:bg-[#6d2842]/30 flex items-center justify-center flex-shrink-0">
@@ -559,7 +556,7 @@ const Home = () => {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white text-sm font-semibold rounded-xl shadow-lg shadow-[#6d2842]/20 hover:opacity-90 transition-all">
-                    <HelpCircle size={15} /> Browse Questions
+                    <HelpCircle size={15} /> {t("home.community.actions.browseQuestions")}
                   </motion.button>
                 </Link>
                 <Link to="/forum/">
@@ -567,7 +564,7 @@ const Home = () => {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className="flex items-center gap-2 px-5 py-2.5 border-2 border-[#6d2842] text-[#6d2842] dark:text-[#e8a0b4] text-sm font-semibold rounded-xl hover:bg-[#6d2842] hover:text-white transition-all">
-                    Ask a Question
+                    {t("home.community.actions.askQuestion")}
                   </motion.button>
                 </Link>
               </div>
@@ -577,22 +574,21 @@ const Home = () => {
             <div className="lg:col-span-3 space-y-3">
               <div className="flex items-center justify-between mb-1">
                 <p className="text-sm font-semibold text-[#2d2a27] dark:text-[#f0ece8]">
-                  Recent Questions
+                  {t("home.community.recentQuestions")}
                 </p>
                 <Link
                   to="/forum"
                   className="text-xs text-[#6d2842] dark:text-[#e8a0b4] font-semibold hover:underline flex items-center gap-1">
-                  See all <ChevronRight size={13} />
+                  {t("home.community.seeAll")} <ChevronRight size={13} />
                 </Link>
               </div>
 
               {recentQuestions.length > 0
-                ? recentQuestions.map((q) => <QACard key={q.id} question={q} />)
+                ? recentQuestions.map((q) => <QACard key={q.id} locale={locale} question={q} />)
                 : /* empty placeholder cards */
                   [
                     {
-                      title:
-                        "What drill bit do I use to go through ceramic tile without cracking it?",
+                      title: t("home.community.placeholder.one.title"),
                       tags: ["drill", "tile", "ceramic"],
                       upvotes: 12,
                       answerCount: 5,
@@ -600,8 +596,7 @@ const Home = () => {
                       solved: true,
                     },
                     {
-                      title:
-                        "Best way to fix a leaking copper pipe joint without soldering?",
+                      title: t("home.community.placeholder.two.title"),
                       tags: ["plumbing", "copper", "leak"],
                       upvotes: 8,
                       answerCount: 3,
@@ -609,8 +604,7 @@ const Home = () => {
                       solved: false,
                     },
                     {
-                      title:
-                        "Which angle grinder disc for cutting through rebar?",
+                      title: t("home.community.placeholder.three.title"),
                       tags: ["grinder", "rebar", "cutting"],
                       upvotes: 6,
                       answerCount: 7,
@@ -618,8 +612,7 @@ const Home = () => {
                       solved: true,
                     },
                     {
-                      title:
-                        "How do I waterproof a concrete floor before tiling?",
+                      title: t("home.community.placeholder.four.title"),
                       tags: ["concrete", "waterproof", "tiling"],
                       upvotes: 4,
                       answerCount: 2,
@@ -634,7 +627,10 @@ const Home = () => {
                         id: i,
                         createdAt: new Date().toISOString(),
                         body: "",
+                        answerLabel: t("home.community.meta.answers"),
+                        viewsLabel: t("home.community.meta.views"),
                       }}
+                      locale={locale}
                     />
                   ))}
             </div>
@@ -647,10 +643,10 @@ const Home = () => {
         <div className="container-custom">
           <div className="text-center mb-12">
             <span className="text-xs font-bold tracking-[0.18em] uppercase text-[#6d2842] dark:text-[#e8a0b4]">
-              Why My-Tools
+              {t("home.why.eyebrow")}
             </span>
             <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold text-[#2d2a27] dark:text-[#fafaf9]">
-              Built for the trades. Not for everyone.
+              {t("home.why.title")}
             </h2>
           </div>
 
@@ -658,20 +654,20 @@ const Home = () => {
             {[
               {
                 icon: ShieldCheck,
-                title: "Secure Transactions",
-                desc: "Every sale and rental is protected. Payments held until delivery confirmed.",
+                title: t("home.why.cards.secure.title"),
+                desc: t("home.why.cards.secure.desc"),
                 color: "from-[#6d2842] to-[#a64d6d]",
               },
               {
                 icon: Award,
-                title: "Verified Craftsmen",
-                desc: "StoreOwner badges are earned, not bought. Real reviews from real jobs.",
+                title: t("home.why.cards.verified.title"),
+                desc: t("home.why.cards.verified.desc"),
                 color: "from-[#508978] to-[#70a596]",
               },
               {
                 icon: Zap,
-                title: "Event-Driven Updates",
-                desc: "Cart changes, new answers, order updates — get notified as they happen.",
+                title: t("home.why.cards.updates.title"),
+                desc: t("home.why.cards.updates.desc"),
                 color: "from-[#b8862f] to-[#d4a343]",
               },
             ].map(({ icon: Icon, title, desc, color }, i) => (
@@ -710,11 +706,10 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-              Ready to get to work?
+              {t("home.cta.title")}
             </h2>
             <p className="text-lg text-white/80 max-w-xl mx-auto mb-10">
-              Join thousands of professionals buying, selling, and helping each
-              other on My-Tools.
+              {t("home.cta.description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/signup">
@@ -722,7 +717,7 @@ const Home = () => {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   className="px-8 py-3.5 bg-white text-[#6d2842] hover:bg-[#fafaf9] font-semibold rounded-xl shadow-xl transition-all min-w-[180px]">
-                  Get Started Free
+                  {t("home.cta.actions.getStarted")}
                 </motion.button>
               </Link>
               <Link to="/forum">
@@ -730,7 +725,7 @@ const Home = () => {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   className="px-8 py-3.5 border-2 border-white text-white hover:bg-white hover:text-[#6d2842] font-semibold rounded-xl transition-all min-w-[180px]">
-                  Browse the Forum
+                  {t("home.cta.actions.browseForum")}
                 </motion.button>
               </Link>
             </div>
