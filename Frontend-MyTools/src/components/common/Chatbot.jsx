@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { X, Send, Sparkles, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { chatService } from '../../services/chatService';
 
 const Chatbot = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -48,7 +50,7 @@ const Chatbot = () => {
       setMessages([
         {
           type: 'bot',
-          text: "Bonjour 👋 ! Je suis votre assistant pour découvrir des événements. Comment puis-je vous aider ?",
+          text: t('chatbot.fallbackGreeting'),
           events: [],
           timestamp: new Date()
         }
@@ -102,7 +104,7 @@ const Chatbot = () => {
         ...prev,
         {
           type: 'bot',
-          text: "Désolé, je n'ai pas pu traiter votre message. Pouvez-vous réessayer ?",
+          text: t('chatbot.fallbackError'),
           events: [],
           timestamp: new Date()
         }
@@ -153,8 +155,8 @@ const Chatbot = () => {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold">Assistant My-Tools</h3>
-                  <p className="text-xs opacity-90">Découvrez des événements</p>
+                  <h3 className="font-bold">{t('chatbot.title')}</h3>
+                  <p className="text-xs opacity-90">{t('chatbot.subtitle')}</p>
                 </div>
               </div>
               <button
@@ -209,7 +211,7 @@ const Chatbot = () => {
                             </div>
                             {event.is_free ? (
                               <div className="mt-2 text-xs font-semibold text-green-600 dark:text-green-400">
-                                ✨ Gratuit
+                                ✨ {t('chatbot.free')}
                               </div>
                             ) : (
                               <div className="mt-2 text-xs font-semibold text-purple-600 dark:text-purple-400">
@@ -217,7 +219,7 @@ const Chatbot = () => {
                               </div>
                             )}
                             <div className="mt-2 text-xs text-center text-purple-600 dark:text-purple-400 font-medium">
-                              Cliquez pour voir les détails →
+                              {t('chatbot.viewDetails')}
                             </div>
                           </motion.div>
                         ))}
@@ -233,7 +235,7 @@ const Chatbot = () => {
                   <div className="bg-white dark:bg-[#2d2a27] border border-[#e8e7e5] dark:border-[#4a4642] rounded-2xl p-3 flex items-center gap-2">
                     <Loader className="w-4 h-4 animate-spin text-purple-600" />
                     <span className="text-sm text-[#5d5955] dark:text-[#c4bfb9]">
-                      En train d'écrire...
+                      {t('chatbot.typing')}
                     </span>
                   </div>
                 </div>
@@ -249,7 +251,7 @@ const Chatbot = () => {
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Tapez votre message..."
+                  placeholder={t('chatbot.placeholder')}
                   disabled={isTyping}
                   className="flex-1 px-4 py-2 bg-[#f5f5f3] dark:bg-[#1a1816] border border-[#e8e7e5] dark:border-[#4a4642] rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-[#2d2a27] dark:text-[#fafaf9] text-sm disabled:opacity-50"
                 />

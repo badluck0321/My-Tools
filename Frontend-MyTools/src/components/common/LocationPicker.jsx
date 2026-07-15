@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { MapPin, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
@@ -15,6 +16,7 @@ const LocationPicker = ({
   country = '',
   onChange 
 }) => {
+  const { t } = useTranslation();
   const [viewport, setViewport] = useState({
     latitude: latitude || 36.8065,  // Default to Tunisia
     longitude: longitude || 10.1815,
@@ -38,7 +40,7 @@ const LocationPicker = ({
       accessToken: MAPBOX_TOKEN,
       mapboxgl: mapRef.current.getMap(),
       marker: false,
-      placeholder: 'Search for a location...',
+      placeholder: t('location.searchPlaceholder'),
       proximity: {
         longitude: viewport.longitude,
         latitude: viewport.latitude
@@ -130,7 +132,7 @@ const LocationPicker = ({
               location_city: extractedCity,
               location_country: extractedCountry
             };
-            console.log('📍 LocationPicker: Sending location data:', locationData);
+        console.log('📍 LocationPicker: Sending location data:', locationData);
             onChange(locationData);
           }
         }
@@ -189,7 +191,7 @@ const LocationPicker = ({
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-[#2d2a27] px-4 py-2 rounded-lg shadow-lg border border-[#e8e7e5] dark:border-[#4a4642]">
             <p className="text-sm text-[#5d5955] dark:text-[#c4bfb9] flex items-center gap-2">
               <Search className="w-4 h-4" />
-              Search for a location or click on the map
+              {t('location.instructions')}
             </p>
           </div>
         )}
@@ -202,13 +204,13 @@ const LocationPicker = ({
             <MapPin className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343] flex-shrink-0 mt-1" />
             <div>
               <p className="font-semibold text-[#2d2a27] dark:text-[#fafaf9] mb-1">
-                Selected Location
+                {t('location.selectedLocation')}
               </p>
               <p className="text-sm text-[#5d5955] dark:text-[#c4bfb9]">
                 {locationName || `${city}, ${country}`}
               </p>
               <p className="text-xs text-[#9b9791] dark:text-[#6d6762] mt-1">
-                Coordinates: {marker.latitude.toFixed(6)}, {marker.longitude.toFixed(6)}
+                {t('location.coordinates')}: {marker.latitude.toFixed(6)}, {marker.longitude.toFixed(6)}
               </p>
             </div>
           </div>

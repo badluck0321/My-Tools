@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, Check, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { formatPrice, getImageUrl } from "../../utils/helpers";
 import { useKeycloak } from "../../providers/KeycloakProvider";
 import { cartService } from "../../services/cartService";
@@ -11,6 +12,7 @@ import { LOOKUP_TYPES, lookupLabel } from "../../utils/lookupUtils";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { authenticated, login } = useKeycloak();
   const { lookups } = useLookups();
   const [cartStatus, setCartStatus] = useState("idle");
@@ -71,13 +73,13 @@ const ProductCard = ({ product }) => {
     lookups,
     LOOKUP_TYPES.CATEGORY,
     product.categoryId,
-    "Uncategorized"
+    t("common.uncategorized")
   );
   const mark = lookupLabel(
     lookups,
     LOOKUP_TYPES.MARK,
     product.markId,
-    "No mark"
+    t("common.noMark")
   );
   const currency = product.currencyId || "MAD";
 
@@ -104,10 +106,10 @@ const ProductCard = ({ product }) => {
             disabled={favLoading}
             title={
               !authenticated
-                ? "Sign in to save"
+                ? t("common.signInToSave")
                 : isFavorited
-                ? "Remove from favorites"
-                : "Add to favorites"
+                ? t("common.removeFromFavorites")
+                : t("common.addToFavorites")
             }
             className={`absolute top-4 left-4 p-2 rounded-full backdrop-blur-md transition-all duration-300 disabled:opacity-60 ${
               isFavorited
@@ -130,10 +132,10 @@ const ProductCard = ({ product }) => {
             whileTap={{ scale: 0.9 }}
             title={
               !authenticated
-                ? "Sign in to add to cart"
+                ? t("common.signInToAddToCart")
                 : cartStatus === "added"
-                ? "Added!"
-                : "Add to cart"
+                ? t("common.addedToCart")
+                : t("common.addToCart")
             }
             className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
               cartStatus === "added"

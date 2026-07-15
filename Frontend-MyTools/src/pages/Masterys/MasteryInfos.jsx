@@ -15,7 +15,8 @@ import {
 } from "lucide-react";
 
 import { Loading } from "../../components/common";
-import { masteryService } from "../../services/masteryService";
+import { useTranslation } from "react-i18next";
+import { masteryService } from "../../services/MasteryService";
 import BookingCalendar from "../../components/booking/BookingCalendar";
 import { favoriteService } from "../../services/favoriteService";
 import { useKeycloak } from "../../providers/KeycloakProvider";
@@ -24,12 +25,12 @@ import { LOOKUP_TYPES, lookupLabel } from "../../utils/lookupUtils";
 import ContactButton from "../../components/common/ContactButton"; // Import the ContactButton component
 
 /* ─── PhotoImage: Renders a single photo using the full URL ── */
-const PhotoImage = ({ photoUrl, alt, className }) => {
+const PhotoImage = ({ photoUrl, alt, className, emptyLabel }) => {
   if (!photoUrl) {
     return (
       <div
         className={`${className} bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580] text-sm`}>
-        No image available
+        {emptyLabel}
       </div>
     );
   }
@@ -50,7 +51,7 @@ const PhotoImage = ({ photoUrl, alt, className }) => {
 };
 
 /* ─── Image Gallery ───────────────────────────────── */
-const Gallery = ({ photoUrls }) => {
+const Gallery = ({ photoUrls, photoEmptyLabel, galleryEmptyLabel }) => {
   const [current, setCurrent] = useState(0);
   const total = photoUrls ? photoUrls.length : 0; // Safety check for null/undefined
 
@@ -58,7 +59,7 @@ const Gallery = ({ photoUrls }) => {
   if (total === 0) {
     return (
       <div className="relative overflow-hidden rounded-2xl bg-[#f0eeeb] dark:bg-[#2d2a27] aspect-[4/3] flex items-center justify-center text-[#8a8580]">
-        No images available
+        {galleryEmptyLabel}
       </div>
     );
   }
@@ -82,6 +83,7 @@ const Gallery = ({ photoUrls }) => {
               photoUrl={photoUrls[current]}
               alt={`Photo ${current + 1}`}
               className="w-full h-full object-cover"
+              emptyLabel={photoEmptyLabel}
             />
           </motion.div>
         </AnimatePresence>
@@ -125,6 +127,7 @@ const Gallery = ({ photoUrls }) => {
                 photoUrl={url}
                 alt={`Thumb ${i + 1}`}
                 className="w-full h-full object-cover"
+                emptyLabel={photoEmptyLabel}
               />
             </button>
           ))}
@@ -170,6 +173,7 @@ const InfoRow = ({ label, value }) => (
 const MasteryInfos = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [mastery, setMastery] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -185,7 +189,7 @@ const MasteryInfos = () => {
       .getMasteryById(id)
       .then(setMastery)
       .catch((err) =>
-        setError(err?.message ?? "Failed to load mastery information")
+        setError(err?.message ?? t("masteryInfo.failedToLoad"))
       )
       .finally(() => setLoading(false));
   }, [id]);
@@ -213,7 +217,7 @@ const MasteryInfos = () => {
     }
   };
 
-  if (loading) return <Loading text="Loading mastery..." />;
+  if (loading) return <Loading text={t("masteryInfo.loading")} />;
 
   if (error) {
     return (
@@ -222,7 +226,7 @@ const MasteryInfos = () => {
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-sm underline">
-          <ArrowLeft size={16} /> Go Back
+          <ArrowLeft size={16} /> {t("common.goBack")}
         </button>
       </div>
     );
@@ -260,7 +264,7 @@ const MasteryInfos = () => {
             size={16}
             className="group-hover:-translate-x-1 transition-transform"
           />
-          Back to Masteries
+          {t("masteryInfo.backToMasteries")}
         </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -268,7 +272,11 @@ const MasteryInfos = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}>
-            <Gallery photoUrls={mastery.photoUrls || []} />
+            <Gallery
+              photoUrls={mastery.photoUrls || []}
+              photoEmptyLabel={t("masteryInfo.noImageAvailable")}
+              galleryEmptyLabel={t("masteryInfo.noImagesAvailable")}
+            />
           </motion.div>
 
           {/* Right Side Content */}
@@ -299,17 +307,17 @@ const MasteryInfos = () => {
             </div>
             {/* Description */}
             <div className="glass dark:glass-dark rounded-2xl p-5">
-              <h3 className="font-semibold text-lg mb-3">About this Mastery</h3>
+              <h3 className="font-semibold text-lg mb-3">{t("masteryInfo.about")}</h3>
               <p className="text-[#5d5955] dark:text-[#c4bfb9] leading-relaxed">
                 {mastery.description}
               </p>
             </div>
             {/* Master Information */}
             <div className="glass dark:glass-dark rounded-2xl p-5">
-              <h3 className="font-semibold text-lg mb-4">Master Information</h3>
+              <h3 className="font-semibold text-lg mb-4">{t("masteryInfo.masterInformation")}</h3>
               <div className="flex justify-between items-center py-3 border-b border-[#e8e7e5] dark:border-[#3a3633] last:border-0">
                 <span className="text-sm text-[#8a8580] dark:text-[#7a756f]">
-                  Master
+                  {t("masteryInfo.master")}
                 </span>
                 <button
                   type="button"
@@ -320,35 +328,32 @@ const MasteryInfos = () => {
                   {mastery.masterName}
                 </button>
               </div>
-              <InfoRow label="Master ID" value={mastery.masterId} />
-              <InfoRow label="Phone" value={mastery.masterPhone} />
-              <InfoRow label="City" value={mastery.city} />
+              <InfoRow label={t("masteryInfo.masterId")} value={mastery.masterId} />
+              <InfoRow label={t("masteryInfo.phone")} value={mastery.masterPhone} />
+              <InfoRow label={t("masteryInfo.city")} value={mastery.city} />
               <InfoRow
-                label="Experience"
-                value={`${mastery.experienceYears} Years`}
+                label={t("masteryInfo.experience")}
+                value={`${mastery.experienceYears} ${t("masteryInfo.years")}`}
               />
-              <InfoRow label="Pricing Type" value={pricingLabel} />
-              <InfoRow label="Status" value={statusLabel} />
+              <InfoRow label={t("masteryInfo.pricingType")} value={pricingLabel} />
+              <InfoRow label={t("masteryInfo.status")} value={statusLabel} />
             </div>
             {/* Highlights */}
             <div className="grid grid-cols-2 gap-4">
               <div className="glass dark:glass-dark rounded-xl p-4 text-center">
                 <Award size={22} className="mx-auto mb-2 text-[#6d2842]" />
                 <p className="text-lg font-bold">{mastery.experienceYears}</p>
-                <p className="text-xs text-[#8a8580]">Years Experience</p>
+                <p className="text-xs text-[#8a8580]">{t("masteryInfo.yearsExperience")}</p>
               </div>
               <div className="glass dark:glass-dark rounded-xl p-4 text-center">
                 <MapPin size={22} className="mx-auto mb-2 text-[#6d2842]" />
                 <p className="text-lg font-bold">{mastery.city}</p>
-                <p className="text-xs text-[#8a8580]">Service Location</p>
+                <p className="text-xs text-[#8a8580]">{t("masteryInfo.serviceLocation")}</p>
               </div>
             </div>
-            <BookingCalendar
-              resourceType="MASTERY"
-              resourceId={mastery.id}
-              title="Mastery booking calendar"
-              quantityEnabled={false}
-            />
+
+            <BookingCalendar resourceType="MASTERY" resourceId={mastery.id} title={t("masteryInfo.bookingCalendar")} quantityEnabled={false} />
+
             {/* Actions */}
 
             <ContactButton
@@ -360,7 +365,7 @@ const MasteryInfos = () => {
               <a
                 href={`tel:${mastery.masterPhone}`}
                 className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20">
-                <Phone size={18} /> Contact Master
+                <Phone size={18} /> {t("masteryInfo.contactMaster")}
               </a>
               <button
                 onClick={handleToggleFavorite}

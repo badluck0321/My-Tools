@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, CheckCircle2, AlertCircle, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ELEGANT_STYLES } from '../../utils/elegantTheme';
 
 const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -81,7 +83,7 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
     const otpCode = otp.join('');
     
     if (otpCode.length !== 6) {
-      setError('Please enter all 6 digits');
+      setError(t('otp.enterAllDigits'));
       return;
     }
 
@@ -97,12 +99,12 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
           onClose();
         }, 1500);
       } else {
-        setError(result.error || 'Invalid verification code');
+        setError(result.error || t('otp.invalidCode'));
         setOtp(['', '', '', '', '', '']);
         inputRefs.current[0]?.focus();
       }
     } catch (err) {
-      setError('Verification failed. Please try again.');
+      setError(t('otp.verificationFailed'));
       setOtp(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } finally {
@@ -122,7 +124,7 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
       setOtp(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } catch (err) {
-      setError('Failed to resend code. Please try again.');
+      setError(t('otp.resendFailed'));
     } finally {
       setLoading(false);
     }
@@ -178,10 +180,10 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
                     <CheckCircle2 className="w-10 h-10 text-white" />
                   </motion.div>
                   <h3 className="text-2xl font-bold text-[#2d2a27] dark:text-[#fafaf9] mb-2">
-                    Verified Successfully!
+                    {t('otp.verifiedTitle')}
                   </h3>
                   <p className="text-[#7c7771] dark:text-[#a9a5a0]">
-                    Your account has been activated
+                    {t('otp.verifiedDescription')}
                   </p>
                 </motion.div>
               ) : (
@@ -195,11 +197,12 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
 
                   {/* Title */}
                   <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] dark:from-[#c47795] dark:via-[#e1bc5d] dark:to-[#d4a343] bg-clip-text text-transparent">
-                    Verify Your Email
+                    {t('otp.title')}
                   </h2>
                   
                   <p className="text-center text-[#7c7771] dark:text-[#a9a5a0] mb-8">
-                    Enter the 6-digit code sent to<br />
+                    {t('otp.subtitle')}
+                    <br />
                     <span className="font-semibold text-[#8b3654] dark:text-[#d4a343]">{email}</span>
                   </p>
 
@@ -255,12 +258,12 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
                           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                           className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                         />
-                        <span>Verifying...</span>
+                        <span>{t('otp.verifying')}</span>
                       </>
                     ) : (
                       <>
                         <CheckCircle2 className="w-5 h-5" />
-                        <span>Verify Code</span>
+                        <span>{t('otp.verifyCode')}</span>
                       </>
                     )}
                   </motion.button>
@@ -268,7 +271,7 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
                   {/* Resend Code */}
                   <div className="mt-6 text-center">
                     <p className="text-sm text-[#7c7771] dark:text-[#a9a5a0] mb-2">
-                      Didn't receive the code?
+                      {t('otp.didntReceive')}
                     </p>
                     <button
                       onClick={handleResend}
@@ -276,7 +279,7 @@ const OTPModal = ({ isOpen, onClose, email, onVerify, onResend }) => {
                       className="text-sm font-semibold text-[#8b3654] dark:text-[#d4a343] hover:text-[#6d2842] dark:hover:text-[#e1bc5d] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 mx-auto"
                     >
                       <RotateCcw className="w-4 h-4" />
-                      {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
+                      {resendCooldown > 0 ? t('otp.resendIn', { seconds: resendCooldown }) : t('otp.resendCode')}
                     </button>
                   </div>
                 </>

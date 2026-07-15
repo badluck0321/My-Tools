@@ -30,9 +30,9 @@ const ProductsIndex = () => {
     setLoading(true);
     productService.getProducts()
       .then((data) => setProducts(Array.isArray(data) ? data : []))
-      .catch((err) => setError(err?.response?.data || 'Unable to load products.'))
+      .catch((err) => setError(err?.response?.data || t('productsPage.unableToLoad')))
       .finally(() => setLoading(false));
-  }, []);
+  }, [t]);
 
   const filteredProducts = useMemo(() => {
     const lower = searchTerm.trim().toLowerCase();
@@ -62,7 +62,7 @@ const ProductsIndex = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6"><span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">{t('nav.products')}</span></h1>
-          <p className="text-lg text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">Browse professional tools with dynamic lookup filters and readable values.</p>
+          <p className="text-lg text-[#5d5955] dark:text-[#c4bfb9] max-w-2xl mx-auto">{t('productsPage.subtitle')}</p>
         </div>
 
         <FilterBar
@@ -81,9 +81,15 @@ const ProductsIndex = () => {
           onAvailabilityChange={setAvailability}
         />
 
-        <div className="mb-6 text-sm text-[#5d5955] dark:text-[#c4bfb9]">Showing {Math.min(visibleCount, filteredProducts.length)} of {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}</div>
+        <div className="mb-6 text-sm text-[#5d5955] dark:text-[#c4bfb9]">
+          {t('productsPage.showing', {
+            visible: Math.min(visibleCount, filteredProducts.length),
+            total: filteredProducts.length,
+            itemLabel: t('nav.products').toLowerCase(),
+          })}
+        </div>
 
-        {loading ? <Loading text={t('common.loading')} /> : error ? <div className="rounded-2xl bg-red-50 text-red-700 p-4">{error}</div> : filteredProducts.length === 0 ? <div className="text-center py-20 text-[#8a8580] dark:text-[#7a756f]">No products found.</div> : (
+        {loading ? <Loading text={t('common.loading')} /> : error ? <div className="rounded-2xl bg-red-50 text-red-700 p-4">{error}</div> : filteredProducts.length === 0 ? <div className="text-center py-20 text-[#8a8580] dark:text-[#7a756f]">{t('productsPage.empty')}</div> : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.slice(0, visibleCount).map((product) => <ProductCard key={product.id} product={product} />)}

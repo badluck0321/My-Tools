@@ -15,6 +15,7 @@ import {
   Share2,
 } from "lucide-react";
 import { Loading } from "../../components/common";
+import { useTranslation } from "react-i18next";
 import { productService } from "../../services/productService";
 import { storeService } from "../../services/storeService";
 import { useKeycloak } from "../../providers/KeycloakProvider"; // adjust path
@@ -53,7 +54,7 @@ const PhotoImage = ({ photoUrls, alt, className }) => {
     return (
       <div
         className={`${className} bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580] text-sm`}>
-        Loading…
+        {t("common.loading")}
       </div>
     );
 
@@ -168,6 +169,7 @@ const InfoRow = ({ label, value }) => (
 const ProductInfos = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -196,7 +198,7 @@ const ProductInfos = () => {
     const listingType = Number(product.listedForId) === 1 ? "RENT" : "SALE";
     if (listingType === "RENT" && (!startDate || !endDate)) {
       setCartStatus("error");
-      setCartError("Please select rental start and end dates.");
+      setCartError(t("productInfo.selectRentalDates"));
       setTimeout(() => setCartStatus("idle"), 2000);
       return;
     }
@@ -214,7 +216,7 @@ const ProductInfos = () => {
       setCartStatus("added");
       setTimeout(() => setCartStatus("idle"), 2000);
     } catch (err) {
-      setCartError(err?.response?.data || "Could not add product to cart");
+      setCartError(err?.response?.data || t("productInfo.couldNotAdd"));
       setCartStatus("error");
       setTimeout(() => setCartStatus("idle"), 2000);
     }
@@ -225,7 +227,7 @@ const ProductInfos = () => {
       .getProductById(id)
       .then(setProduct)
 
-      .catch((err) => setError(err?.message ?? "Failed to load product"))
+      .catch((err) => setError(err?.message ?? t("productInfo.failedToLoad")))
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -266,7 +268,7 @@ const ProductInfos = () => {
       .finally(() => setStoreLoading(false));
   }, [product]);
 
-  if (loading) return <Loading text="Loading product..." />;
+  if (loading) return <Loading text={t("productInfo.loading")} />;
 
   if (error)
     return (
@@ -275,7 +277,7 @@ const ProductInfos = () => {
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-sm underline">
-          <ArrowLeft size={16} /> Go back
+          <ArrowLeft size={16} /> {t("common.goBack")}
         </button>
       </div>
     );
@@ -319,7 +321,7 @@ const ProductInfos = () => {
             size={16}
             className="group-hover:-translate-x-1 transition-transform"
           />
-          Back to Products
+          {t("productInfo.backToProducts")}
         </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -332,7 +334,7 @@ const ProductInfos = () => {
               <Gallery photoUrls={product.photoUrls} />
             ) : (
               <div className="aspect-[4/3] rounded-2xl bg-[#f0eeeb] dark:bg-[#2d2a27] flex items-center justify-center text-[#8a8580]">
-                No image available
+                {t("productInfo.noImageAvailable")}
               </div>
             )}
           </motion.div>
@@ -348,11 +350,11 @@ const ProductInfos = () => {
               <Badge color={product.isavailable ? "green" : "red"}>
                 {product.isavailable ? (
                   <>
-                    <CheckCircle size={12} /> Available
+                    <CheckCircle size={12} /> {t("productInfo.available")}
                   </>
                 ) : (
                   <>
-                    <XCircle size={12} /> Unavailable
+                    <XCircle size={12} /> {t("productInfo.unavailable")}
                   </>
                 )}
               </Badge>
@@ -361,7 +363,7 @@ const ProductInfos = () => {
               </Badge>
               {product.duration > 0 && (
                 <Badge>
-                  <Clock size={12} /> {product.duration} months
+                  <Clock size={12} /> {product.duration} {t("productInfo.months")}
                 </Badge>
               )}
             </div>
@@ -385,16 +387,16 @@ const ProductInfos = () => {
 
             {/* Details table */}
             <div className="glass dark:glass-dark rounded-2xl px-5 py-1">
-              <InfoRow label="Serie No." value={`#${product.serieNum}`} />
-              <InfoRow label="Category" value={categoryLabel} />
-              <InfoRow label="Mark" value={markLabel} />
-              <InfoRow label="Condition" value={conditionLabel} />
+              <InfoRow label={t("productInfo.serieNo")} value={`#${product.serieNum}`} />
+              <InfoRow label={t("productInfo.category")} value={categoryLabel} />
+              <InfoRow label={t("productInfo.mark")} value={markLabel} />
+              <InfoRow label={t("productInfo.condition")} value={conditionLabel} />
               {product.ownerId && (
                 <InfoRow
-                  label="Store"
+                  label={t("productInfo.store")}
                   value={
                     storeLoading ? (
-                      "Loading store..."
+                      t("productInfo.loadingStore")
                     ) : store ? (
                       <button
                         type="button"
@@ -411,8 +413,8 @@ const ProductInfos = () => {
                 />
               )}
               <InfoRow
-                label="Photos"
-                value={`${product.photoUrls?.length ?? 0} image${
+                label={t("productInfo.photos")}
+                value={`${product.photoUrls?.length ?? 0} ${t("productInfo.image")}${
                   product.photoUrls?.length !== 1 ? "s" : ""
                 }`}
               />
@@ -422,7 +424,7 @@ const ProductInfos = () => {
             {/* <div className="glass dark:glass-dark rounded-2xl p-5 space-y-4">
               <div className="flex items-center gap-3">
                 <label className="text-sm font-semibold text-[#5d5955] dark:text-[#c4bfb9]">
-                  Quantity
+                  {t("productInfo.quantity")}
                 </label>
                 <input
                   type="number"
@@ -437,7 +439,7 @@ const ProductInfos = () => {
               {Number(product.listedForId) === 1 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="text-sm text-[#5d5955] dark:text-[#c4bfb9]">
-                    Start date
+                    {t("productInfo.startDate")}
                     <input
                       type="date"
                       value={startDate}
@@ -446,7 +448,7 @@ const ProductInfos = () => {
                     />
                   </label>
                   <label className="text-sm text-[#5d5955] dark:text-[#c4bfb9]">
-                    End date
+                    {t("productInfo.endDate")}
                     <input
                       type="date"
                       value={endDate}
@@ -467,7 +469,7 @@ const ProductInfos = () => {
               <BookingCalendar
                 resourceType="PRODUCT"
                 resourceId={product.id}
-                title="Product booking calendar"
+                title={t("productInfo.bookingCalendar")}
               />
             )}
 
@@ -483,10 +485,10 @@ const ProductInfos = () => {
                 className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20">
                 <ShoppingCart size={18} />
                 {cartStatus === "added"
-                  ? "Added!"
+                  ? t("common.addedToCart")
                   : Number(product.listedForId) === 1
-                  ? "Rent Now"
-                  : "Add to Cart"}
+                  ? t("productInfo.rentNow")
+                  : t("common.addToCart")}
               </button>
 
               <button

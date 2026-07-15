@@ -6,6 +6,13 @@ import en from "./locales/en/translation.json";
 import fr from "./locales/fr/translation.json";
 import ar from "./locales/ar/translation.json";
 
+const syncDocumentLanguage = (language) => {
+  if (typeof document === "undefined") return;
+  const normalized = (language || "en").split("-")[0];
+  document.documentElement.lang = normalized;
+  document.documentElement.dir = normalized === "ar" ? "rtl" : "ltr";
+};
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -28,5 +35,8 @@ i18n
       escapeValue: false,
     },
   });
+
+i18n.on("languageChanged", syncDocumentLanguage);
+syncDocumentLanguage(i18n.language);
 
 export default i18n;

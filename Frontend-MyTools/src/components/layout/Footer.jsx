@@ -20,19 +20,19 @@ const Footer = () => {
       { name: t("nav.products"), path: "/Products" },
       { name: t("nav.masterys"), path: "/Masterys" },
       { name: t("nav.stores"), path: "/stores" },
-      { name: "Categories", path: "/categories" },
+      { name: t("footer.categories"), path: "/categories" },
     ],
     company: [
       { name: t("about.title"), path: "/about" },
-      { name: "Contact", path: "/contact" },
-      { name: "Careers", path: "/careers" },
-      { name: "Blog", path: "/blog" },
+      { name: t("footer.contact"), path: "/contact" },
+      { name: t("footer.careers"), path: "/careers" },
+      { name: t("footer.blog"), path: "/blog" },
     ],
     legal: [
-      { name: "Privacy Policy", path: "/privacy" },
-      { name: "Terms of Service", path: "/terms" },
-      { name: "Cookie Policy", path: "/cookies" },
-      { name: "Refund Policy", path: "/refund" },
+      { name: t("footer.privacyPolicy"), path: "/privacy" },
+      { name: t("footer.termsOfService"), path: "/terms" },
+      { name: t("footer.cookiePolicy"), path: "/cookies" },
+      { name: t("footer.refundPolicy"), path: "/refund" },
     ],
   };
 
@@ -56,9 +56,9 @@ const Footer = () => {
             </Link>
             <p className="text-[#5d5955] dark:text-[#c4bfb9] mb-6 max-w-md">{t("footer.description")}</p>
             <div className="space-y-3">
-              <div className="flex items-center gap-3"><Mail className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">contact@my-tools.demo</span></div>
-              <div className="flex items-center gap-3"><Phone className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">+212 600 000 000</span></div>
-              <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">Rabat, Morocco</span></div>
+              <div className="flex items-center gap-3"><Mail className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">{t("footer.contactEmail")}</span></div>
+              <div className="flex items-center gap-3"><Phone className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">{t("footer.phone")}</span></div>
+              <div className="flex items-center gap-3"><MapPin className="w-5 h-5 text-[#6d2842] dark:text-[#d4a343]" /><span className="text-[#5d5955] dark:text-[#c4bfb9]">{t("footer.location")}</span></div>
             </div>
           </div>
 
