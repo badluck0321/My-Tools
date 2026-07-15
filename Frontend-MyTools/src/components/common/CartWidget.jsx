@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ShoppingCart, X, Trash2, Plus, Minus,
   ChevronRight, ShoppingBag, Package,
@@ -21,6 +22,7 @@ const cartService = {
 const CartWidget = () => {
   const { authenticated } = useKeycloak();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [cart, setCart] = useState(null);
@@ -103,7 +105,7 @@ const CartWidget = () => {
             <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#6d2842] to-[#a64d6d]">
               <div className="flex items-center gap-2">
                 <ShoppingCart size={18} className="text-white" />
-                <span className="text-white font-bold text-sm">My Cart</span>
+                <span className="text-white font-bold text-sm">{t('cart.title')}</span>
                 {itemCount > 0 && (
                   <span className="bg-white/20 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
                     {itemCount}
@@ -116,7 +118,7 @@ const CartWidget = () => {
                     onClick={handleClear}
                     className="text-white/70 hover:text-white text-xs transition-colors"
                   >
-                    Clear all
+                    {t('cart.clearAll')}
                   </button>
                 )}
                 <button
@@ -140,13 +142,13 @@ const CartWidget = () => {
                     <ShoppingBag size={22} className="text-[#c4bfb9]" />
                   </div>
                   <p className="text-sm text-[#8a8580] dark:text-[#7a756f]">
-                    Your cart is empty
+                    {t('cart.empty')}
                   </p>
                   <button
                     onClick={() => { setOpen(false); navigate('/Products'); }}
                     className="text-xs text-[#6d2842] dark:text-[#e8a0b4] underline underline-offset-4 hover:opacity-75 transition"
                   >
-                    Browse products
+                    {t('cart.browseProducts')}
                   </button>
                 </div>
               ) : (
@@ -173,7 +175,7 @@ const CartWidget = () => {
                           <p className="text-xs text-[#8a8580] dark:text-[#7a756f]">
                             ${item.price.toFixed(2)}
                             {item.listingType === 'RENT' && (
-                              <span className="ml-1 text-[#6d2842] dark:text-[#e8a0b4]">· Rent</span>
+                              <span className="ml-1 text-[#6d2842] dark:text-[#e8a0b4]">· {t('common.rent')}</span>
                             )}
                           </p>
                         </div>
@@ -205,7 +207,7 @@ const CartWidget = () => {
             {itemCount > 0 && (
               <div className="px-5 py-4 border-t border-[#e8e7e5] dark:border-[#4a4642] space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-[#8a8580] dark:text-[#7a756f]">Total</span>
+                  <span className="text-sm text-[#8a8580] dark:text-[#7a756f]">{t('cart.total')}</span>
                   <span className="text-base font-bold bg-gradient-to-r from-[#6d2842] to-[#a64d6d] bg-clip-text text-transparent">
                     ${total.toFixed(2)}
                   </span>
@@ -214,7 +216,7 @@ const CartWidget = () => {
                   onClick={handleCheckout}
                   className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white font-semibold py-2.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20 text-sm"
                 >
-                  Checkout
+                  {t('cart.checkout')}
                   <ChevronRight size={15} />
                 </button>
               </div>

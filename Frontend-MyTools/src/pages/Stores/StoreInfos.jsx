@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { Loading } from "../../components/common";
+import { useTranslation } from "react-i18next";
 import { storeService } from "../../services/storeService";
 import { productService } from "../../services/productService";
 import ProductCard from "../../components/common/ProductCard";
@@ -17,6 +18,7 @@ import ProductCard from "../../components/common/ProductCard";
 const StoreInfos = () => {
   const { ownerId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [store, setStore] = useState(null);
   const [products, setProducts] = useState([]);
   const [loadingStore, setLoadingStore] = useState(true);
@@ -31,10 +33,10 @@ const StoreInfos = () => {
       .then(setStore)
       .catch((err) => {
         console.error(err);
-        setError("Store not found.");
+        setError(t("storeInfo.notFound"));
       })
       .finally(() => setLoadingStore(false));
-  }, [ownerId]);
+  }, [ownerId, t]);
 
   useEffect(() => {
     if (!ownerId) return;
@@ -49,7 +51,7 @@ const StoreInfos = () => {
       .finally(() => setLoadingProducts(false));
   }, [ownerId]);
 
-  if (loadingStore) return <Loading text="Loading store..." />;
+  if (loadingStore) return <Loading text={t("storeInfo.loadingStore")} />;
 
   if (error)
     return (
@@ -58,7 +60,7 @@ const StoreInfos = () => {
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-sm underline">
-          <ArrowLeft size={16} /> Go back
+          <ArrowLeft size={16} /> {t("common.goBack")}
         </button>
       </div>
     );
@@ -71,7 +73,7 @@ const StoreInfos = () => {
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-sm text-[#5d5955] dark:text-[#c4bfb9] hover:text-[#6d2842] dark:hover:text-[#e8a0b4] transition-colors mb-4">
-              <ArrowLeft size={16} /> Back
+              <ArrowLeft size={16} /> {t("common.back")}
             </button>
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 rounded-3xl bg-[#6d2842] text-white flex items-center justify-center shadow-lg shadow-[#6d2842]/20">
@@ -82,7 +84,7 @@ const StoreInfos = () => {
                   {store.name}
                 </h1>
                 <p className="text-sm text-[#8a8580] dark:text-[#7a756f] mt-2">
-                  {store.isVerified ? "Verified store" : "Unverified store"}
+                  {store.isVerified ? t("storeInfo.verifiedStore") : t("storeInfo.unverifiedStore")}
                 </p>
               </div>
             </div>
@@ -91,7 +93,7 @@ const StoreInfos = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">
             <div className="glass dark:glass-dark rounded-3xl p-5">
               <p className="text-xs uppercase tracking-widest text-[#8a8580] dark:text-[#7a756f]">
-                Owner ID
+                {t("storeInfo.ownerId")}
               </p>
               <p className="mt-2 font-semibold text-[#1a1816] dark:text-[#f0ece8]">
                 {store.ownerId?.join(", ")}
@@ -99,7 +101,7 @@ const StoreInfos = () => {
             </div>
             <div className="glass dark:glass-dark rounded-3xl p-5">
               <p className="text-xs uppercase tracking-widest text-[#8a8580] dark:text-[#7a756f]">
-                Total Products
+                {t("storeInfo.totalProducts")}
               </p>
               <p className="mt-2 font-semibold text-[#1a1816] dark:text-[#f0ece8]">
                 {products.length}
@@ -115,20 +117,20 @@ const StoreInfos = () => {
             className="glass dark:glass-dark rounded-3xl p-8 space-y-6">
             <div className="flex items-center gap-3 text-[#5d5955] dark:text-[#c4bfb9]">
               <MapPin size={18} />
-              <span>{store.address ?? "Address not available"}</span>
+              <span>{store.address ?? t("storeInfo.addressUnavailable")}</span>
             </div>
             <div className="flex items-center gap-3 text-[#5d5955] dark:text-[#c4bfb9]">
               <Mail size={18} />
-              <span>{store.email ?? "Email not available"}</span>
+              <span>{store.email ?? t("storeInfo.emailUnavailable")}</span>
             </div>
             <div className="flex items-center gap-3 text-[#5d5955] dark:text-[#c4bfb9]">
               <Users size={18} />
-              <span>{store.associatsIds?.length ?? 0} associates</span>
+              <span>{store.associatsIds?.length ?? 0} {t("storeInfo.associates")}</span>
             </div>
             {store.socialMedias?.length > 0 && (
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-widest text-[#8a8580] dark:text-[#7a756f]">
-                  Social Media
+                  {t("storeInfo.socialMedia")}
                 </p>
                 {store.socialMedias.map((link) => (
                   <a
@@ -148,22 +150,22 @@ const StoreInfos = () => {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm text-[#8a8580] dark:text-[#c4bfb9] uppercase tracking-widest">
-                  Listings
+                  {t("storeInfo.listings")}
                 </p>
                 <h2 className="text-3xl font-bold text-[#1a1816] dark:text-[#f0ece8]">
-                  Products from this store
+                  {t("storeInfo.productsFromStore")}
                 </h2>
               </div>
               <div className="rounded-full bg-[#e8e7e5] dark:bg-[#2d2a27] px-4 py-2 text-sm text-[#5d5955] dark:text-[#c4bfb9]">
-                {loadingProducts ? "Loading..." : `${products.length} items`}
+                {loadingProducts ? t("storeInfo.loadingProducts") : `${products.length} ${t("storeInfo.items")}`}
               </div>
             </div>
 
             {loadingProducts ? (
-              <Loading text="Loading products..." />
+              <Loading text={t("storeInfo.loadingProducts")} />
             ) : products.length === 0 ? (
               <div className="glass dark:glass-dark rounded-3xl p-8 text-center text-[#5d5955] dark:text-[#c4bfb9]">
-                No products available from this store.
+                {t("storeInfo.noProducts")}
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

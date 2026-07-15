@@ -30,9 +30,9 @@ const MasterysIndex = () => {
     setLoading(true);
     masteryService.getMasterys()
       .then((data) => setMasterys(Array.isArray(data) ? data : []))
-      .catch((err) => setError(err?.response?.data || 'Unable to load masteries.'))
+      .catch((err) => setError(err?.response?.data || t('masteriesPage.unableToLoad')))
       .finally(() => setLoading(false));
-  }, []);
+  }, [t]);
 
   const filteredMasterys = useMemo(() => {
     const lower = searchTerm.trim().toLowerCase();
@@ -60,7 +60,7 @@ const MasterysIndex = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633] py-16">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6"><span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">Masteries / Services</span></h1>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6"><span className="bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] bg-clip-text text-transparent">{t('masteriesPage.title')}</span></h1>
         </div>
 
         <FilterBar
@@ -76,7 +76,7 @@ const MasterysIndex = () => {
           onSortChange={setSelectedSort}
         />
 
-        {loading ? <Loading text={t('common.loading')} /> : error ? <div className="rounded-2xl bg-red-50 text-red-700 p-4">{error}</div> : filteredMasterys.length === 0 ? <div className="text-center py-20 text-[#8a8580] dark:text-[#7a756f]">No masteries found.</div> : (
+        {loading ? <Loading text={t('common.loading')} /> : error ? <div className="rounded-2xl bg-red-50 text-red-700 p-4">{error}</div> : filteredMasterys.length === 0 ? <div className="text-center py-20 text-[#8a8580] dark:text-[#7a756f]">{t('masteriesPage.empty')}</div> : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredMasterys.slice(0, visibleCount).map((mastery) => <MasteryCard key={mastery.id} mastery={mastery} />)}
