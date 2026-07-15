@@ -1,4 +1,25 @@
 {
+    "navbar": {
+        "home": "Home",
+        "products": "Products",
+        "masteries": "Masteries",
+        "forum": "Forum",
+        "dashboard": "Dashboard",
+        "favorites": "Favorites",
+        "bookings": "Bookings",
+        "messages": "Messages",
+        "notifications": "Notifications",
+        "profile": "Profile",
+        "settings": "Settings",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "searchPlaceholder": "Search products, services...",
+        "language": "Language",
+        "theme": "Theme",
+        "lightMode": "Light Mode",
+        "darkMode": "Dark Mode"
+    },
     "home": {
         "hero": {
             "badge": "The marketplace built for real craftsmen",

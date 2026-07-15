@@ -22,6 +22,7 @@ import { favoriteService } from "../../services/favoriteService";
 import { useKeycloak } from "../../providers/KeycloakProvider";
 import { useLookups } from "../../hooks/useLookups";
 import { LOOKUP_TYPES, lookupLabel } from "../../utils/lookupUtils";
+import ContactButton from "../../components/common/ContactButton"; // Import the ContactButton component
 
 /* ─── PhotoImage: Renders a single photo using the full URL ── */
 const PhotoImage = ({ photoUrl, alt, className, emptyLabel }) => {
@@ -195,13 +196,17 @@ const MasteryInfos = () => {
 
   useEffect(() => {
     if (!authenticated || !id) return;
-    favoriteService.statusMastery(id)
+    favoriteService
+      .statusMastery(id)
       .then((res) => setIsLiked(Boolean(res.data?.favorited)))
       .catch(() => setIsLiked(false));
   }, [authenticated, id]);
 
   const handleToggleFavorite = async () => {
-    if (!authenticated) { login(); return; }
+    if (!authenticated) {
+      login();
+      return;
+    }
     if (favLoading) return;
     setFavLoading(true);
     try {
@@ -227,9 +232,24 @@ const MasteryInfos = () => {
     );
   }
 
-  const typeLabel = lookupLabel(lookups, LOOKUP_TYPES.MASTERY_TYPE, mastery.typeId ?? mastery.masteryTypeId, "Service");
-  const statusLabel = lookupLabel(lookups, LOOKUP_TYPES.MASTERY_STATUS, mastery.masteryStatuId, mastery.masteryStatuId || "—");
-  const pricingLabel = lookupLabel(lookups, LOOKUP_TYPES.PRICING_TYPE, mastery.pricingType, mastery.pricingType || "—");
+  const typeLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.MASTERY_TYPE,
+    mastery.typeId ?? mastery.masteryTypeId,
+    "Service"
+  );
+  const statusLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.MASTERY_STATUS,
+    mastery.masteryStatuId,
+    mastery.masteryStatuId || "—"
+  );
+  const pricingLabel = lookupLabel(
+    lookups,
+    LOOKUP_TYPES.PRICING_TYPE,
+    mastery.pricingType,
+    mastery.pricingType || "—"
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafaf9] via-[#f5f5f3] to-[#e8e7e5] dark:from-[#1a1816] dark:via-[#2d2a27] dark:to-[#3a3633]">
@@ -276,7 +296,6 @@ const MasteryInfos = () => {
                 {pricingLabel}
               </Badge>
             </div>
-
             {/* Title */}
             <div>
               <h1 className="text-4xl md:text-5xl font-display font-bold mb-3 text-[#1a1816] dark:text-[#f0ece8]">
@@ -286,7 +305,6 @@ const MasteryInfos = () => {
                 {mastery.price} MAD
               </p>
             </div>
-
             {/* Description */}
             <div className="glass dark:glass-dark rounded-2xl p-5">
               <h3 className="font-semibold text-lg mb-3">{t("masteryInfo.about")}</h3>
@@ -294,7 +312,6 @@ const MasteryInfos = () => {
                 {mastery.description}
               </p>
             </div>
-
             {/* Master Information */}
             <div className="glass dark:glass-dark rounded-2xl p-5">
               <h3 className="font-semibold text-lg mb-4">{t("masteryInfo.masterInformation")}</h3>
@@ -321,7 +338,6 @@ const MasteryInfos = () => {
               <InfoRow label={t("masteryInfo.pricingType")} value={pricingLabel} />
               <InfoRow label={t("masteryInfo.status")} value={statusLabel} />
             </div>
-
             {/* Highlights */}
             <div className="grid grid-cols-2 gap-4">
               <div className="glass dark:glass-dark rounded-xl p-4 text-center">
@@ -339,13 +355,26 @@ const MasteryInfos = () => {
             <BookingCalendar resourceType="MASTERY" resourceId={mastery.id} title={t("masteryInfo.bookingCalendar")} quantityEnabled={false} />
 
             {/* Actions */}
+
+            <ContactButton
+              resourceType="MASTERY" // or "MASTERY" or "DEMANDE"
+              resourceId={mastery.id}
+              initialMessage={`Bonjour, je suis intéressé(e) par votre service de ${mastery.title}.`}
+            />
             <div className="flex gap-3 mt-auto">
               <a
                 href={`tel:${mastery.masterPhone}`}
                 className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#6d2842]/20">
                 <Phone size={18} /> {t("masteryInfo.contactMaster")}
               </a>
-              <button onClick={handleToggleFavorite} disabled={favLoading} className={`p-3.5 rounded-xl border transition-all ${isLiked ? "bg-[#6d2842] border-[#6d2842] text-white" : "border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842]"}`}>
+              <button
+                onClick={handleToggleFavorite}
+                disabled={favLoading}
+                className={`p-3.5 rounded-xl border transition-all ${
+                  isLiked
+                    ? "bg-[#6d2842] border-[#6d2842] text-white"
+                    : "border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842]"
+                }`}>
                 <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
               </button>
               <button className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842] transition-all">

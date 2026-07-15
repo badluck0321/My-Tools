@@ -9,6 +9,7 @@ import lombok.Data;
 public class Demande {
     @Id
     public String id;
+    public String ownerId;
     public String title;
     public int typeId;
     public int price;

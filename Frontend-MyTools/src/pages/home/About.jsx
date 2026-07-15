@@ -14,10 +14,10 @@ const About = () => {
   ];
 
   const stats = [
-    { number: '200+', label: 'Tools' },
-    { number: '50+', label: 'Services' },
-    { number: '1K+', label: 'Users' },
-    { number: '10+', label: 'Cities' },
+    { number: '200+', label: t('about.stats.tools') },
+    { number: '50+', label: t('about.stats.services') },
+    { number: '1K+', label: t('about.stats.users') },
+    { number: '10+', label: t('about.stats.cities') },
   ];
 
   return (
@@ -61,9 +61,9 @@ const About = () => {
                 {t('about.story')}
               </h2>
               <div className="space-y-4 text-lg text-[#5d5955] dark:text-[#c4bfb9] text-left">
-                <p>My-Tools was born from a simple belief: useful equipment and trusted services should be accessible without friction.</p>
-                <p>In 2024, we set out to organize that experience. The platform brings together product listings, rental bookings, orders, payments, reviews, favorites, demandes and messaging in a clear workflow.</p>
-                <p>Today, My-Tools is more than a catalog. It is a practical marketplace where customers, sellers and service providers can collaborate with confidence.</p>
+                <p>{t('about.storyParagraph1')}</p>
+                <p>{t('about.storyParagraph2')}</p>
+                <p>{t('about.storyParagraph3')}</p>
               </div>
             </motion.div>
           </div>
@@ -104,7 +104,7 @@ const About = () => {
             <Target className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-4xl font-display font-bold mb-6">{t('about.mission')}</h2>
             <p className="text-xl mb-8 opacity-95">
-              To empower customers and store owners with a reliable platform for selling, renting, booking, ordering and requesting services around tools and professional work.
+              {t('about.missionText')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/signup">
