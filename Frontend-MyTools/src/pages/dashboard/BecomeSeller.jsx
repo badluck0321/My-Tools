@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useKeycloak } from "../../providers/KeycloakProvider";
-import { roleRequestService } from "../../services/roleRequestService";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useKeycloak } from '../../providers/KeycloakProvider';
+import { roleRequestService } from '../../services/roleRequestService';
+import { useTranslation } from 'react-i18next';
 
 const BecomeSeller = () => {
+  const { t } = useTranslation();
   const { authenticated, login, isAdmin, isStoreOwner, isCraftMan } =
     useKeycloak();
-  const [type, setType] = useState("STORE_OWNER");
-  const [description, setDescription] = useState("");
+  const [type, setType] = useState('STORE_OWNER');
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [request, setRequest] = useState(null);
   const [history, setHistory] = useState([]);
 
@@ -24,7 +26,7 @@ const BecomeSeller = () => {
       setRequest(mineRes?.data || null);
       setHistory(Array.isArray(historyRes?.data) ? historyRes.data : []);
     } catch (err) {
-      setMessage(err?.response?.data || "Unable to load your requests.");
+      setMessage(err?.response?.data || t('becomeSeller.unableToLoadRequests'));
     } finally {
       setLoading(false);
     }
@@ -47,28 +49,26 @@ const BecomeSeller = () => {
     }
 
     if (isAdmin || isStoreOwner || isCraftMan) {
-      setMessage(
-        "You already have access to this role, so no request is needed."
-      );
+      setMessage(t('becomeSeller.alreadyHasRole'));
       return;
     }
 
     setSubmitting(true);
-    setMessage("");
+    setMessage('');
 
     try {
       const res = await roleRequestService.submit(type, description.trim());
       setRequest(res?.data || null);
-      setDescription("");
+      setDescription('');
       setMessage(
-        `Your request to become a ${
-          type === "STORE_OWNER" ? "Store Owner" : "Craftsman"
-        } has been submitted.`
+        t('becomeSeller.requestSubmitted', {
+          role: type === 'STORE_OWNER' ? t('becomeSeller.storeOwner') : t('becomeSeller.craftsman'),
+        })
       );
       await loadRequests();
     } catch (err) {
       setMessage(
-        err?.response?.data || err?.message || "Unable to submit your request."
+        err?.response?.data || err?.message || t('becomeSeller.unableToSubmit')
       );
     } finally {
       setSubmitting(false);
@@ -78,21 +78,21 @@ const BecomeSeller = () => {
   const handleDelete = async () => {
     if (!request?.id) return;
 
-    if (!window.confirm("Are you sure you want to delete this request?")) {
+    if (!window.confirm(t('becomeSeller.confirmDelete'))) {
       return;
     }
 
     setSubmitting(true);
-    setMessage("");
+    setMessage('');
 
     try {
       await roleRequestService.delete(request.id);
       setRequest(null);
-      setMessage("Your request has been deleted successfully.");
+      setMessage(t('becomeSeller.requestDeleted'));
       await loadRequests();
     } catch (err) {
       setMessage(
-        err?.response?.data || err?.message || "Unable to delete your request."
+        err?.response?.data || err?.message || t('becomeSeller.unableToDelete')
       );
     } finally {
       setSubmitting(false);
@@ -107,16 +107,15 @@ const BecomeSeller = () => {
         className="space-y-6">
         <div className="rounded-3xl border border-[#e8e7e5] bg-white p-8 shadow-lg dark:border-[#4a4642] dark:bg-[#2d2a27]">
           <h2 className="text-2xl font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-            Become a Seller or Craftsman
+            {t('becomeSeller.title')}
           </h2>
           <p className="mt-3 text-[#5d5955] dark:text-[#c4bfb9]">
-            Please sign in to submit a request. Only admins can review it from
-            the admin dashboard.
+            {t('becomeSeller.signInRequired')}
           </p>
           <button
             onClick={() => login()}
             className="mt-5 rounded-xl bg-[#6d2842] px-4 py-2 text-sm font-semibold text-white hover:bg-[#5a1f35]">
-            Sign in
+            {t('becomeSeller.signIn')}
           </button>
         </div>
       </motion.div>
@@ -131,11 +130,10 @@ const BecomeSeller = () => {
         className="space-y-6">
         <div className="rounded-3xl border border-[#e8e7e5] bg-white p-8 shadow-lg dark:border-[#4a4642] dark:bg-[#2d2a27]">
           <h2 className="text-2xl font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-            Your access is already active
+            {t("yourAccessIsAlreadyActive")}
           </h2>
           <p className="mt-3 text-[#5d5955] dark:text-[#c4bfb9]">
-            You already have an authorized role, so there is no need to submit a
-            new request.
+            {t("You already have an authorized role, so there is no need to submit a new request.")}
           </p>
         </div>
       </motion.div>
@@ -149,11 +147,10 @@ const BecomeSeller = () => {
       className="space-y-6">
       <div className="rounded-3xl border border-[#e8e7e5] bg-white p-8 shadow-lg dark:border-[#4a4642] dark:bg-[#2d2a27]">
         <h2 className="text-2xl font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-          Become a Seller or Craftsman
+         {t("becomeSeller.title")}
         </h2>
         <p className="mt-3 text-[#5d5955] dark:text-[#c4bfb9]">
-          Authenticated users without a role can submit a request that is
-          visible only to admins in the admin dashboard.
+          {t("becomeSeller.description")}
         </p>
       </div>
 
@@ -168,7 +165,7 @@ const BecomeSeller = () => {
         className="rounded-3xl border border-[#e8e7e5] bg-white p-6 shadow-lg dark:border-[#4a4642] dark:bg-[#2d2a27]">
         <div className="space-y-4">
           <label className="block text-sm font-medium text-[#2d2a27] dark:text-[#fafaf9]">
-            Request type
+            {t("Request type")}
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
@@ -179,7 +176,7 @@ const BecomeSeller = () => {
           </label>
 
           <label className="block text-sm font-medium text-[#2d2a27] dark:text-[#fafaf9]">
-            Why do you want this role?
+            {t("Why do you want this role?")}
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -194,36 +191,38 @@ const BecomeSeller = () => {
           type="submit"
           disabled={submitting}
           className="mt-5 rounded-xl bg-[#6d2842] px-4 py-2 text-sm font-semibold text-white hover:bg-[#5a1f35] disabled:cursor-not-allowed disabled:opacity-70">
-          {submitting ? "Submitting..." : "Submit request"}
+            {submitting
+    ? t("becomeSeller.submitting")
+    : t("becomeSeller.submit")}
         </button>
       </form>
 
       <div className="rounded-3xl border border-[#e8e7e5] bg-white p-6 shadow-lg dark:border-[#4a4642] dark:bg-[#2d2a27]">
         <h3 className="text-lg font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-          Your request status
+          {t("Your request status")}
         </h3>
         {loading ? (
           <p className="mt-3 text-sm text-[#8a8580]">
-            Loading your previous requests...
+            {t("Loading your previous requests...")}
           </p>
         ) : request ? (
           <div className="mt-4 space-y-3 text-sm text-[#5d5955] dark:text-[#c4bfb9]">
             <p>
               <span className="font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-                Requested role:
+                {t("Requested role")}
               </span>{" "}
               {request.type === "STORE_OWNER" ? "Store Owner" : "Craftsman"}
             </p>
             <p>
               <span className="font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-                Status:
+                {t("Status:")}
               </span>{" "}
               {request.status}
             </p>
             {request.description ? (
               <p>
                 <span className="font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-                  Reason:
+                  {t("Reason:")}
                 </span>{" "}
                 {request.description}
               </p>
@@ -231,7 +230,7 @@ const BecomeSeller = () => {
             {request.reviewComment && request.status !== "PENDING" ? (
               <p>
                 <span className="font-semibold text-[#2d2a27] dark:text-[#fafaf9]">
-                  Admin comment:
+                  {t("Admin comment:")}
                 </span>{" "}
                 {request.reviewComment}
               </p>
@@ -250,14 +249,14 @@ const BecomeSeller = () => {
           </div>
         ) : (
           <p className="mt-3 text-sm text-[#8a8580]">
-            No request submitted yet.
+            {t(" No request submitted yet.")}
           </p>
         )}
 
         {history.length > 0 ? (
           <div className="mt-6">
             <h4 className="text-sm font-semibold uppercase tracking-wide text-[#8a8580]">
-              History
+              {t("History")}
             </h4>
             <ul className="mt-3 space-y-2">
               {history.map((item) => (
