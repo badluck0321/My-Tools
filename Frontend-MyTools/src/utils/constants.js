@@ -1,3 +1,5 @@
+import i18n from "../i18n";
+
 // API Base URL
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888';
 
@@ -32,19 +34,19 @@ export const USER_ROLES = {
   GUEST: 'tools-guest',
 };
 export const PRICE_RANGES = [
-  { id: 'all', label: 'All Prices', min: 0, max: Infinity },
-  { id: 'under-500', label: 'Under 500 MAD', min: 0, max: 500 },
-  { id: '500-1000', label: '500-1,000 MAD', min: 500, max: 1000 },
-  { id: '1000-5000', label: '1,000-5,000 MAD', min: 1000, max: 5000 },
-  { id: 'above-5000', label: 'Above 5,000 MAD', min: 5000, max: Infinity },
+  { id: "all", label: i18n.t("priceRanges.all"), min: 0, max: Infinity },
+  { id: "under-500", label: i18n.t("priceRanges.under500"), min: 0, max: 500 },
+  { id: "500-1000", label: i18n.t("priceRanges.500to1000"), min: 500, max: 1000 },
+  { id: "1000-5000", label: i18n.t("priceRanges.1000to5000"), min: 1000, max: 5000 },
+  { id: "above-5000", label: i18n.t("priceRanges.above5000"), min: 5000, max: Infinity },
 ];
 
 export const SORT_OPTIONS = [
-  { id: 'newest', label: 'Newest First' },
-  { id: 'oldest', label: 'Oldest First' },
-  { id: 'price-low', label: 'Price: Low to High' },
-  { id: 'price-high', label: 'Price: High to Low' },
-  { id: 'popular', label: 'Most Popular' },
+  { id: "newest", label: i18n.t("sortOptions.newest") },
+  { id: "oldest", label: i18n.t("sortOptions.oldest") },
+  { id: "price-low", label: i18n.t("sortOptions.priceLow") },
+  { id: "price-high", label: i18n.t("sortOptions.priceHigh") },
+  { id: "popular", label: i18n.t("sortOptions.popular") },
 ];
 
 export const STORAGE_KEYS = {

@@ -493,5 +493,26 @@
         "available": "Available",
         "unavailable": "Unavailable",
         "clear": "Clear Filters"
+    },
+    "dashboard": {
+        "title": "Controle Pannel",
+        "welcomeBack": "Welcome Back",
+        "user": "User",
+        "profile": "My Profile",
+        "myStore": "Store",
+        "myProducts": "Products",
+        "myMasteries": "Mastery",
+        "favorites": "Favorites",
+        "orders": "Orders",
+        "bookings": "Bookings",
+        "analytics": "Analytics",
+        "vendorVerification": "Vendor Verification",
+        "adminPanel": "Admin Panel",
+        "roleRequests": "Role Requests",
+        "lookups": "Lookups",
+        "notifications": "Notifications",
+        "messages": "Messages",
+        "settings": "Settings",
+        "becomeSeller": "Become a Seller / Craftsman"
     }
 }

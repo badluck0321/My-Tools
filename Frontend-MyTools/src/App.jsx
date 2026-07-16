@@ -11,13 +11,6 @@ function App() {
         <Layout>
           <AppRoutes />
         </Layout>
-{/* 
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-          }}
-        /> */}
       </Router>
     </ThemeProvider>
   );

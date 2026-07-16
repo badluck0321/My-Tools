@@ -19,7 +19,7 @@ import {
   ListTree,
 } from "lucide-react";
 import { useKeycloak } from "../../providers/KeycloakProvider";
-
+import { useTranslation } from "react-i18next";
 import Profile from "./Profile";
 import MyStore from "./MyStore";
 import MyProducts from "./MyProducts";
@@ -37,63 +37,67 @@ import AdminPanel from "./AdminPanel";
 import MyMasteries from "./MyMasteries";
 import SettingsPage from "./Settings";
 
-const DASHBOARD_TABS = [
+
+
+const Dashboard = () => {
+  const { t } = useTranslation();
+  const DASHBOARD_TABS = [
   {
     id: "profile",
-    name: "My Profile",
+    name: t("dashboard.profile"),
     icon: User,
     color: "from-[#6d2842] to-[#a64d6d]",
   },
   {
     id: "MyStore",
-    name: "My Store",
+    name: t("dashboard.myStore"),
     icon: Store,
     color: "from-[#b8862f] to-[#d4a343]",
     sellerOnly: true,
   },
   {
     id: "MyProducts",
-    name: "My Products",
+    name:  t("dashboard.myProducts"),
     icon: Package,
     color: "from-[#b8862f] to-[#d4a343]",
     sellerOnly: true,
   },
   {
     id: "MyMasteries",
-    name: "My Masteries",
+    name: t("dashboard.myMasteries"),
     icon: Sparkles,
     color: "from-[#508978] to-[#70a596]",
     access: "craft",
   },
   {
     id: "favorites",
-    name: "Favorites",
+    name: t("dashboard.favorites"),
     icon: Heart,
     color: "from-[#508978] to-[#70a596]",
   },
   {
     id: "orders",
-    name: "Orders",
+    name: t("dashboard.orders"),
     icon: ShoppingBag,
     color: "from-[#6d2842] to-[#b8862f]",
     adminOnly: false,
   },
   {
     id: "bookings",
-    name: "Bookings",
+    name: t("dashboard.bookings"),
     icon: CalendarDays,
     color: "from-[#508978] to-[#70a596]",
   },
   {
     id: "analytics",
-    name: "Analytics",
+    name: t("dashboard.analytics"),
     icon: BarChart3,
     color: "from-[#6d2842] to-[#a64d6d]",
     sellerOnly: true,
   },
   {
     id: "vendor-verification",
-    name: "Vendor Verification",
+    name: t("dashboard.vendorVerification"),
     icon: BadgeCheck,
     color: "from-[#6d2842] to-[#a64d6d]",
     sellerOnly: true,
@@ -101,52 +105,51 @@ const DASHBOARD_TABS = [
   },
   {
     id: "admin",
-    name: "Admin Panel",
+    name: t("dashboard.adminPanel"),
     icon: Shield,
     color: "from-[#4a4642] to-[#6d6762]",
     adminOnly: true,
   },
   {
     id: "manage-role-requests",
-    name: "Role Requests",
+    name: t("dashboard.roleRequests"),
     icon: BadgeCheck,
     color: "from-[#4a4642] to-[#6d6762]",
     adminOnly: true,
   },
   {
     id: "lookups",
-    name: "Lookups",
+    name: t("dashboard.lookups"),
     icon: ListTree,
     color: "from-[#4a4642] to-[#6d6762]",
     adminOnly: true,
   },
   {
     id: "notifications",
-    name: "Notifications",
+    name: t("dashboard.notifications"),
     icon: Bell,
     color: "from-[#b8862f] to-[#d4a343]",
   },
   {
     id: "messages",
-    name: "Messages",
+    name: t("dashboard.messages"),
     icon: MessageCircle,
     color: "from-[#508978] to-[#70a596]",
   },
   {
     id: "settings",
-    name: "Settings",
+    name:t("dashboard.settings"),
     icon: Settings,
     color: "from-[#4a4642] to-[#6d6762]",
   },
   {
     id: "become-seller",
-    name: "Become a Seller / Craftsman",
+    name: t("dashboard.becomeSeller"),
+    // name: "Become a Seller / Craftsman",
     icon: BadgeCheck,
     color: "from-[#6d2842] to-[#b8862f]",
   },
 ];
-
-const Dashboard = () => {
   const { user, isAdmin, isStoreOwner, isCraftMan } = useKeycloak();
   const location = useLocation();
   const pathSegments = location.pathname.split("/").filter(Boolean);
@@ -190,13 +193,13 @@ const Dashboard = () => {
               <Sparkles className="w-6 h-6 text-[#fafaf9]" />
             </div>
             <h1 className="text-4xl font-display font-bold bg-gradient-to-r from-[#2d2a27] dark:from-[#fafaf9] via-[#6d2842] dark:via-[#d4a343] to-[#b8862f] bg-clip-text text-transparent">
-              Dashboard
+              {t("dashboard.title")}
             </h1>
           </div>
           <p className="text-[#5d5955] dark:text-[#c4bfb9] text-lg">
-            Welcome back,{" "}
+            {t("dashboard.welcomeBack")},{" "}
             <span className="font-semibold text-[#6d2842] dark:text-[#d4a343]">
-              {user?.first_name || user?.username || "User"}
+              {user?.first_name || user?.username || t("dashboard.user")}
             </span>
             !
           </p>
