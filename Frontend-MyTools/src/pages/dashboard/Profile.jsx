@@ -17,9 +17,11 @@ import {
 // import { useAuth } from "../../hooks/useAuth";
 import { useKeycloak } from "../../providers/KeycloakProvider";
 import showToast from "../../services/toast";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const { user, updateProfile, refreshUserProfile } = useKeycloak();
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -284,10 +286,7 @@ const Profile = () => {
             {/* Email (Read-only) */}
             <div>
               <label className="block text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9] mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9b9791] dark:text-[#6d6762]" />
+              {t("profile.email")}
                 <input
                   type="email"
                   value={user?.email || ""}
@@ -300,7 +299,7 @@ const Profile = () => {
             {/* Username */}
             <div>
               <label className="block text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9] mb-2">
-                Username *
+                {t("profile.username")} *
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9b9791] dark:text-[#6d6762]" />
@@ -329,7 +328,7 @@ const Profile = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9] mb-2">
-                  First Name
+                  {t("profile.firstName")}
                 </label>
                 <input
                   type="text"
@@ -347,7 +346,7 @@ const Profile = () => {
 
               <div>
                 <label className="block text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9] mb-2">
-                  Last Name
+                  {t("profile.lastName")}
                 </label>
                 <input
                   type="text"
@@ -367,7 +366,7 @@ const Profile = () => {
             {/* Bio */}
             <div>
               <label className="block text-sm font-medium text-[#5d5955] dark:text-[#c4bfb9] mb-2">
-                Bio
+                {t("profile.bio")}
               </label>
               <div className="relative">
                 <FileText className="absolute left-4 top-4 w-5 h-5 text-[#9b9791] dark:text-[#6d6762]" />
@@ -382,7 +381,7 @@ const Profile = () => {
                       ? "bg-white dark:bg-[#1a1816] border-[#6d2842] focus:border-[#a64d6d] focus:ring-2 focus:ring-[#6d2842]/20 text-[#2d2a27] dark:text-[#fafaf9]"
                       : "bg-[#e8e7e5] dark:bg-[#1a1816] border-[#e8e7e5] dark:border-[#4a4642] cursor-not-allowed text-[#9b9791] dark:text-[#6d6762]"
                   }`}
-                  placeholder="Tell us about yourself..."
+                  placeholder={t("profile.tellAboutYourself")}
                 />
               </div>
             </div>

@@ -10,6 +10,7 @@ import {
   lookupOptions,
 } from "../../utils/lookupUtils";
 import { useKeycloak } from "../../providers/KeycloakProvider";
+import { useTranslation } from "react-i18next";
 
 const emptyForm = {
   title: "",

@@ -20,6 +20,7 @@ import {
 } from "../../utils/lookupUtils";
 import interceptor from "../../interceptors/auth.interceptor";
 import { useKeycloak } from "../../providers/KeycloakProvider";
+import { useTranslation } from "react-i18next";
 
 const emptyForm = {
   name: "",
@@ -302,11 +303,11 @@ const ProductFormModal = ({ initial, lookups, onClose, onSaved }) => {
               onChange={() => set("isavailable", !form.isavailable)}
             />
             <label htmlFor="isavailable" className="text-sm">
-              Available
+              {t("common.available")}
             </label>
           </div>
           <div>
-            <label className={labelCls}>Photos</label>
+            <label className={labelCls}>{t("common.photos")}</label>
             <input
               type="file"
               accept="image/*"
@@ -325,12 +326,12 @@ const ProductFormModal = ({ initial, lookups, onClose, onSaved }) => {
               type="button"
               onClick={onClose}
               className="px-4 py-2 rounded-xl border">
-              Cancel
+              {t("common.cancel")}
             </button>
             <button
               disabled={saving}
               className="px-4 py-2 rounded-xl bg-[#6d2842] text-white font-semibold disabled:opacity-60">
-              {saving ? "Saving..." : "Save"}
+              {saving ? t("common.saving") : t("common.save")}
             </button>
           </div>
         </form>
@@ -342,6 +343,7 @@ const ProductFormModal = ({ initial, lookups, onClose, onSaved }) => {
 const MyProducts = () => {
   const { lookups } = useLookups();
   const { isAdmin, isStoreOwner } = useKeycloak();
+  const { t } = useTranslation();
   const [store, setStore] = useState(undefined);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -351,7 +353,11 @@ const MyProducts = () => {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [page, setPage] = useState(1);
   const [editingProductId, setEditingProductId] = useState(null);
-  const [editingProductForm, setEditingProductForm] = useState({ name: "", price: "", isavailable: true });
+  const [editingProductForm, setEditingProductForm] = useState({
+    name: "",
+    price: "",
+    isavailable: true,
+  });
   const [savingProductId, setSavingProductId] = useState(null);
 
   const loadProducts = useCallback(async () => {
@@ -424,7 +430,10 @@ const MyProducts = () => {
 
   const pageSize = 6;
   const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
-  const visibleProducts = products.slice((page - 1) * pageSize, page * pageSize);
+  const visibleProducts = products.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
   const canManageProducts = isAdmin || isStoreOwner;
 
   if (!canManageProducts) {
@@ -448,17 +457,18 @@ const MyProducts = () => {
         </div>
         <div>
           <h2 className="text-3xl font-bold text-[#2d2a27] dark:text-[#fafaf9]">
-            My Products
+            {t("myProducts.title")}
           </h2>
           {store !== undefined && (
             <div className="mt-1">
               {store ? (
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-[#6d2842]/10 text-[#6d2842]">
-                  <Store size={10} /> Listed under: {store.name}
+                  <Store size={10} />{" "}
+                  {t("myProducts.storeOwner", { storeName: store.name })}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-[#f0eeeb] dark:bg-[#3a3633]">
-                  <User size={10} /> Listed under: Personal account
+                  <User size={10} /> {t("myProducts.personalAccount")}
                 </span>
               )}
             </div>
@@ -470,7 +480,7 @@ const MyProducts = () => {
             setShowForm(true);
           }}
           className="ml-auto flex items-center gap-2 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white font-semibold px-4 py-2 rounded-xl text-sm">
-          <Plus size={15} /> Add Product
+          <Plus size={15} /> {t("myProducts.addProduct")}
         </button>
       </div>
       {loading ? (
@@ -522,14 +532,24 @@ const MyProducts = () => {
                   <div className="grid gap-3 md:grid-cols-3">
                     <input
                       value={editingProductForm.name}
-                      onChange={(e) => setEditingProductForm((prev) => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) =>
+                        setEditingProductForm((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
                       placeholder="Product name"
                     />
                     <input
                       type="number"
                       value={editingProductForm.price}
-                      onChange={(e) => setEditingProductForm((prev) => ({ ...prev, price: e.target.value }))}
+                      onChange={(e) =>
+                        setEditingProductForm((prev) => ({
+                          ...prev,
+                          price: e.target.value,
+                        }))
+                      }
                       className="rounded-xl border border-[#d4cfc9] bg-transparent px-3 py-2 text-sm"
                       placeholder="Price"
                     />
@@ -537,7 +557,12 @@ const MyProducts = () => {
                       <input
                         type="checkbox"
                         checked={editingProductForm.isavailable}
-                        onChange={(e) => setEditingProductForm((prev) => ({ ...prev, isavailable: e.target.checked }))}
+                        onChange={(e) =>
+                          setEditingProductForm((prev) => ({
+                            ...prev,
+                            isavailable: e.target.checked,
+                          }))
+                        }
                       />
                       Available
                     </label>
@@ -563,10 +588,22 @@ const MyProducts = () => {
       )}
       {products.length > pageSize && (
         <div className="mt-5 flex items-center justify-between rounded-2xl border border-[#e8e7e5] bg-white px-4 py-3 dark:border-[#4a4642] dark:bg-[#2d2a27]">
-          <p className="text-sm text-[#8a8580]">Page {page} of {totalPages}</p>
+          <p className="text-sm text-[#8a8580]">
+            Page {page} of {totalPages}
+          </p>
           <div className="flex gap-2">
-            <button onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page === 1} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Prev</button>
-            <button onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page === totalPages} className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">Next</button>
+            <button
+              onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+              disabled={page === 1}
+              className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">
+              Prev
+            </button>
+            <button
+              onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+              disabled={page === totalPages}
+              className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50">
+              Next
+            </button>
           </div>
         </div>
       )}
