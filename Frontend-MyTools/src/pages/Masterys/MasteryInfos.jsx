@@ -377,9 +377,23 @@ const MasteryInfos = () => {
                 }`}>
                 <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
               </button>
-              <button className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] text-[#5d5955] dark:text-[#c4bfb9] hover:border-[#6d2842] hover:text-[#6d2842] transition-all">
-                <Share2 size={18} />
-              </button>
+            <button
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({
+                    title: mastery.name,
+                    text: `Découvrez ${mastery.title} sur My-Tools`,
+                    url: window.location.href,
+                  });
+                } else {
+                  // Fallback: copy to clipboard
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Lien copié dans le presse-papiers !");
+                }
+              }}
+              className="p-3.5 rounded-xl border border-[#d4cfc9] dark:border-[#4a4642] hover:bg-[#f5f5f3] dark:hover:bg-[#2d2a27] transition-all active:scale-95">
+              <Share2 size={18} className="text-[#5d5955] dark:text-[#c4bfb9]" />
+            </button>
             </div>
           </motion.div>
         </div>
