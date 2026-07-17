@@ -71,16 +71,16 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-<div className="hidden lg:block flex-1 max-w-sm mx-6">
-    <GlobalSearch />
-</div>
+          <div className="hidden lg:block flex-1 max-w-sm mx-3">
+              <GlobalSearch />
+          </div>
 
           <div className="hidden md:flex items-center gap-4 ml-6"></div>
             
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center">
-                      <div className="hidden lg:block flex-1 max-w-sm mx-4">
+          <div className="hidden lg:block flex-1 max-w-sm mx-4">
             <LanguageSwitcher />
           </div>
 
@@ -132,7 +132,9 @@ const Navbar = () => {
                   <motion.div
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden">
+                    // className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden">
+                    className="absolute inset-x-0 mx-auto mt-2 w-72 bg-white dark:bg-[#2d2a27] rounded-2xl shadow-2xl py-2 border border-[#e8e7e5] dark:border-[#4a4642] overflow-hidden"> 
+
                     <div className="px-5 py-4 bg-gradient-to-r from-[#6d2842] via-[#8b3654] to-[#a64d6d] text-white">
                       <div className="flex items-center gap-3 mb-2">
                         {user?.profile_image ? (
@@ -251,7 +253,9 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-
+          <div className="hidden lg:block flex-1 max-w-sm mx-4">
+            <LanguageSwitcher />
+          </div>
             <div className="pt-4 mt-4 border-t border-[#e8e7e5] dark:border-[#4a4642] space-y-3">
               <button
                 onClick={toggleTheme}

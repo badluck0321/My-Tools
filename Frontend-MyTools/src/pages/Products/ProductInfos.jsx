@@ -29,9 +29,12 @@ import {
   lookupLabel,
   listingLabel,
 } from "../../utils/lookupUtils";
+import ContactButton from "../../components/common/ContactButton"; // Import the ContactButton component
+
 
 /* ─── PhotoImage: fetches one photo via service, renders it ── */
 const PhotoImage = ({ photoUrls, alt, className }) => {
+  const { t } = useTranslation();
   const [src, setSrc] = useState(null);
 
   useEffect(() => {

@@ -181,7 +181,7 @@ const Profile = () => {
             <User className="w-6 h-6 text-[#fafaf9]" />
           </div>
           <h2 className="text-3xl font-bold text-[#2d2a27] dark:text-[#fafaf9]">
-            My Profile
+            {t("profile.title")}
           </h2>
         </div>
 
@@ -192,7 +192,7 @@ const Profile = () => {
             onClick={() => setIsEditing(true)}
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#6d2842] to-[#a64d6d] text-white rounded-xl font-medium shadow-lg shadow-[#6d2842]/30 hover:shadow-xl hover:shadow-[#6d2842]/40 transition-all">
             <Edit2 className="w-4 h-4" />
-            Edit Profile
+            {t("profile.EditProfile")}
           </motion.button>
         )}
       </div>
@@ -293,7 +293,7 @@ const Profile = () => {
                   disabled
                   className="w-full pl-12 pr-4 py-3 bg-[#e8e7e5] dark:bg-[#1a1816] border border-[#e8e7e5] dark:border-[#4a4642] rounded-xl text-[#9b9791] dark:text-[#6d6762] cursor-not-allowed"
                 />
-              </div>
+              </label>
             </div>
 
             {/* Username */}

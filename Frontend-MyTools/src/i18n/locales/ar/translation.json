@@ -281,6 +281,8 @@
         "available": "متاح"
     },
     "profile": {
+        "title": "ملفي الشخصي",
+        "EditProfile": "تعديل الملف الشخصي",
         "email": "البريد الإلكتروني",
         "username": "اسم المستخدم",
         "firstName": "الاسم الأول",
@@ -645,38 +647,6 @@
         "priceHigh": "السعر: من الأعلى إلى الأقل",
         "popular": "الأكثر شعبية"
     },
-    "becomeSeller": {
-        "title": "كن بائعًا أو حرفيًا",
-        "signInRequired": "يرجى تسجيل الدخول لإرسال طلب. يمكن للمسؤولين فقط مراجعة الطلبات من لوحة التحكم.",
-        "signIn": "تسجيل الدخول",
-        "alreadyActiveTitle": "تم تفعيل صلاحياتك بالفعل",
-        "alreadyActiveDescription": "لديك بالفعل دور مخول، لذلك لا حاجة لإرسال طلب جديد.",
-        "description": "يمكن للمستخدمين المسجلين الذين لا يمتلكون دورًا إرسال طلب يظهر فقط للمسؤولين في لوحة الإدارة.",
-        "unableToLoadRequests": "تعذر تحميل طلباتك.",
-        "alreadyHasRole": "لديك بالفعل هذا الدور، لذلك لا حاجة لإرسال طلب.",
-        "requestSubmitted": "تم إرسال طلبك لتصبح {{role}}.",
-        "unableToSubmit": "تعذر إرسال طلبك.",
-        "confirmDelete": "هل أنت متأكد أنك تريد حذف هذا الطلب؟",
-        "requestDeleted": "تم حذف طلبك بنجاح.",
-        "unableToDelete": "تعذر حذف طلبك.",
-        "requestType": "نوع الطلب",
-        "storeOwner": "مالك متجر (بائع)",
-        "craftsman": "حرفي",
-        "reasonLabel": "لماذا ترغب في هذا الدور؟",
-        "reasonPlaceholder": "أخبر المسؤول عن خبرتك وما الذي تنوي تقديمه.",
-        "submit": "إرسال الطلب",
-        "submitting": "جارٍ الإرسال...",
-        "statusTitle": "حالة طلبك",
-        "loadingRequests": "جارٍ تحميل طلباتك السابقة...",
-        "noRequest": "لم يتم إرسال أي طلب بعد.",
-        "requestedRole": "الدور المطلوب",
-        "status": "الحالة",
-        "reason": "السبب",
-        "adminComment": "تعليق المسؤول",
-        "deleteRequest": "حذف الطلب",
-        "deleting": "جارٍ الحذف...",
-        "history": "السجل"
-    },
     "admin": {
         "page": "الصفحة",
         "of": "من",
@@ -703,22 +673,6 @@
         "usersManagement": "إدارة المستخدمين",
         "storeVerification": "توثيق المتاجر",
         "platformSettings": "إعدادات المنصة"
-    },
-    "adminPanel": {
-        "title": "لوحة الإدارة",
-        "welcome": "مرحبًا بك في لوحة الإدارة",
-        "stats": "الإحصائيات",
-        "totalUsers": "إجمالي المستخدمين",
-        "totalProducts": "إجمالي المنتجات",
-        "totalOrders": "إجمالي الطلبات",
-        "totalRevenue": "إجمالي الإيرادات",
-        "recentActivity": "النشاط الأخير",
-        "userManagement": "إدارة المستخدمين",
-        "storeManagement": "إدارة المتاجر",
-        "productManagement": "إدارة المنتجات",
-        "orderManagement": "إدارة الطلبات",
-        "analytics": "الإحصائيات",
-        "settings": "الإعدادات"
     },
     "analytics": {
         "title": "الإحصائيات",
@@ -1125,7 +1079,8 @@
         "needHelp": "هل تحتاج مساعدة؟",
         "supportEmail": "support@my-tools.demo",
         "supportPhone": "+212 600 000 000"
-    }
+    },
+    "adminPanel": {
         "adminDescription": "إحصائيات المنصة، وإدارة المنتجات، وإدارة الطلبات",
         "unableToLoadAdminData": "تعذر تحميل بيانات الإدارة.",
         "unableToUpdateProduct": "تعذر تحديث المنتج.",
